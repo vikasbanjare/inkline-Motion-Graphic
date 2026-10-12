@@ -1,0 +1,42 @@
+{
+ "copy": {
+  "logo": "films/example/wordmark.png",
+  "claim1": {
+   "head": "5% rewards",
+   "sub": "on everyday spends"
+  },
+  "card": {
+   "head": "the Inkline",
+   "sub": "rewards card"
+  },
+  "strip": [
+   "ZERO JOINING FEE",
+   "5% REWARDS ON EVERYDAY SPENDS"
+  ],
+  "claim2": {
+   "head": "redeem on flights, hotels"
+  },
+  "claim3": {
+   "head": "2,000+ products",
+   "sub": "in the rewards store"
+  },
+  "hero": {
+   "label": "JOINING FEE",
+   "value": "₹0"
+  },
+  "cardPrint": "5% REWARDS ON EVERYDAY SPENDS  ·  ZERO JOINING FEE",
+  "outro": {
+   "screen": "your card",
+   "title": "Inkline rewards card",
+   "rows": [
+    "5% rewards on everyday spends",
+    "zero joining fee",
+    "redeem on flights, hotels and 2,000+ products"
+   ],
+   "left": "the Inkline",
+   "right": "rewards card."
+  },
+  "lockup": "rewards card · example film"
+ },
+ "score": "audio/score.wav"
+}

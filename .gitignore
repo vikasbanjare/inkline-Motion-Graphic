@@ -1,0 +1,9 @@
+node_modules/
+out/
+.render/
+public/films/*/score.music.wav
+public/films/*/score.sfx.wav
+public/audio/score.music.wav
+public/audio/score.sfx.wav
+__pycache__/
+.DS_Store

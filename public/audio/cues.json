@@ -1,0 +1,443 @@
+{
+ "title": "Inkline example film",
+ "fps": 24,
+ "frames": 720,
+ "key": "D",
+ "sections": [
+  {
+   "name": "rewards",
+   "from": 0,
+   "to": 150,
+   "beats": 12,
+   "style": "intro",
+   "drums_from": 62
+  },
+  {
+   "name": "card",
+   "from": 150,
+   "to": 276,
+   "beats": 10,
+   "style": "groove",
+   "quiet": [
+    [
+     250,
+     276
+    ]
+   ]
+  },
+  {
+   "name": "travel",
+   "from": 276,
+   "to": 384,
+   "beats": 9,
+   "style": "drive"
+  },
+  {
+   "name": "products",
+   "from": 384,
+   "to": 484,
+   "beats": 8,
+   "style": "drive"
+  },
+  {
+   "name": "zero fee",
+   "from": 484,
+   "to": 561,
+   "beats": 6,
+   "style": "ambient"
+  },
+  {
+   "name": "outro",
+   "from": 561,
+   "to": 645,
+   "beats": 7,
+   "style": "groove",
+   "quiet": [
+    [
+     630,
+     645
+    ]
+   ]
+  },
+  {
+   "name": "lockup",
+   "from": 645,
+   "to": 720,
+   "beats": 6,
+   "style": "end"
+  }
+ ],
+ "events": [
+  {
+   "at": 9.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 8.0,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 6.4,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 4.8,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 3.2,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 1.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 0.0,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 1.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 3.2,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 4.8,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 6.4,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 8.0,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 9.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 25,
+   "fx": "tick",
+   "freq": 1800,
+   "gain": 0.8
+  },
+  {
+   "at": 18,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 200,
+   "hi": 1800,
+   "gain": 0.7,
+   "pan": 0.5
+  },
+  {
+   "at": 62,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 112,
+   "fx": "tick",
+   "freq": 2200,
+   "gain": 0.6
+  },
+  {
+   "at": 150,
+   "fx": "swell",
+   "sec": 1.0,
+   "gain": 1.0
+  },
+  {
+   "at": 150,
+   "fx": "impact",
+   "big": 0.8,
+   "gain": 0.9
+  },
+  {
+   "at": 150,
+   "fx": "whoosh",
+   "sec": 0.8,
+   "lo": 400,
+   "hi": 3000,
+   "up": false,
+   "gain": 0.6
+  },
+  {
+   "at": 200,
+   "fx": "riser",
+   "until": 276,
+   "gain": 0.8
+  },
+  {
+   "at": 276,
+   "fx": "impact",
+   "big": 0.6,
+   "gain": 0.6
+  },
+  {
+   "at": 276,
+   "fx": "whoosh",
+   "sec": 1.0,
+   "lo": 600,
+   "hi": 6000,
+   "gain": 0.8
+  },
+  {
+   "at": 280,
+   "fx": "sparkle",
+   "sec": 1.0,
+   "base": 86,
+   "gain": 0.35
+  },
+  {
+   "at": 292,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 500,
+   "hi": 2500,
+   "gain": 0.35,
+   "pan": -0.6
+  },
+  {
+   "at": 312,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 500,
+   "hi": 2500,
+   "gain": 0.35,
+   "pan": 0.6
+  },
+  {
+   "at": 326,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 500,
+   "hi": 2500,
+   "gain": 0.35,
+   "pan": -0.3
+  },
+  {
+   "at": 296,
+   "fx": "rumble",
+   "sec": 1.1,
+   "gain": 0.6,
+   "pan": -0.5
+  },
+  {
+   "at": 336,
+   "fx": "tick",
+   "freq": 2000,
+   "gain": 0.6
+  },
+  {
+   "at": 354,
+   "fx": "riser",
+   "until": 384,
+   "gain": 0.6
+  },
+  {
+   "at": 384,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.55
+  },
+  {
+   "at": 386,
+   "fx": "whoosh",
+   "sec": 1.6,
+   "lo": 250,
+   "hi": 1500,
+   "up": false,
+   "gain": 0.6
+  },
+  {
+   "at": 409,
+   "fx": "pop",
+   "freq": 330,
+   "gain": 0.8,
+   "pan": 0.2
+  },
+  {
+   "at": 421,
+   "fx": "pop",
+   "freq": 392,
+   "gain": 0.8,
+   "pan": 0.2
+  },
+  {
+   "at": 434,
+   "fx": "pop",
+   "freq": 440,
+   "gain": 0.8,
+   "pan": 0.2
+  },
+  {
+   "at": 459,
+   "fx": "pop",
+   "freq": 494,
+   "gain": 0.8,
+   "pan": 0.2
+  },
+  {
+   "at": 446,
+   "fx": "tick",
+   "freq": 2400,
+   "gain": 0.5
+  },
+  {
+   "at": 484,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 150,
+   "hi": 900,
+   "gain": 0.7
+  },
+  {
+   "at": 486,
+   "fx": "bubbles",
+   "until": 561,
+   "count": 26,
+   "gain": 1.0,
+   "pan": -0.2
+  },
+  {
+   "at": 506,
+   "fx": "sparkle",
+   "sec": 1.3,
+   "base": 84,
+   "gain": 0.7
+  },
+  {
+   "at": 536,
+   "fx": "riser",
+   "until": 561,
+   "gain": 0.7
+  },
+  {
+   "at": 561,
+   "fx": "impact",
+   "big": 0.7,
+   "gain": 0.8
+  },
+  {
+   "at": 561,
+   "fx": "whoosh",
+   "sec": 0.8,
+   "lo": 500,
+   "hi": 3500,
+   "up": false,
+   "gain": 0.5
+  },
+  {
+   "at": 571,
+   "fx": "laser",
+   "until": 591,
+   "gain": 1.0,
+   "pan": -0.3
+  },
+  {
+   "at": 573,
+   "fx": "laser",
+   "until": 589,
+   "gain": 0.9,
+   "pan": 0.3
+  },
+  {
+   "at": 586,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 300,
+   "hi": 2200,
+   "gain": 0.6
+  },
+  {
+   "at": 606,
+   "fx": "click",
+   "gain": 0.9
+  },
+  {
+   "at": 609,
+   "fx": "tick",
+   "freq": 2600,
+   "gain": 0.55,
+   "pan": 0.15
+  },
+  {
+   "at": 615,
+   "fx": "tick",
+   "freq": 2600,
+   "gain": 0.55,
+   "pan": 0.15
+  },
+  {
+   "at": 621,
+   "fx": "tick",
+   "freq": 2600,
+   "gain": 0.55,
+   "pan": 0.15
+  },
+  {
+   "at": 630,
+   "fx": "riser",
+   "until": 645,
+   "gain": 0.6
+  },
+  {
+   "at": 645,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.8
+  },
+  {
+   "at": 645,
+   "fx": "impact",
+   "big": 1.0,
+   "gain": 0.9
+  }
+ ]
+}
