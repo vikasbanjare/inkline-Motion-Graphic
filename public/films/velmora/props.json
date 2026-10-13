@@ -1,141 +1,99 @@
 {
  "composition": "Story",
- "frames": 755,
+ "frames": 812,
  "plan": {
   "slug": "velmora",
   "brand": {
    "name": "VELMORA",
    "logo": "films/velmora/wordmark.png",
-   "line": "coffee roasters · first store · sample film"
+   "line": "coffee roasters · first café · sample film"
   },
   "shots": [
    {
-    "world": "garden",
+    "world": "scene",
+    "scene": "branch",
     "enter": "lines",
     "theme": "forest",
-    "cast": [
-     "figure",
-     "plant",
-     "plant"
-    ],
-    "p": {
-     "cherries": true
-    },
     "text": {
-     "head": "It starts on a hillside",
-     "sub": "coffee cherries, picked by hand"
+     "head": "Every cup begins as a cherry"
     },
     "dur": 138
    },
    {
-    "world": "globe",
+    "world": "scene",
+    "scene": "split",
     "enter": "iris",
-    "theme": "honey",
-    "cast": [
-     "lantern"
-    ],
+    "theme": "blush",
+    "mood": "groove",
     "p": {
-     "home": [
-      77.59,
-      12.97
-     ],
-     "inbound": true,
-     "mark": "ship",
-     "building": "none",
-     "to": [
-      [
-       38.76,
-       9.0
-      ],
-      [
-       -74.07,
-       4.71
-      ],
-      [
-       98.67,
-       3.6
-      ],
-      [
-       -47.88,
-       -15.79
-      ]
+     "irisAt": [
+      0.5,
+      0.55
      ]
     },
     "text": {
-     "head": "Four origins, one city"
+     "head": "Picked by hand, one by one"
     },
-    "dur": 115
+    "dur": 69
    },
    {
-    "world": "orbit",
-    "enter": "match",
+    "world": "scene",
+    "scene": "roast",
+    "enter": "cut",
     "theme": "roastery",
-    "cast": [
-     "lantern"
-    ],
-    "p": {
-     "bodies": "beans",
-     "count": 8,
-     "spin": 2.2
-    },
+    "mood": "drive",
     "text": {
      "head": "Roasted in small batches"
     },
-    "dur": 93
+    "dur": 116
    },
    {
-    "world": "table",
-    "enter": "cut",
+    "world": "scene",
+    "scene": "grind",
+    "enter": "match",
     "theme": "honey",
-    "cast": [
-     "cup",
-     "dish"
-    ],
-    "p": {
-     "pour": true,
-     "beans": 36,
-     "surface": "wood"
+    "mood": "drive",
+    "text": {
+     "head": "Ground moments before"
     },
+    "dur": 80
+   },
+   {
+    "world": "scene",
+    "scene": "pour",
+    "enter": "wipe",
+    "theme": "lagoon",
+    "mood": "groove",
     "text": {
      "head": "Poured slow, by hand"
     },
     "dur": 115
    },
    {
-    "world": "city",
-    "enter": "wipe",
-    "theme": "dusk",
-    "cast": [
-     "figure",
-     "car",
-     "lantern"
-    ],
-    "p": {
-     "sign": "VELMORA",
-     "enter": true
-    },
+    "world": "scene",
+    "scene": "art",
+    "enter": "cut",
+    "theme": "roastery",
+    "mood": "ambient",
     "text": {
-     "head": "Our first store",
-     "sub": "doors open this November"
+     "head": "No two cups alike"
     },
-    "dur": 127
+    "dur": 81
    },
    {
-    "world": "object",
-    "enter": "print",
-    "theme": "roastery",
+    "world": "scene",
+    "scene": "cafe",
+    "enter": "match",
+    "theme": "terracotta",
+    "mood": "groove",
     "p": {
-     "shape": "ticket",
-     "stamp": "01·11",
-     "strip": [
-      "FIRST CUP ON US",
-      "OPENING WEEK"
-     ]
+     "sign": "VELMORA"
     },
     "text": {
-     "head": "You're invited"
+     "head": "Our first café",
+     "sub": "opens this November"
     },
-    "dur": 92
+    "dur": 138
    },
    {
     "world": "lockup",

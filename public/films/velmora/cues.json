@@ -1,11 +1,11 @@
 {
  "title": "velmora",
  "fps": 24,
- "frames": 755,
+ "frames": 812,
  "key": "F",
  "sections": [
   {
-   "name": "1 garden",
+   "name": "1 scene",
    "from": 0,
    "to": 138,
    "beats": 12,
@@ -13,50 +13,57 @@
    "drums_from": 62
   },
   {
-   "name": "2 globe",
+   "name": "2 scene",
    "from": 138,
-   "to": 253,
+   "to": 207,
+   "beats": 6,
+   "style": "groove"
+  },
+  {
+   "name": "3 scene",
+   "from": 207,
+   "to": 323,
    "beats": 10,
    "style": "drive"
   },
   {
-   "name": "3 orbit",
-   "from": 253,
-   "to": 346,
-   "beats": 8,
+   "name": "4 scene",
+   "from": 323,
+   "to": 403,
+   "beats": 7,
    "style": "drive"
   },
   {
-   "name": "4 table",
-   "from": 346,
-   "to": 461,
+   "name": "5 scene",
+   "from": 403,
+   "to": 518,
    "beats": 10,
    "style": "groove"
   },
   {
-   "name": "5 city",
-   "from": 461,
-   "to": 588,
-   "beats": 11,
-   "style": "drive"
+   "name": "6 scene",
+   "from": 518,
+   "to": 599,
+   "beats": 7,
+   "style": "ambient"
   },
   {
-   "name": "6 object",
-   "from": 588,
-   "to": 680,
-   "beats": 8,
+   "name": "7 scene",
+   "from": 599,
+   "to": 737,
+   "beats": 12,
    "style": "groove",
    "quiet": [
     [
-     658,
-     680
+     715,
+     737
     ]
    ]
   },
   {
-   "name": "7 lockup",
-   "from": 680,
-   "to": 755,
+   "name": "8 lockup",
+   "from": 737,
+   "to": 812,
    "beats": 7,
    "style": "end"
   }
@@ -183,72 +190,43 @@
    "gain": 0.6
   },
   {
-   "at": 163,
+   "at": 153,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 253,
-   "fx": "riser",
-   "sec": 1.1,
-   "gain": 0.5
-  },
-  {
-   "at": 255,
-   "fx": "impact",
-   "big": 0.6,
-   "gain": 0.6
-  },
-  {
-   "at": 273,
-   "fx": "swell",
-   "sec": 0.5,
-   "gain": 0.5
-  },
-  {
-   "at": 259,
-   "fx": "riser",
-   "sec": 1.2,
-   "gain": 0.35
-  },
-  {
-   "at": 346,
+   "at": 207,
    "fx": "impact",
    "big": 0.5,
    "gain": 0.7
   },
   {
-   "at": 371,
+   "at": 232,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 352,
-   "fx": "click",
+   "at": 323,
+   "fx": "riser",
+   "sec": 1.1,
    "gain": 0.5
   },
   {
-   "at": 364,
-   "fx": "click",
+   "at": 325,
+   "fx": "impact",
+   "big": 0.6,
+   "gain": 0.6
+  },
+  {
+   "at": 340,
+   "fx": "swell",
+   "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 352,
-   "fx": "bubbles",
-   "sec": 1.2,
-   "count": 18,
-   "gain": 0.45
-  },
-  {
-   "at": 380,
-   "fx": "rumble",
-   "sec": 1.6,
-   "gain": 0.35
-  },
-  {
-   "at": 477,
+   "at": 419,
    "fx": "whoosh",
    "sec": 0.6,
    "lo": 400,
@@ -257,54 +235,61 @@
    "pan": 0.4
   },
   {
-   "at": 465,
+   "at": 407,
    "fx": "sparkle",
    "sec": 0.6,
    "gain": 0.4
   },
   {
-   "at": 488,
+   "at": 428,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 524,
-   "fx": "click",
+   "at": 518,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 535,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 599,
+   "fx": "riser",
+   "sec": 1.1,
+   "gain": 0.5
+  },
+  {
+   "at": 601,
+   "fx": "impact",
+   "big": 0.6,
    "gain": 0.6
   },
   {
-   "at": 588,
-   "fx": "swell",
-   "sec": 1.0,
-   "gain": 0.9
-  },
-  {
-   "at": 589,
-   "fx": "impact",
-   "big": 0.8,
-   "gain": 0.8
-  },
-  {
-   "at": 608,
+   "at": 629,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 680,
+   "at": 737,
    "fx": "riser",
    "sec": 0.6,
    "gain": 0.6
   },
   {
-   "at": 682,
+   "at": 739,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.6
   },
   {
-   "at": 682,
+   "at": 739,
    "fx": "impact",
    "big": 1.0,
    "gain": 0.9

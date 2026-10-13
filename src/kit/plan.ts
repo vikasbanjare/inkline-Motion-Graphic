@@ -3,12 +3,16 @@
  * enters by. tools/plan.py checks a plan, snaps every cut to the beat grid and writes it here as props (with frames).
  */
 export type Enter = "lines" | "cut" | "iris" | "split" | "wipe" | "match" | "dive" | "print";
-export type WorldName = "garden" | "object" | "globe" | "hall" | "deep" | "city" | "orbit" | "table" | "type" | "stage" | "lockup";
+export type WorldName = "scene" | "garden" | "object" | "globe" | "hall" | "deep" | "city" | "orbit" | "table" | "type" | "stage" | "lockup";
 export type Say = { head: string; sub?: string };
 export type Value = { label: string; value: string };
 
 export type Shot = {
   world: WorldName;
+  /** with world "scene": the name of one of this film's own scenes (src/films/<slug>/index.tsx) */
+  scene?: string;
+  /** the score's style under this shot (intro, groove, drive, ambient, end); default from the world */
+  mood?: string;
   /** frames (written by tools/plan.py from seconds, snapped to the beat) */
   dur: number;
   enter: Enter;

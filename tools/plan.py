@@ -29,12 +29,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 FPS = 24
 BEAT = 11.52  # 125 BPM at 24 fps
-WORLDS = {"garden", "object", "globe", "hall", "deep", "city", "orbit", "table", "type", "stage", "lockup"}
+WORLDS = {"scene", "garden", "object", "globe", "hall", "deep", "city", "orbit", "table", "type", "stage", "lockup"}
 ENTERS = {"lines", "cut", "iris", "split", "wipe", "match", "dive", "print"}
 OVERLAP = {"lines": 0, "cut": 0, "iris": 18, "split": 24, "wipe": 16, "match": 14, "dive": 0, "print": 0}
 FIXED = {"stage": 84, "lockup": 75}
 MIN_SEC = {"garden": 4.5, "object": 3.5, "globe": 4.0, "hall": 3.8, "deep": 3.0, "city": 4.0, "orbit": 3.2, "table": 3.8, "type": 2.4}
-STYLE = {"garden": "groove", "object": "groove", "globe": "drive", "hall": "drive", "deep": "ambient", "city": "drive", "orbit": "drive", "table": "groove", "type": "ambient", "stage": "groove", "lockup": "end"}
+STYLE = {"scene": "groove", "garden": "groove", "object": "groove", "globe": "drive", "hall": "drive", "deep": "ambient", "city": "drive", "orbit": "drive", "table": "groove", "type": "ambient", "stage": "groove", "lockup": "end"}
 
 
 def names_in(path, pattern):
@@ -65,7 +65,7 @@ def check(spec):
     if len(shots) < 3:
         errs.append("a film needs at least 3 shots")
     for i, s in enumerate(shots):
-        tag = f"shot {i + 1} ({s.get('world')})"
+        tag = f"shot {i + 1} ({s.get('scene') or s.get('world')})"
         w, e = s.get("world"), s.get("enter")
         if w not in WORLDS:
             errs.append(f"{tag}: unknown world; one of {sorted(WORLDS)}")
@@ -79,12 +79,19 @@ def check(spec):
             errs.append(f"{tag}: only an object shot enters by print")
         if w == "object" and e != "print":
             errs.append(f"{tag}: an object shot enters by print (the previous world becomes its print)")
-        if w == "object" and i > 0 and shots[i - 1].get("world") in ("object", "stage", "lockup", "type"):
+        if w == "object" and i > 0 and shots[i - 1].get("world") in ("object", "stage", "lockup", "type", "scene"):
             errs.append(f"{tag}: the shot before an object must be a 3D world (it becomes the print)")
         if w == "lockup" and i != len(shots) - 1:
             errs.append(f"{tag}: the lockup is the last shot")
         if e == "split" and (i == 0 or shots[i - 1].get("world") != "object" or not (shots[i - 1].get("p") or {}).get("strip")):
             errs.append(f"{tag}: split opens out of an object shot that has a foil strip (p.strip)")
+        if w == "scene":
+            src = os.path.join(ROOT, "src/films", spec.get("slug", ""), "index.tsx")
+            have = set(re.findall(r"\n  (\w+): \w+,", open(src).read())) if os.path.exists(src) else set()
+            if s.get("scene") not in have:
+                errs.append(f"{tag}: scene {s.get('scene')!r} is not in src/films/{spec.get('slug')}/index.tsx (has {sorted(have)})")
+            if float(s.get("sec", 0)) < 2.4:
+                errs.append(f"{tag}: needs at least 2.4 s")
         if w not in FIXED and w in MIN_SEC and float(s.get("sec", 0)) < MIN_SEC[w]:
             errs.append(f"{tag}: needs at least {MIN_SEC[w]} s, has {s.get('sec')}")
         if s.get("theme") and s["theme"] not in themes:
@@ -142,7 +149,7 @@ def cues(spec, shots, durs):
     secs, ev, t = [], [], 0
     for i, (s, d) in enumerate(zip(shots, durs)):
         w, e = s["world"], s["enter"]
-        sec = {"name": f"{i + 1} {w}", "from": t, "to": t + d, "beats": max(1, round(d / BEAT)), "style": STYLE[w]}
+        sec = {"name": f"{i + 1} {w}", "from": t, "to": t + d, "beats": max(1, round(d / BEAT)), "style": s.get("mood") or STYLE[w]}
         if i == 0:
             sec["style"] = "intro"
             sec["drums_from"] = min(d - 12, 62)
@@ -240,7 +247,7 @@ def main():
     print("\n  #  frames      world   enter   text")
     for i, (s, d) in enumerate(zip(shots, durs)):
         head = (s.get("text") or {}).get("head") or (s.get("value") or {}).get("value") or " / ".join((s.get("p") or {}).get("lines") or [])
-        print(f"  {i + 1:<2} {t:>4}-{t + d - 1:<5} {s['world']:<7} {s['enter']:<7} {head}")
+        print(f"  {i + 1:<2} {t:>4}-{t + d - 1:<5} {(s.get('scene') or s['world']):<7} {s['enter']:<7} {head}")
         keys.append(t + int(d * 0.62))
         t += d
     print("\n1) stills sheet (send to the user before rendering):")

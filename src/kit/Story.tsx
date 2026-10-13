@@ -20,6 +20,7 @@ import { DeepWorld } from "./worlds/deep.tsx";
 import { OrbitWorld } from "./worlds/orbit.tsx";
 import { TypeWorld } from "./worlds/type.tsx";
 import { ObjectWorld } from "./worlds/object.tsx";
+import { FILMS } from "../films/index.ts";
 
 /**
  * Story: any shot plan as a film. Each shot is a world in its own Sequence; the incoming shot overlaps the outgoing
@@ -58,7 +59,7 @@ const WorldView: React.FC<{ s: Placed; f: number; plan: Plan; shots: Placed[]; p
     const prev = shots[s.index - 1];
     return <ObjectWorld f={f} shot={s} th={th} logo={plan.brand.logo} printOf={prev ? (ff) => <WorldView s={prev} f={ff + prev.dur} plan={plan} shots={shots} print /> : undefined} />;
   }
-  const C = WORLDS[s.world];
+  const C = s.world === "scene" ? FILMS[plan.slug]?.[s.scene ?? ""] : WORLDS[s.world];
   return C ? <C f={f} shot={s} th={th} print={print} /> : null;
 };
 

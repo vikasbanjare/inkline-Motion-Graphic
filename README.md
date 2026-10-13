@@ -77,11 +77,24 @@ Use only a logo you have the right to use. Don't put another company's logo or n
 
 ## Two ways to make a film
 
-**A unique film (the `Story` composition): the default.** Claude reads your script as a storyboard designer
-would. It finds the story's spine and picks a shape (journey, problem → turn, place, ritual, proof stack). It casts
-each beat as a metaphor in one of the kit's worlds and joins them with transitions that mean something. The look
-stays the same in every film: engraved 3D, two-ink worlds, foil and serif headlines. The order, worlds, cast,
-timing and score come from your script.
+**A unique film (the `Story` composition): the default.** Inkline copies a style, not a film. What every film
+shares:
+- the engraving shader;
+- two-ink duotones, paper grain and the flowing line field;
+- foil on one hero;
+- the serif headlines;
+- the camera rhythm (a slow move, then a scale-step on the beat);
+- the transition set;
+- the original score.
+
+What each film gets for itself is its subjects. Claude storyboards the script like a director and then builds its
+scenes in code, from turned, extruded and tubed shapes, leaves, organic forms, an engraved mannequin for people,
+and 2D foil line work (`src/build/geo.ts`, `src/films/<slug>/`). The worked example is Velmora, a fictional coffee
+brand: a coffee branch whose cherry ripens, the cherry splitting into twin beans, a drum roaster and its cooling
+tray, a hand grinder, a gooseneck pour-over, rosetta latte art and a café terrace where a man in a hat walks in.
+The style rules are in `.claude/skills/inkline-film/reference/style-bible.md`.
+
+The kit also has ready-made worlds. A film uses one only when it is exactly the right picture:
 
 | Worlds (src/kit/worlds/) | Best for |
 |---|---|

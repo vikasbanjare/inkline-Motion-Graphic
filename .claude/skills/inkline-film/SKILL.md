@@ -1,17 +1,19 @@
 ---
 name: inkline-film
-description: Make an engraved 3D launch film from any script, with its own storyboard. Claude directs. It reads the script, finds the story's spine, picks a shape (journey, problem→turn, place, ritual, proof stack), casts each beat as a metaphor in one of the kit's worlds (garden, globe, orbit, table, city, hall, deep, type, an object that the previous world prints onto, a phone stage, the lockup), and motivates every transition (lines, iris, match, cut, wipe, print, split, dive). tools/plan.py snaps it to the beat, writes the cue sheet and an original score, then stills go to the user, render, motion QA, delivery. Use whenever someone pastes a video script, ad brief, product or store launch, feature list, or asks for a brand film.
+description: Make an engraved 3D launch film from any script, with its own storyboard and its own subjects. The style is fixed (engraving shader, two-ink duotones, paper and line field, foil on one hero, serif headlines, scale-step cuts on the beat, the transition set, an original score), and the content is designed for the script. Claude storyboards like a director (spine, the script's world of objects, shape, a designed shot per beat, designed joins), builds that film's own scenes in src/films/<slug>/ from the subject builder (lathe, extrude, tube, leaf, blob, mannequin, 2D foil overlays), then checks it with tools/plan.py (beat grid and score), sends stills to the user, renders, runs motion QA and delivers. Use whenever someone pastes a video script, ad brief, product or store launch, or feature list, or asks for a brand film in this style.
 ---
-
 # Inkline film: a script in, a unique film out
 
-The look is fixed and tuned: engraved 3D subjects in two-ink duotones, foil on one hero, serif headlines, cuts on
-the beat, an original score. **The film is not fixed.** You are the storyboard designer: every script gets its own
-order of worlds, cast, metaphors and transitions. Two scripts should never give the same film.
+**Copy the style, never the content.** The style is the engraving, the inks, the paper, the foil, the type, the
+camera rhythm, the transitions and the score (`reference/style-bible.md`). The content is invented for each
+script: a coffee film has a coffee branch, a roaster, a pour-over and a café, and a space film has a rocket, stage
+separation and orbits. Re-using the garden, the card or the colonnade for a script they don't belong to is the
+failure this skill exists to prevent.
 
 There are two compositions:
-- **`Story`** (use this): any shot plan built from the kit in `src/kit/`. It runs from `specs/<slug>.plan.json`
-  through `tools/plan.py`.
+- **`Story`** (use this): any shot plan. Its shots are the film's own scenes (`src/films/<slug>/`, `"world":
+  "scene"`) and, only where one fits exactly, a kit world (`src/kit/worlds/`). It runs from
+  `specs/<slug>.plan.json` through `tools/plan.py`.
 - **`Film`**: the original fixed 30-second card film; only its words change (`tools/film.py`). Use it only when
   the user asks for "the same film as the example".
 
@@ -37,24 +39,26 @@ There are two compositions:
 
 ### 1. Direct (no code yet)
 
-Read `reference/storyboarding.md` and follow it:
-1. the spine sentence;
-2. the shape;
-3. one metaphor per beat;
-4. contrasting worlds;
-5. motivated transitions;
-6. the timing.
+Read `reference/style-bible.md`, then follow `reference/storyboarding.md`:
+1. the spine;
+2. the script's world (15–25 specific objects and actions);
+3. the shape;
+4. one designed shot per beat (subject and how it is built, its life, the camera, the foil, the theme, the words);
+5. designed joins.
 
-Each world's settings and best uses are at the top of its file in `src/kit/worlds/`. The cast and what each model
-can mean are in `src/kit/cast.ts`, and the themes (inks) are in `src/kit/theme.ts`.
+Show the user the storyboard table and wait for approval or notes. Ask at most one question, and only if a
+claim or the audience is unclear.
 
-Show the user the storyboard table (#, world + theme, picture, exact words, transition in, why). Wait for
-approval or notes. Ask at most one question, and only if a claim or the audience is unclear.
+### 2. Build the film's scenes and write the plan
 
-### 2. Write the plan
-
-Copy `specs/coffee.plan.json` to `specs/<slug>.plan.json` and write your shots: `world`, `sec`, `enter`, `theme`,
-`cast`, `text` / `value`, and `p` (the world's settings).
+1. **Make `src/films/<slug>/`**, with one `React.FC<WorldProps>` per scene, built with `src/build/geo.ts` and the
+   style pieces in `src/kit/common.tsx`. Follow the worked example in `src/films/velmora/` (a fictional coffee
+   brand).
+2. **Register the film:** export its scenes from `src/films/<slug>/index.tsx` and add it to `src/films/index.ts`.
+3. **Write `specs/<slug>.plan.json`** (copy `specs/coffee.plan.json`). Each shot is `{"world": "scene",
+   "scene": "<name>", "sec", "enter", "theme", "mood", "text", "p"}`, and the last shot is
+   `{"world": "lockup", "enter": "dive"}`.
+4. **Typecheck:** `npx tsc --noEmit`.
 
 ### 3. Check it and score it
 
@@ -109,5 +113,5 @@ produced track.
 
 Turn the user's timestamps into frames (seconds × 24) and look at those frames first.
 - **Copy and order notes:** edit the plan, re-run step 3, delete `.render/<slug>/` and re-render.
-- **New worlds or subjects:** bespoke work in `src/kit/worlds/`. Read `reference/transitions.md` and
-  `reference/lessons.md` first.
+- **Look notes:** change the film's own scenes in `src/films/<slug>/`. `reference/lessons.md` covers the motion
+  pitfalls: micro-stops, chunk-safe animation and headless text rendering.

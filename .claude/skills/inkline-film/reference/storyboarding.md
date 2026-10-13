@@ -1,123 +1,100 @@
-# Storyboarding a unique film: the director's method
+# Storyboarding a film that belongs to its script
 
-Every script gets its own film. The look stays the same: engraved 3D, two inks per world, foil on one hero, serif
-headlines, and cuts on the beat. The story, the worlds, the cast, the order and the transitions come from the
-script. Do this thinking before you touch a file. Write the answers down; the user sees them as the storyboard table.
+You are the storyboard designer. The style is fixed (`style-bible.md`); the content is invented for each script.
+**Never start from the kit's existing scenes.** Start from the script's world: what would a great director film
+for this brand if money were no object? Then build that in this style.
 
-## 1. Find the spine (one sentence)
+Do steps 1–6 in writing before any code. The user approves the storyboard table.
 
-Read the script twice. Then write: **"This is a film about ___ that ends with ___."**
+## 1. The spine (one sentence)
 
-- The first blank is the change the viewer should feel, not the product. Examples: "a bean's journey from hill to
-  cup", "a team that stops losing notes", "a city that comes to your door".
-- The second blank is the moment the product, the offer or the place appears. Examples: "an invitation to the
-  store", "the app's home screen", "a card in your hand".
+Write: **"This is a film about ___ that ends with ___."**
 
-If you can't write this sentence, ask the user one question about the audience or the single thing they must
-remember.
+- The first blank is the change the viewer feels. Example: "a coffee cherry's journey to a cup on a café terrace".
+- The second blank is the moment the product, place or offer appears. Example: "a man in a hat walking into the
+  new café".
 
-## 2. Pick the shape of the story
+## 2. The world of the script
 
-Choose one of these shapes. Every shape has 5–7 shots and lasts 26–34 seconds.
+List 15–25 concrete, filmable nouns and verbs that only this subject has. Use what a specialist would recognise,
+not stock icons.
+
+| Script | Its world (examples) |
+|---|---|
+| Premium coffee café | coffee branch with cherries clustered at the nodes, the split cherry with twin beans, drum roaster with cooling tray and sweeping arms, hand grinder crank, gooseneck kettle, cone dripper, bloom, rosetta latte art, crema, café terrace, awning, string lights |
+| Space startup | launch pad and gantry, the rocket's stages separating, a fairing opening, orbit lines, a satellite unfolding its panels, a planet with rings, a lunar lander's legs, star field, ground station dish, mission patch |
+| Bank card | the card's chip and guilloche, foil, a banknote's watermark, a vault door, coins stacking, a receipt printing |
+| Fitness app | a running track, a stopwatch, a heart line, shoes, a dumbbell, a pulse, a finish tape |
+| AI tool | a lattice of nodes and rings, a lens, a brain-like coral, a loom weaving threads into cloth |
+
+Circle the 6–8 strongest. The best are things that move in a satisfying way: they split, pour, turn, unfold,
+open or grow.
+
+## 3. The shape
 
 | Shape | Order | Fits |
 |---|---|---|
-| **Journey** | origin → travel → transformation → arrival → invitation | food and drink, fashion, craft, anything "made" (coffee, tea, textiles) |
-| **Problem → turn** | the old way → the turn → what's possible now → proof → the product | apps, SaaS, fintech, services |
-| **Place** | outside → threshold → inside → detail → invitation | a store, venue, hotel, restaurant, event launch |
-| **Ritual** | the moment before → the ritual in close-up → the feeling → the product | beauty, wellness, coffee, everyday habits |
-| **Proof stack** | hook → claim 1 → claim 2 → the number → the product | offers, cards, plans: when the script is a list of benefits |
+| **Journey** | origin → transformation → craft → result → arrival | food, drink, fashion, anything made |
+| **Problem → turn** | the old way → the turn → what's possible → proof → product | apps, SaaS, fintech |
+| **Place** | outside → threshold → inside → detail → invitation | stores, venues, events |
+| **Ritual** | before → the ritual close-up → the feeling → product | beauty, wellness, coffee, habits |
+| **Proof stack** | hook → claim → claim → the number → product | benefit lists, offers |
+| **Mission** | countdown → launch → separation → orbit → the view → the brand | space, ambition, "launch" stories |
 
-Never stack claims flat when the script tells a story. Never force a story onto a claim list: use the proof
-stack shape for a list.
+## 4. One shot per beat, designed
 
-## 3. One metaphor per beat, never the literal object if a metaphor reads faster
+For each beat, write:
+- **Subject:** what is built, and how it is built (lathe / extrude / tube / leaf / blob / model / mannequin / 2D).
+- **Its life:** the one motion that makes it satisfying (it splits, a crank turns, the stream spirals, the door
+  swings).
+- **Camera:** the slow move, then the scale-step at about 60 %.
+- **Foil:** the one hero.
+- **Theme:** the inks, different from the neighbours'.
+- **Words:** the exact headline, 2–6 words.
 
-For each beat, ask: *what can I put on screen that means this without words?* Then let the headline say the
-exact words.
+## 5. Design the joins
 
-| Beat says | Literal (weak) | Metaphor (strong) |
-|---|---|---|
-| "sourced from four countries" | a map with pins | routes drawing in over a turning globe (`globe`, `inbound`, `mark: ship`) |
-| "roasted in small batches" | a roaster | beans riding rings around a flame (`orbit`, `bodies: beans`, fast `spin`) |
-| "made by hand" | a factory | one cup, one pour, steam rising (`table`, `pour`) |
-| "a new store" | a photo of a shopfront | a street that grows, a person walking in, the door opening (`city`, `enter`) |
-| "zero fee" | a price tag | the number rising from a shell like a pearl (`deep`, `value`) |
-| "smart / AI" | a robot | a hero at the centre of turning rings (`orbit`) |
-| "choose from thousands" | a grid | a colonnade, things dropping onto plinths (`hall`) |
-| "your belief" | an icon | the words themselves, one in foil (`type`) |
+- **Write the last frame of each shot and the first frame of the next together.**
+- **Look for a shared shape** for a `match`:
+  - round tray → grinder mouth;
+  - cup from above → cup on a table;
+  - planet → porthole;
+  - eye → lens.
+- **Look for a point** for an `iris`: the cherry, a star.
+- **Give each other join a meaning:**
+  - `wipe` = next chapter;
+  - `cut` = punch;
+  - `dive` = into the brand.
+- **Never use the same join twice in a row.**
 
-The cast list in `src/kit/cast.ts` gives what each model can stand for (`means`). The mannequin (`figure`) is the
-person: the customer, the maker, "you". Use it when the script is about people. It walks, stands and enters doors.
+## 6. The table (the user approves this)
 
-## 4. Choose worlds so that neighbours contrast
+| # | Sec | Subject (built how) | Its life | Camera | Words | In | Why |
+|---|---|---|---|---|---|---|---|
 
-- **Scale.** Alternate wide and close: a street, then a cup; a globe, then beans. Two wide worlds in a row feel
-  like one long shot.
-- **Ink.** Every cut changes theme; `plan.py` refuses two neighbours with the same theme. Warm and cool should
-  alternate when they can (forest → honey → roastery → graphite).
-- **Light.** End on contrast: a bright world into the dark object or lockup.
-- **Use each world at most once.** The only exception is `table`, which can be repeated for two different rituals.
-- **`type` at most once.** A film of words is not a film.
+## 7. Build
 
-## 5. Motivate every transition
+1. Make `src/films/<slug>/`, with one file per group of related scenes.
+2. Each scene is a `React.FC<WorldProps>` and uses:
+   - `WorldLook`, `Backdrop`, `World`, `Cam`, `RefDepth`, `Detail` with `ENGRAVE`, `EMesh` with palettes from the
+     theme, and `SayIt` for the words;
+   - geometry from `src/build/geo.ts`, made once at module level.
+3. Export the scenes from `src/films/<slug>/index.tsx`, and register the film in `src/films/index.ts`.
+4. In the plan, each shot is `{"world": "scene", "scene": "<name>", "sec", "enter", "theme", "mood", "text", "p"}`.
+5. Reuse a kit world (`src/kit/worlds/`) only if it already is exactly the right picture.
 
-A transition is a sentence joining two shots. Pick the one whose shape matches the story's logic.
+`src/films/velmora/` is the worked example (a fictional coffee brand):
+- origin.tsx: the branch and the split;
+- craft.tsx: the roaster, the grinder and the pour-over;
+- cafe.tsx: the latte art and the café.
 
-| Transition | Means | Use it when |
-|---|---|---|
-| `lines` (first shot only) | "it begins" | always the opener, unless the script opens on a hard fact (then `cut`) |
-| `iris` | "look closer / meanwhile" | opening into a new place from a point (set `p.irisAt` on the subject) |
-| `match` | "this becomes that" | the outgoing world has a round thing at its centre (globe → floor, rings, a cup seen from above) |
-| `cut` (a scale step on the beat) | energy, a new fact | between two related beats; the cheapest and the punchiest; use 1–2 per film |
-| `wipe` (a foil-edged diagonal) | "and now / next" | a change of chapter (process → place) |
-| `print` | "and here it is" | the world you just watched becomes the object (the card, the ticket, the screen). The strongest reveal in the kit |
-| `split` | "open it" | out of an object with a foil strip, into the next world |
-| `dive` | "go deeper / into the brand" | into the lockup, or into a close world from a shiny hero (shell, foil) |
+## 8. Check the stills honestly
 
-Rules:
-- **Never use the same transition twice in a row.**
-- **Use `print` at most once.** It is the turn of the film, so put it where the product appears.
-- **Always end with `dive` into the lockup, or `cut`.**
-
-## 6. Time it like music
-
-- A shot is 3.5–6.5 s. The opener gets the most time (5.5–6.5 s); a punchy middle beat gets 3.5–4 s.
-- A whole film is 26–34 s. More than 7 shots feels like a slideshow.
-- `plan.py` snaps every cut to the beat (125 BPM). Give seconds; it gives frames.
-- Headlines land about 20 % into a shot and leave before the next transition. One idea per headline: the 2–5 words
-  a viewer remembers. Put the rest of the exact wording in `sub`.
-
-## 7. Write the storyboard table (the user approves this)
-
-| # | Time | World + theme | On screen (picture) | Words (exact) | Transition in | Why |
-|---|---|---|---|---|---|---|
-
-The **Why** column is one line connecting the beat to the spine. If you can't write it, cut the shot.
-
-## 8. Check yourself before building
-
-- Does the film still make sense with the sound off and the headlines hidden? If not, the pictures aren't
-  carrying the story.
-- Is every claim the script's own words? Put fictional brands and offers only in samples, and label them.
-- Is any logo on screen not the brand's own file? Remove it.
-- Do two neighbouring shots share a world, a theme or a transition? Change one.
-- Is the product (or the invitation) on screen in the last third? The viewer must leave knowing what to do.
-
-## Worked example: a premium coffee store launch (specs/coffee.plan.json)
-
-**Spine:** "This is a film about a bean's journey from a hillside to a cup, that ends with an invitation to the
-first store." The shape is a journey.
-
-| # | World + theme | Picture | Words | In | Why |
-|---|---|---|---|---|---|
-| 1 | garden, forest | the pen lines become a hillside; coffee cherries on the bushes; a person walks through | It starts on a hillside | lines | the origin; a human from the first frame |
-| 2 | globe, honey | ship routes draw in from four origins to the city | Four origins, one city | iris | the sourcing |
-| 3 | orbit, roastery | beans ride fast rings round a flame | Roasted in small batches | match | the transformation (the globe becomes the rings) |
-| 4 | table, honey | beans rain onto wood, a cup arrives, the pour, steam | Poured slow, by hand | cut | the ritual, close and slow after the fast roast |
-| 5 | city, graphite | a street grows, the shopfront sign, a person walks in and the door opens | Our first store | wipe | the place: a new chapter |
-| 6 | object (ticket), roastery | the street becomes the print on an invitation ticket, foil date | You're invited | print | the turn: the film becomes the thing in your hand |
-| 7 | lockup | the logo | (the line) | dive | the brand |
-
-Scale alternates wide → wide → mid → close → wide → object. Ink alternates cool green → warm → dark brown → warm →
-neutral → dark.
+- **Would someone from this industry recognise the objects?** If a roaster reads as a barrel, add the parts that
+  make it a roaster: the hopper, the glass door, the cooling tray.
+- **Does each shot have one clear subject, with a foil hero?**
+- **Is anything cropped, or is a headline crossing a subject?** Fix it with the plate, a camera target or the
+  headline's position.
+- **Do neighbouring shots differ in scale (wide / close) and ink?**
+- **Labels:** brands, claims and dates in a sample must be fictional and labelled. Real brands use only approved
+  words and their own logo file.

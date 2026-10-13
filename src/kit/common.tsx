@@ -142,13 +142,14 @@ const FIG = (() => {
     shin: capsule(0.085, 0.36),
     foot: new THREE.BoxGeometry(0.12, 0.07, 0.26),
     joint: new THREE.SphereGeometry(0.08, 14, 10),
+    hat: new THREE.LatheGeometry([[0, 0], [0.3, 0], [0.31, 0.02], [0.17, 0.03], [0.16, 0.2], [0.12, 0.23], [0, 0.23]].map(([r, y]) => new THREE.Vector2(r, y)), 32),
   };
 })();
 /**
  * A walking figure in the manner of an artist's wooden mannequin (procedural: no licensed walking human exists in
  * the cast). phase advances one stride per 1.0; `walk` 0 = standing, 1 = full stride. ~1.8 units tall, feet at y=0.
  */
-export const Figure: React.FC<{ pal: Pal; phase: number; walk?: number; pos?: V3; rot?: V3; scale?: number; seed?: number; coat?: boolean; hold?: boolean }> = ({ pal, phase, walk = 1, pos, rot, scale = 1, seed = 70, coat = true, hold }) => {
+export const Figure: React.FC<{ pal: Pal; phase: number; walk?: number; pos?: V3; rot?: V3; scale?: number; seed?: number; coat?: boolean; hold?: boolean; hat?: boolean }> = ({ pal, phase, walk = 1, pos, rot, scale = 1, seed = 70, coat = true, hold, hat }) => {
   const m = { palette: pal, seed, follow: 0.4, angleDeg: 8 } as EOpts;
   const a = Math.PI * 2 * phase;
   const sw = 0.5 * walk;
@@ -183,6 +184,7 @@ export const Figure: React.FC<{ pal: Pal; phase: number; walk?: number; pos?: V3
         {coat ? <EMesh g={FIG.coat} m={{ ...m, seed: seed + 1 }} pos={[0, 1.02, 0]} double /> : null}
         <EMesh g={FIG.neck} m={m} pos={[0, 1.7, 0]} />
         <EMesh g={FIG.head} m={m} pos={[0, 1.86, 0.01]} />
+        {hat ? <EMesh g={FIG.hat} m={{ ...m, seed: seed + 2 }} pos={[0, 1.93, 0.01]} rot={[-0.08, 0, 0]} double /> : null}
         {arm(hold ? -0.9 : -hipL * 0.8, -0.3, hold ? 1.2 : 0.25 + 0.2 * walk)}
         {arm(hold ? -0.2 : -hipR * 0.8, 0.3, 0.25 + 0.2 * walk)}
       </group>
