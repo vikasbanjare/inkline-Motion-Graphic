@@ -8,6 +8,7 @@ import { Backdrop, Cast, H, SayIt, W, WorldLook, clamp01, lerp, smooth, step, ty
 import { PALS } from "../../kit/theme.ts";
 import { canvasTex, lathe, rnd, signTex, smoothProfile, tube } from "../../build/geo.ts";
 import { Person, STRIDE } from "../../build/person.tsx";
+import { MAN } from "./street.tsx";
 
 /**
  * Velmora 6-7: the cup and the café. From straight above, milk is poured into the crema and a rosetta grows in foil;
@@ -49,7 +50,7 @@ const linenTex = canvasTex(1024, 1024, (x) => {
 });
 
 /** A Cup with crema: shared by the art shot and the café table. */
-const Cup: React.FC<{ th: WorldProps["th"]; seed?: number }> = ({ th, seed = 700 }) => (
+export const Cup: React.FC<{ th: WorldProps["th"]; seed?: number }> = ({ th, seed = 700 }) => (
   <group>
     <EMesh g={saucerG} m={{ palette: th.b, seed, angleDeg: 10 }} />
     <group position={[0, 0.1, 0]}>
@@ -179,6 +180,7 @@ export const Cafe: React.FC<WorldProps> = ({ f, shot, th, print }) => {
   const t = f / 24;
   const p = shot.p ?? {};
   const fromCup = shot.enter === "match";
+  const enterOnly = p.variant === "enter";
   const crane = fromCup ? smooth(ramp(f, 0, 44)) : 1;
   const cutAt = Math.round(dur * 0.62);
   const cut = step(f, [cutAt]);
@@ -186,20 +188,22 @@ export const Cafe: React.FC<WorldProps> = ({ f, shot, th, print }) => {
   const cupTop: V3 = [cup[0], 1.25, cup[2]];
   const wide = { pos: [lerp(1.5, 0.6, f / dur), 2.6, 12.5 - f * 0.02] as V3, target: [0, 2.6, -1.5] as V3 };
   const over = { pos: [cupTop[0] + 0.001, cupTop[1] + 2.6, cupTop[2] + 0.002] as V3, target: cupTop };
-  const cam = cut === 0
+  const cam = enterOnly
+    ? { pos: [0.9 - f * 0.006, 1.75, 5.2 - f * 0.02] as V3, target: [-0.2, 1.6, -2.2] as V3, fov: 36 }
+    : cut === 0
     ? { pos: wide.pos.map((v, i) => lerp(over.pos[i], v, crane)) as V3, target: wide.target.map((v, i) => lerp(over.target[i], v, crane)) as V3, fov: lerp(34, 36, crane) }
     : { pos: [1.6 - (f - cutAt) * 0.006, 2.3, 8.2 - (f - cutAt) * 0.02] as V3, target: [-0.3, 2.4, -1.5] as V3, fov: 36 };
   const sign = useMemo(() => signTex((p.sign as string) ?? "", th.a[0][0], "#f4ede0"), [p.sign, th]);
   // the customer: along the pavement, turn, through the door
-  const walkK = clamp01((f - 10) / (dur * 0.7));
+  const walkK = enterOnly ? clamp01(0.55 + 0.45 * (f / (dur * 0.8))) : clamp01((f - 10) / (dur * 0.7));
   const along = smooth(clamp01(walkK / 0.62));
   const inward = smooth(clamp01((walkK - 0.6) / 0.4));
   const figPos: V3 = [lerp(-8, -0.2, along), 0, lerp(1.2, -1.9, inward)];
   const figYaw = lerp(Math.PI / 2, Math.PI, inward);
   const walked = along * 7.8 + inward * 3.1; // distance along the path: the stride follows it, so feet stay planted
-  const moving = clamp01(Math.min((f - 10) / 8, (dur * 0.7 + 10 - f) / 8));
+  const moving = enterOnly ? 1 : clamp01(Math.min((f - 10) / 8, (dur * 0.7 + 10 - f) / 8));
   const gone = walkK >= 0.98;
-  const door = smooth(ramp(f, dur * 0.42, dur * 0.56));
+  const door = enterOnly ? smooth(ramp(f, 0, 14)) : smooth(ramp(f, dur * 0.42, dur * 0.56));
   const glow = 0.4 + 0.1 * Math.sin(t * 2);
   return (
     <WorldLook th={th}>
@@ -250,7 +254,7 @@ export const Cafe: React.FC<WorldProps> = ({ f, shot, th, print }) => {
                 <EMesh g={potG} m={{ palette: th.b, seed: 760 }} />
                 <Cast id="plant" size={1.8} pos={[0, 0.6, 0]} pal={PALS.moss} seed={761} />
               </group>
-              {!gone ? <Person pals={{ coat: PALS.espresso, trousers: PALS.ink, hat: PALS.ink, hair: PALS.espresso }} phase={walked / (STRIDE * 1.05)} walk={0.35 + 0.65 * moving} pos={figPos} rot={[0, figYaw, 0]} scale={1.05} hat seed={770} /> : null}
+              {!gone ? <Person pals={MAN} phase={walked / (STRIDE * 1.05)} walk={0.35 + 0.65 * moving} pos={figPos} rot={[0, figYaw, 0]} scale={1.05} hat seed={770} /> : null}
             </Detail.Provider>
           </RefDepth.Provider>
         </World>

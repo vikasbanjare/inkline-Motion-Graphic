@@ -62,7 +62,7 @@ const drumTex = bandsTex(18, "#e6dfd4", "#5a4a3c", true);
 export const Roast: React.FC<WorldProps> = ({ f, shot, th, print }) => {
   const dur = shot.dur;
   const t = f / 24;
-  const cutAt = Math.round(dur * 0.6);
+  const cutAt = Math.round(dur * (dur < 90 ? 0.8 : 0.6));
   const cut = step(f, [cutAt]);
   const orb = 0.55 + f * 0.004;
   // wide 3/4 on the roaster, then a scale-step to straight above the tray (it becomes the grinder's mouth)
@@ -309,7 +309,7 @@ export const Pour: React.FC<WorldProps> = ({ f, shot, th, print }) => {
               {bubbles.map((b, i) => {
                 const life = ((t * 0.8 + b.at) % 1);
                 const k = Math.sin(Math.PI * life);
-                return bloom > 0.2 ? <EMesh key={i} g={bubbleG} m={{ palette: water, seed: 620 + (i % 6), foil: 0.5 }} pos={[Math.cos(b.a) * b.r, BED_Y + 0.02 + 0.1 * bloom * (1 - b.r * 1.6), Math.sin(b.a) * b.r]} scale={b.s * k} /> : null;
+                return bloom > 0.2 ? <EMesh key={i} g={bubbleG} m={{ palette: brew, seed: 620 + (i % 6), foil: 0.3 }} pos={[Math.cos(b.a) * b.r, BED_Y + 0.02 + 0.1 * bloom * (1 - b.r * 1.6), Math.sin(b.a) * b.r]} scale={0.55 * b.s * k} /> : null;
               })}
               {/* ripples where the stream lands */}
               {pouring

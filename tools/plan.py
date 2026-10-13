@@ -128,7 +128,7 @@ def check(spec):
     return errs
 
 
-def frames(shots):
+def frames(shots, beat=BEAT):
     """Seconds -> frames, with every cut snapped to the nearest beat (cumulative, so errors never add up)."""
     out, t_sec, prev = [], 0.0, 0
     for s in shots:
@@ -139,7 +139,7 @@ def frames(shots):
             t_sec = prev / FPS
             continue
         t_sec += float(s["sec"])
-        edge = int(round(round(t_sec * FPS / BEAT) * BEAT))
+        edge = int(round(round(t_sec * FPS / beat) * beat))
         d = max(24, edge - prev)
         out.append(d)
         prev += d
@@ -209,6 +209,34 @@ def cues(spec, shots, durs):
     return {"title": spec.get("slug"), "fps": FPS, "frames": t, "key": spec.get("key", "D"), "sections": secs, "events": ev}
 
 
+GENRES = {"lofi_jazz", "cinematic", "modern_pop", "ambient"}
+
+
+def sound_sheet(spec, shots, durs):
+    """The cue sheet for tools/sound.py: sections with energy, the foley written per shot (frames from shot start)."""
+    snd = spec["sound"]
+    secs, ev, t = [], [], 0
+    n = len(shots)
+    for i, (s, d) in enumerate(zip(shots, durs)):
+        e = s.get("energy")
+        if e is None:  # default arc: rise through the film, full before the end card
+            e = 0.15 if i == 0 else min(1.0, 0.3 + 0.7 * i / max(1, n - 2))
+        sec = {"from": t, "to": t + d, "energy": e}
+        if s.get("drop"):
+            sec["drop"] = True
+        if s["world"] == "lockup" or i == n - 1:
+            sec["end"] = True
+        secs.append(sec)
+        for x in s.get("sfx") or []:
+            y = dict(x)
+            y["at"] = t + x.get("at", 0)
+            if "until" in x:
+                y["until"] = t + x["until"]
+            ev.append(y)
+        t += d
+    return {"fps": FPS, "frames": t, "genre": snd.get("genre", "lofi_jazz"), "bpm": snd.get("bpm", 84), "key": snd.get("key", spec.get("key", "D")), "sections": secs, "events": ev}
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
     if len(args) != 1:
@@ -228,18 +256,30 @@ def main():
         wordmark(brand["name"], os.path.join(out, "wordmark.png"))
         brand["logo"] = f"films/{slug}/wordmark.png"
     shots = spec["shots"]
-    durs = frames(shots)
+    snd = spec.get("sound")
+    if snd and snd.get("genre", "lofi_jazz") not in GENRES:
+        raise SystemExit(f"sound.genre must be one of {sorted(GENRES)}")
+    beat = FPS * 60 / snd.get("bpm", 84) if snd else BEAT
+    while snd and beat > 14:  # cut on half-beats at slow tempos, so shots can be short
+        beat /= 2
+    durs = frames(shots, beat)
     plan_shots = []
     for s, d in zip(shots, durs):
         q = {k: v for k, v in s.items() if k != "sec"}
         q["dur"] = d
         plan_shots.append(q)
     total = sum(durs)
-    cue = cues(spec, shots, durs)
-    json.dump(cue, open(os.path.join(out, "cues.json"), "w"), indent=1)
     score = f"films/{slug}/score.wav"
-    if "--no-score" not in sys.argv:
-        subprocess.run([sys.executable, "-I", os.path.join(HERE, "score_to_picture.py"), os.path.join(out, "cues.json"), "--out", os.path.join(out, "score")], check=True)
+    if snd:
+        sheet = sound_sheet(spec, shots, durs)
+        json.dump(sheet, open(os.path.join(out, "sound.json"), "w"), indent=1)
+        if "--no-score" not in sys.argv:
+            subprocess.run([sys.executable, "-I", os.path.join(HERE, "sound.py"), os.path.join(out, "sound.json"), "--out", os.path.join(out, "score")], check=True)
+    else:
+        cue = cues(spec, shots, durs)
+        json.dump(cue, open(os.path.join(out, "cues.json"), "w"), indent=1)
+        if "--no-score" not in sys.argv:
+            subprocess.run([sys.executable, "-I", os.path.join(HERE, "score_to_picture.py"), os.path.join(out, "cues.json"), "--out", os.path.join(out, "score")], check=True)
     plan = {"slug": slug, "brand": {"name": brand["name"], "logo": brand["logo"], "line": brand.get("line", "")}, "shots": plan_shots, "score": score}
     json.dump({"composition": "Story", "frames": total, "plan": plan}, open(os.path.join(out, "props.json"), "w"), ensure_ascii=False, indent=1)
     rel = os.path.relpath(out, ROOT)

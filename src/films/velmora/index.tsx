@@ -3,6 +3,9 @@ import type { WorldProps } from "../../kit/common.tsx";
 import { Branch, Split } from "./origin.tsx";
 import { Grind, Pour, Roast } from "./craft.tsx";
 import { Art, Cafe } from "./cafe.tsx";
+import { Hills } from "./hills.tsx";
+import { Street } from "./street.tsx";
+import { Counter } from "./counter.tsx";
 
 /** Velmora (a fictional coffee brand): this film's own scenes, built for its script. */
 export const scenes: Record<string, React.FC<WorldProps>> = {
@@ -13,4 +16,7 @@ export const scenes: Record<string, React.FC<WorldProps>> = {
   pour: Pour,
   art: Art,
   cafe: Cafe,
+  hills: Hills,
+  street: Street,
+  counter: Counter,
 };

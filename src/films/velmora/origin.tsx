@@ -42,7 +42,9 @@ export const Branch: React.FC<WorldProps> = ({ f, shot, th, print }) => {
     ? { pos: [lerp(-1.2, 0.4, f / dur), 0.4, 8.6 - f * 0.012] as V3, target: [0.2, 0.25, 0] as V3, fov: 34 }
     : { pos: [hp.x + 0.6 + (f - cutAt) * 0.006, hp.y + 0.35, 3.3 - (f - cutAt) * 0.008] as V3, target: [hp.x, hp.y - 0.15, hp.z] as V3, fov: 30 };
   const r = reach(f, g0);
-  const ripe = smooth(ramp(f, g0 + 50, g0 + 78));
+  const ripe = shot.enter === "lines" ? smooth(ramp(f, g0 + 50, g0 + 78)) : smooth(ramp(f, dur * 0.12, dur * 0.5));
+  const fall = shot.enter === "lines" ? 0 : Math.max(0, f - dur * 0.62) / 24; // seconds since the cherry let go
+  const drop = 4.9 * fall * fall;
   const heroPal = useMemo(() => (k: number) => mixPal(UNRIPE, RED, k), []);
   const clusters = useMemo(
     () =>
@@ -89,7 +91,7 @@ export const Branch: React.FC<WorldProps> = ({ f, shot, th, print }) => {
                       if (pop <= 0) return null;
                       const isHero = n === 4 && j === 0;
                       const pal = isHero ? heroPal(ripe) : c.ripe > 0.45 ? RED : c.ripe > 0.2 ? mixPal(UNRIPE, RED, 0.5) : UNRIPE;
-                      return <EMesh key={j} g={cherryG} m={{ palette: RED, seed: 450 + n * 7 + j, foil: isHero ? 0.25 : 0.1, spec: 0.8 } as never} live={{ pal }} pos={isHero ? [0.05, -0.32, 0.26] : c.off} scale={(isHero ? 0.3 : c.s) * pop} />;
+                      return <EMesh key={j} g={cherryG} m={{ palette: RED, seed: 450 + n * 7 + j, foil: isHero ? 0.25 : 0.1, spec: 0.8 } as never} live={{ pal }} pos={isHero ? [0.05 + 0.6 * fall, -0.32 - drop, 0.26] : c.off} scale={(isHero ? 0.3 : c.s) * pop} />;
                     })}
                   </group>
                 );

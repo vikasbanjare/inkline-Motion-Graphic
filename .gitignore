@@ -3,6 +3,7 @@ out/
 .render/
 public/films/*/score.music.wav
 public/films/*/score.sfx.wav
+public/films/*/score.fx.wav
 public/audio/score.music.wav
 public/audio/score.sfx.wav
 __pycache__/

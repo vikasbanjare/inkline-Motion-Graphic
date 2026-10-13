@@ -138,7 +138,7 @@ export const Person: React.FC<{
             <EMesh g={G.ear} m={m(skin, 9)} pos={[-0.098, 0.12, 0]} />
             <EMesh g={G.ear} m={m(skin, 9)} pos={[0.098, 0.12, 0]} />
             {hat ? (
-              <group position={[0, 0.2, -0.01]} rotation={[-0.08, 0, 0]}>
+              <group position={[0, 0.185, -0.01]} rotation={[-0.08, 0, 0]}>
                 <EMesh g={G.brim} m={m(hatP, 11)} double />
                 <EMesh g={G.crown} m={m(hatP, 12)} pos={[0, 0.005, 0]} />
                 <EMesh g={G.band} m={m(pals.coat, 13, { foil: 0.3 } as Partial<EOpts>)} pos={[0, 0.02, 0]} double />

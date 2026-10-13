@@ -96,7 +96,7 @@ const BloomOpen: React.FC<{ f: number; th: ReturnType<typeof theme>; children: R
       <svg width={W} height={H} style={{ position: "absolute", inset: 0 }}>
         {f < 11 ? (
           <>
-            <ellipse cx={W / 2} cy={dropY} rx={16} ry={16 + 14 * fall} fill={ink} />
+            <ellipse cx={W / 2} cy={dropY} rx={30} ry={30 + 24 * fall} fill={ink} />
             <path d={`M ${W / 2 - 4} ${dropY - 30 - 60 * fall} Q ${W / 2} ${dropY - 10} ${W / 2 + 4} ${dropY - 30 - 60 * fall}`} fill={ink} opacity={0.5} />
           </>
         ) : null}

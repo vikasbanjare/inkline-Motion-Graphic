@@ -1,7 +1,7 @@
 {
  "title": "velmora",
  "fps": 24,
- "frames": 812,
+ "frames": 881,
  "key": "F",
  "sections": [
   {
@@ -22,159 +22,81 @@
   {
    "name": "3 scene",
    "from": 207,
-   "to": 323,
-   "beats": 10,
-   "style": "drive"
+   "to": 288,
+   "beats": 7,
+   "style": "groove"
   },
   {
    "name": "4 scene",
-   "from": 323,
-   "to": 403,
-   "beats": 7,
-   "style": "drive"
+   "from": 288,
+   "to": 357,
+   "beats": 6,
+   "style": "groove"
   },
   {
    "name": "5 scene",
-   "from": 403,
-   "to": 518,
-   "beats": 10,
+   "from": 357,
+   "to": 426,
+   "beats": 6,
    "style": "groove"
   },
   {
    "name": "6 scene",
-   "from": 518,
-   "to": 599,
-   "beats": 7,
-   "style": "ambient"
+   "from": 426,
+   "to": 484,
+   "beats": 5,
+   "style": "groove"
   },
   {
    "name": "7 scene",
-   "from": 599,
-   "to": 737,
-   "beats": 12,
+   "from": 484,
+   "to": 541,
+   "beats": 5,
+   "style": "groove"
+  },
+  {
+   "name": "8 scene",
+   "from": 541,
+   "to": 611,
+   "beats": 6,
+   "style": "groove"
+  },
+  {
+   "name": "9 scene",
+   "from": 611,
+   "to": 668,
+   "beats": 5,
    "style": "groove",
    "quiet": [
     [
-     715,
-     737
+     646,
+     668
     ]
    ]
   },
   {
-   "name": "8 lockup",
-   "from": 737,
-   "to": 812,
+   "name": "10 scene",
+   "from": 668,
+   "to": 726,
+   "beats": 5,
+   "style": "groove"
+  },
+  {
+   "name": "11 scene",
+   "from": 726,
+   "to": 806,
+   "beats": 7,
+   "style": "groove"
+  },
+  {
+   "name": "12 lockup",
+   "from": 806,
+   "to": 881,
    "beats": 7,
    "style": "end"
   }
  ],
  "events": [
-  {
-   "at": 9.6,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 8.0,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": 0.6
-  },
-  {
-   "at": 6.4,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 4.8,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": 0.6
-  },
-  {
-   "at": 3.2,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 1.6,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": 0.6
-  },
-  {
-   "at": 0.0,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 1.6,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": 0.6
-  },
-  {
-   "at": 3.2,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 4.8,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": 0.6
-  },
-  {
-   "at": 6.4,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 8.0,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": 0.6
-  },
-  {
-   "at": 9.6,
-   "fx": "pen",
-   "sec": 0.35,
-   "gain": 0.9,
-   "pan": -0.6
-  },
-  {
-   "at": 18,
-   "fx": "whoosh",
-   "sec": 0.9,
-   "lo": 200,
-   "hi": 1800,
-   "gain": 0.7,
-   "pan": 0.5
-  },
-  {
-   "at": 25,
-   "fx": "tick",
-   "freq": 1800,
-   "gain": 0.8
-  },
   {
    "at": 30,
    "fx": "swell",
@@ -182,18 +104,10 @@
    "gain": 0.5
   },
   {
-   "at": 156,
-   "fx": "whoosh",
-   "sec": 0.7,
-   "lo": 300,
-   "hi": 3000,
-   "gain": 0.6
-  },
-  {
-   "at": 153,
-   "fx": "swell",
-   "sec": 0.5,
-   "gain": 0.5
+   "at": 138,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
   },
   {
    "at": 207,
@@ -202,31 +116,13 @@
    "gain": 0.7
   },
   {
-   "at": 232,
+   "at": 224,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 323,
-   "fx": "riser",
-   "sec": 1.1,
-   "gain": 0.5
-  },
-  {
-   "at": 325,
-   "fx": "impact",
-   "big": 0.6,
-   "gain": 0.6
-  },
-  {
-   "at": 340,
-   "fx": "swell",
-   "sec": 0.5,
-   "gain": 0.5
-  },
-  {
-   "at": 419,
+   "at": 304,
    "fx": "whoosh",
    "sec": 0.6,
    "lo": 400,
@@ -235,61 +131,109 @@
    "pan": 0.4
   },
   {
-   "at": 407,
+   "at": 292,
    "fx": "sparkle",
    "sec": 0.6,
    "gain": 0.4
   },
   {
-   "at": 428,
+   "at": 303,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 518,
-   "fx": "impact",
-   "big": 0.5,
-   "gain": 0.7
-  },
-  {
-   "at": 535,
-   "fx": "swell",
-   "sec": 0.5,
-   "gain": 0.5
-  },
-  {
-   "at": 599,
+   "at": 357,
    "fx": "riser",
    "sec": 1.1,
    "gain": 0.5
   },
   {
-   "at": 601,
+   "at": 359,
    "fx": "impact",
    "big": 0.6,
    "gain": 0.6
   },
   {
-   "at": 629,
+   "at": 426,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 438,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.5
   },
   {
-   "at": 737,
+   "at": 484,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 541,
+   "fx": "riser",
+   "sec": 1.1,
+   "gain": 0.5
+  },
+  {
+   "at": 543,
+   "fx": "impact",
+   "big": 0.6,
+   "gain": 0.6
+  },
+  {
+   "at": 556,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 611,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 668,
    "fx": "riser",
    "sec": 0.6,
    "gain": 0.6
   },
   {
-   "at": 739,
+   "at": 670,
    "fx": "swell",
    "sec": 0.5,
    "gain": 0.6
   },
   {
-   "at": 739,
+   "at": 726,
+   "fx": "riser",
+   "sec": 1.1,
+   "gain": 0.5
+  },
+  {
+   "at": 728,
+   "fx": "impact",
+   "big": 0.6,
+   "gain": 0.6
+  },
+  {
+   "at": 743,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 806,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 808,
    "fx": "impact",
    "big": 1.0,
    "gain": 0.9

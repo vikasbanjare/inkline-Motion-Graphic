@@ -37,27 +37,42 @@ There are two compositions:
 
 ## Steps
 
-### 1. Direct (no code yet)
+### 1. Storyboard: the most important step (no code yet)
 
-Read `reference/style-bible.md`, then follow `reference/storyboarding.md`:
-1. the spine;
-2. the script's world (15–25 specific objects and actions);
-3. the shape;
-4. one designed shot per beat (subject and how it is built, its life, the camera, the foil, the theme, the words);
-5. designed joins.
+Read `reference/style-bible.md`, then follow `reference/storyboarding.md` in full:
+1. the brief → the logline;
+2. the **concept device** (parallel journeys, one take, object's POV, before/after, ritual, scale shift, reveal)
+   and a **motif**;
+3. a **protagonist** and a three-beat **arc**;
+4. the **beat sheet** with a hook in the first 2 s and a pace curve;
+5. the script's own **world** of objects;
+6. one shot per beat, with its size, angle, move, action, words, sound and a designed join.
 
-Show the user the storyboard table and wait for approval or notes. Ask at most one question, and only if a
-claim or the audience is unclear.
+Plan the sound at the same time (`reference/sound-design.md`): the genre from the concept, the energy per shot, the
+drop before the turn, and the foley each picture implies.
+
+Show the user the board (logline, device, motif, protagonist, arc, the shot table) and wait for approval or notes.
+Ask at most one question, and only if a claim or the audience is unclear.
 
 ### 2. Build the film's scenes and write the plan
 
-1. **Make `src/films/<slug>/`**, with one `React.FC<WorldProps>` per scene, built with `src/build/geo.ts` and the
-   style pieces in `src/kit/common.tsx`. Follow the worked example in `src/films/velmora/` (a fictional coffee
-   brand).
-2. **Register the film:** export its scenes from `src/films/<slug>/index.tsx` and add it to `src/films/index.ts`.
-3. **Write `specs/<slug>.plan.json`** (copy `specs/coffee.plan.json`). Each shot is `{"world": "scene",
-   "scene": "<name>", "sec", "enter", "theme", "mood", "text", "p"}`, and the last shot is
-   `{"world": "lockup", "enter": "dive"}`.
+1. **Make `src/films/<slug>/`**, one `React.FC<WorldProps>` per scene, built with:
+   - `src/build/geo.ts`: lathe, extrude, tube, leaf, blob, textures, signs;
+   - `src/build/person.tsx`: the walking `Person`, with stride-locked feet, a coat and a hat;
+   - the style pieces in `src/kit/common.tsx`.
+
+   The worked example is `src/films/velmora/`: hills, branch, street (door / walk / corner), roaster, grinder,
+   pour-over, latte art, café, counter.
+2. **Register the film:** export its scenes from `src/films/<slug>/index.tsx` and add the film to
+   `src/films/index.ts`.
+3. **Write `specs/<slug>.plan.json`** (copy `specs/coffee.plan.json`):
+   - **Top level:** `"sound": {"genre", "bpm", "key"}`, plus a `"board"` with title, logline, device, motif,
+     protagonist and arc.
+   - **Each shot:** `{"world": "scene", "scene", "sec", "enter", "theme", "energy", "drop"?, "text"?, "p"?,
+     "sfx": [...], "board": {beat, shot, action, sound, in, why}}`.
+   - **The first shot** enters by an opener chosen for this film: `bloom`, `letters`, `blinds`, `focus` or `lines`.
+     Never default to `lines`.
+   - **The last shot** is the lockup.
 4. **Typecheck:** `npx tsc --noEmit`.
 
 ### 3. Check it and score it
@@ -67,26 +82,28 @@ python3 -I tools/plan.py specs/<slug>.plan.json
 ```
 
 **You should see:**
+- `wrote …score.wav (genre BPM in key)`;
 - `ok: <slug>: N shots, F frames`;
-- the shot table with frames;
-- the stills and render commands.
+- the shot table.
 
-It refuses a plan that breaks a rule: a line too long, two neighbours in the same ink, `print` into a non-object,
-the lockup not last, and so on. Fix what it names and run it again. It also writes the cue sheet and the score
-(`public/films/<slug>/score.wav`).
+Cuts snap to the genre's beat. It refuses a plan that breaks a rule (a line too long, neighbours in the same ink,
+the lockup not last, an unknown scene); fix what it names and run it again.
 
-### 4. Stills to the user (gate)
+### 4. The realistic board (gate)
+
+Render one real frame per panel and look at it as a director would:
 
 ```sh
-bash tools/stills.sh public/films/<slug>/props.json out/<slug>-stills <frames from step 3>
+bash tools/stills.sh public/films/<slug>/props.json out/<slug>-board <one frame per shot, from step 3>
 ```
 
-Look at `out/<slug>-stills/sheet.jpg` yourself first:
-- every word is readable and clear of the subjects;
-- the cast is in frame (feet not cut off), with no empty or black frames;
-- each world's ink differs from its neighbours'.
+Look at `out/<slug>-board/sheet.jpg` yourself first:
+- would someone from this industry recognise every object?
+- is the protagonist in frame and readable in every shot they're in?
+- are the words clear of the subjects?
+- do neighbouring shots differ in scale and ink?
 
-Fix what you can, then send the sheet to the user and wait for "go".
+Fix it, re-render, then send the sheet to the user and wait for "go".
 
 ### 5. Render and check
 
@@ -100,18 +117,27 @@ This renders in 120-frame chunks, joins them, adds the score and runs `tools/mot
 else, look at the flagged frames in the export, not the preview, and fix the motion (overlap the moves, or keep a
 drift through the hand-over).
 
-### 6. Deliver
+### 6. Showcase and deliver
 
 ```sh
-ffmpeg -i out/<slug>.mp4 -c:v libx264 -crf 26 -preset slow -c:a aac -b:a 192k out/<slug>-share.mp4
+python3 -I tools/showcase.py specs/<slug>.plan.json out/<slug>.mp4
 ```
 
-Send the film with the storyboard table and what QA found. Say plainly that the score is synthesized: clean, not a
-produced track.
+This writes `showcase/<slug>/`:
+- `film.mp4`;
+- `preview.gif`;
+- `board/NN.jpg` (real frames from the export);
+- `STORYBOARD.md`, which renders on GitHub;
+- `board.html`.
+
+Send the user the film and the board. Say plainly that the score is synthesized: clean, not a produced track.
 
 ### 7. Notes
 
 Turn the user's timestamps into frames (seconds × 24) and look at those frames first.
+- **Story notes:** change the board first, then the scenes.
 - **Copy and order notes:** edit the plan, re-run step 3, delete `.render/<slug>/` and re-render.
 - **Look notes:** change the film's own scenes in `src/films/<slug>/`. `reference/lessons.md` covers the motion
   pitfalls: micro-stops, chunk-safe animation and headless text rendering.
+- **Sound notes:** change the shots' `energy`, `drop` and `sfx`, or the genre, and re-run step 3. That only
+  re-mixes; re-run render.sh to mux the new score (delete `.render/<slug>/video.mp4` only).
