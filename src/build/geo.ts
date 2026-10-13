@@ -70,7 +70,7 @@ export const leaf = (len = 1, w = 0.42, fold = 0.35, wave = 0.04, curl = 0.25, s
   for (let i = 0; i < p.count; i++) {
     const x = p.getX(i), y = p.getY(i) + len / 2; // 0..len
     const t = y / len;
-    const half = (w / 2) * Math.pow(Math.sin(Math.PI * Math.min(1, t * 1.02)), 0.85) * (1 - 0.15 * t); // pointed tip
+    const half = (w / 2) * Math.pow(Math.max(0, Math.sin(Math.PI * Math.min(1, t * 1.02))), 0.85) * (1 - 0.15 * t); // pointed tip
     const u = x / (w / 2); // -1..1
     const xx = u * half + wave * Math.sin(t * 22 + u) * Math.abs(u) * half * 3;
     const z = -fold * Math.abs(u * half) + curl * t * t;
