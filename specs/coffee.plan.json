@@ -1,0 +1,28 @@
+{
+  "slug": "velmora",
+  "note": "Fictional brand and claims: a sample film to show the kit. Not a real company.",
+  "brand": { "name": "VELMORA", "line": "coffee roasters · first store · sample film" },
+  "key": "F",
+  "shots": [
+    { "world": "garden", "sec": 6.0, "enter": "lines", "theme": "forest",
+      "cast": ["figure", "plant", "plant"], "p": { "cherries": true },
+      "text": { "head": "It starts on a hillside", "sub": "coffee cherries, picked by hand" } },
+    { "world": "globe", "sec": 4.5, "enter": "iris", "theme": "honey",
+      "cast": ["lantern"], "p": { "home": [77.59, 12.97], "inbound": true, "mark": "ship", "building": "none",
+        "to": [[38.76, 9.0], [-74.07, 4.71], [98.67, 3.6], [-47.88, -15.79]] },
+      "text": { "head": "Four origins, one city" } },
+    { "world": "orbit", "sec": 4.0, "enter": "match", "theme": "roastery",
+      "cast": ["lantern"], "p": { "bodies": "beans", "count": 8, "spin": 2.2 },
+      "text": { "head": "Roasted in small batches" } },
+    { "world": "table", "sec": 4.8, "enter": "cut", "theme": "honey",
+      "cast": ["cup", "dish"], "p": { "pour": true, "beans": 36, "surface": "wood" },
+      "text": { "head": "Poured slow, by hand" } },
+    { "world": "city", "sec": 5.0, "enter": "wipe", "theme": "dusk",
+      "cast": ["figure", "car", "lantern"], "p": { "sign": "VELMORA", "enter": true },
+      "text": { "head": "Our first store", "sub": "doors open this November" } },
+    { "world": "object", "sec": 3.8, "enter": "print", "theme": "roastery",
+      "p": { "shape": "ticket", "stamp": "01·11", "strip": ["FIRST CUP ON US", "OPENING WEEK"] },
+      "text": { "head": "You're invited" } },
+    { "world": "lockup", "enter": "dive" }
+  ]
+}

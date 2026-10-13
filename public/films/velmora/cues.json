@@ -1,0 +1,313 @@
+{
+ "title": "velmora",
+ "fps": 24,
+ "frames": 755,
+ "key": "F",
+ "sections": [
+  {
+   "name": "1 garden",
+   "from": 0,
+   "to": 138,
+   "beats": 12,
+   "style": "intro",
+   "drums_from": 62
+  },
+  {
+   "name": "2 globe",
+   "from": 138,
+   "to": 253,
+   "beats": 10,
+   "style": "drive"
+  },
+  {
+   "name": "3 orbit",
+   "from": 253,
+   "to": 346,
+   "beats": 8,
+   "style": "drive"
+  },
+  {
+   "name": "4 table",
+   "from": 346,
+   "to": 461,
+   "beats": 10,
+   "style": "groove"
+  },
+  {
+   "name": "5 city",
+   "from": 461,
+   "to": 588,
+   "beats": 11,
+   "style": "drive"
+  },
+  {
+   "name": "6 object",
+   "from": 588,
+   "to": 680,
+   "beats": 8,
+   "style": "groove",
+   "quiet": [
+    [
+     658,
+     680
+    ]
+   ]
+  },
+  {
+   "name": "7 lockup",
+   "from": 680,
+   "to": 755,
+   "beats": 7,
+   "style": "end"
+  }
+ ],
+ "events": [
+  {
+   "at": 9.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 8.0,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 6.4,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 4.8,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 3.2,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 1.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 0.0,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 1.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 3.2,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 4.8,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 6.4,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 8.0,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": 0.6
+  },
+  {
+   "at": 9.6,
+   "fx": "pen",
+   "sec": 0.35,
+   "gain": 0.9,
+   "pan": -0.6
+  },
+  {
+   "at": 18,
+   "fx": "whoosh",
+   "sec": 0.9,
+   "lo": 200,
+   "hi": 1800,
+   "gain": 0.7,
+   "pan": 0.5
+  },
+  {
+   "at": 25,
+   "fx": "tick",
+   "freq": 1800,
+   "gain": 0.8
+  },
+  {
+   "at": 30,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 156,
+   "fx": "whoosh",
+   "sec": 0.7,
+   "lo": 300,
+   "hi": 3000,
+   "gain": 0.6
+  },
+  {
+   "at": 163,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 253,
+   "fx": "riser",
+   "sec": 1.1,
+   "gain": 0.5
+  },
+  {
+   "at": 255,
+   "fx": "impact",
+   "big": 0.6,
+   "gain": 0.6
+  },
+  {
+   "at": 273,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 259,
+   "fx": "riser",
+   "sec": 1.2,
+   "gain": 0.35
+  },
+  {
+   "at": 346,
+   "fx": "impact",
+   "big": 0.5,
+   "gain": 0.7
+  },
+  {
+   "at": 371,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 352,
+   "fx": "click",
+   "gain": 0.5
+  },
+  {
+   "at": 364,
+   "fx": "click",
+   "gain": 0.5
+  },
+  {
+   "at": 352,
+   "fx": "bubbles",
+   "sec": 1.2,
+   "count": 18,
+   "gain": 0.45
+  },
+  {
+   "at": 380,
+   "fx": "rumble",
+   "sec": 1.6,
+   "gain": 0.35
+  },
+  {
+   "at": 477,
+   "fx": "whoosh",
+   "sec": 0.6,
+   "lo": 400,
+   "hi": 4000,
+   "gain": 0.6,
+   "pan": 0.4
+  },
+  {
+   "at": 465,
+   "fx": "sparkle",
+   "sec": 0.6,
+   "gain": 0.4
+  },
+  {
+   "at": 488,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 524,
+   "fx": "click",
+   "gain": 0.6
+  },
+  {
+   "at": 588,
+   "fx": "swell",
+   "sec": 1.0,
+   "gain": 0.9
+  },
+  {
+   "at": 589,
+   "fx": "impact",
+   "big": 0.8,
+   "gain": 0.8
+  },
+  {
+   "at": 608,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.5
+  },
+  {
+   "at": 680,
+   "fx": "riser",
+   "sec": 0.6,
+   "gain": 0.6
+  },
+  {
+   "at": 682,
+   "fx": "swell",
+   "sec": 0.5,
+   "gain": 0.6
+  },
+  {
+   "at": 682,
+   "fx": "impact",
+   "big": 1.0,
+   "gain": 0.9
+  }
+ ]
+}

@@ -4,7 +4,8 @@
 
 ![Nine frames from the example film](docs/preview.jpg)
 
-Paste a product script, and Inkline puts your claims into a finished, tuned film:
+Paste a product script, and Inkline storyboards it and builds a film of its own from a kit of engraved worlds
+(the original card film below is one example of what it makes):
 - engraved 3D worlds in two-ink duotones;
 - a garden that turns into your card;
 - a foil-strip close-up that splits open onto a travel globe;
@@ -74,21 +75,42 @@ in your sheet. With no logo file, the name is set in plain type.
 
 Use only a logo you have the right to use. Don't put another company's logo or name in your film.
 
-## What changes per film, and what doesn't
+## Two ways to make a film
 
-**Changes:**
-- every word;
-- the key number;
-- the logo;
-- the music key (optional `"key": "A"` in your sheet).
+**A unique film (the `Story` composition): the default.** Claude reads your script as a storyboard designer
+would. It finds the story's spine and picks a shape (journey, problem → turn, place, ritual, proof stack). It casts
+each beat as a metaphor in one of the kit's worlds and joins them with transitions that mean something. The look
+stays the same in every film: engraved 3D, two-ink worlds, foil and serif headlines. The order, worlds, cast,
+timing and score come from your script.
 
-**Stays the same:**
-- the worlds (garden, travel, colonnade, shell);
-- every camera move and transition;
-- the 30-second timing;
-- the score.
+| Worlds (src/kit/worlds/) | Best for |
+|---|---|
+| garden | origin, growth, nature, a beginning |
+| globe | reach, sourcing, travel, a network |
+| orbit | a process that turns: roasting, an engine, AI, a platform |
+| table | how it's made: food and drink, craft, a ritual in close-up |
+| city | a store or venue opening: a street grows, a person walks in, the door opens |
+| hall | a curated range, a store interior, choice |
+| deep | the one number, rising like a pearl |
+| type | a belief in words, one in foil |
+| object | the world you just watched becomes the print on a card, ticket, banknote or screen |
+| stage | a phone shows your claims |
+| lockup | your logo |
 
-Changing the worlds is custom work in `src/film/scenes/`. Read `.claude/skills/inkline-film/reference/` first.
+Transitions: `lines` (the pen-line opening), `iris`, `match` (one world becomes the next), `cut` (a scale step on
+the beat), `wipe` (a foil-edged diagonal), `print`, `split` (a foil strip opens), `dive`.
+
+```sh
+python3 tools/plan.py specs/coffee.plan.json        # checks the storyboard, snaps cuts to the beat, writes the score
+bash tools/stills.sh public/films/velmora/props.json out/velmora-stills 85,209,310,417,539,645
+bash tools/render.sh public/films/velmora/props.json out/velmora.mp4
+```
+
+`specs/coffee.plan.json` is a worked example: a store launch for **Velmora**, a fictional coffee brand. The
+director's method is in `.claude/skills/inkline-film/reference/storyboarding.md`.
+
+**The fixed template (the `Film` composition).** The original 30-second card film; only the words, the number and
+the logo change (`tools/film.py`, the table above).
 
 ## Licences and credits
 

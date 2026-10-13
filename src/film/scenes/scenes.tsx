@@ -66,7 +66,7 @@ const CanvasPen: React.FC<{ strokes: Stroke[] }> = ({ strokes }) => {
 
 /** The lines hand over to the fine field on this beat. */
 const LINES_END = 25;
-export const Ground: React.FC<{ F: number }> = ({ F }) => {
+export const Ground: React.FC<{ F: number; disc?: string }> = ({ F, disc = "#d3e0a8" }) => {
   const ink = mix("#3a3a3e", "#b4b6ad", ramp(F, 38, 66));
   const discR = 1120 * expoOut(ramp(F, 18, 46));
   const strokes: Stroke[] = F < LINES_END
@@ -85,8 +85,8 @@ export const Ground: React.FC<{ F: number }> = ({ F }) => {
           <svg width={W} height={H} style={{ position: "absolute", inset: 0 }}>
             <defs>
               <radialGradient id="gdisc" gradientUnits="userSpaceOnUse" cx={W * 1.12} cy={H * 0.42} r={Math.max(1, discR)}>
-                <stop offset="0.9" stopColor="#d3e0a8" />
-                <stop offset="1" stopColor="#d3e0a8" stopOpacity="0" />
+                <stop offset="0.9" stopColor={disc} />
+                <stop offset="1" stopColor={disc} stopOpacity="0" />
               </radialGradient>
             </defs>
             <circle cx={W * 1.12} cy={H * 0.42} r={discR} fill="url(#gdisc)" />
