@@ -4,9 +4,10 @@ import * as THREE from "three";
 import { expoOut, ramp } from "../../ensemble/score.ts";
 import { Cam, Detail, EMesh, RefDepth, Shadow, World } from "../../film/core/three.tsx";
 import { ENGRAVE } from "../../film/scenes/kit.tsx";
-import { Backdrop, Cast, Figure, H, SayIt, W, WorldLook, clamp01, lerp, smooth, step, type V3, type WorldProps } from "../../kit/common.tsx";
+import { Backdrop, Cast, H, SayIt, W, WorldLook, clamp01, lerp, smooth, step, type V3, type WorldProps } from "../../kit/common.tsx";
 import { PALS } from "../../kit/theme.ts";
 import { canvasTex, lathe, rnd, signTex, smoothProfile, tube } from "../../build/geo.ts";
+import { Person, STRIDE } from "../../build/person.tsx";
 
 /**
  * Velmora 6-7: the cup and the café. From straight above, milk is poured into the crema and a rosetta grows in foil;
@@ -195,6 +196,8 @@ export const Cafe: React.FC<WorldProps> = ({ f, shot, th, print }) => {
   const inward = smooth(clamp01((walkK - 0.6) / 0.4));
   const figPos: V3 = [lerp(-8, -0.2, along), 0, lerp(1.2, -1.9, inward)];
   const figYaw = lerp(Math.PI / 2, Math.PI, inward);
+  const walked = along * 7.8 + inward * 3.1; // distance along the path: the stride follows it, so feet stay planted
+  const moving = clamp01(Math.min((f - 10) / 8, (dur * 0.7 + 10 - f) / 8));
   const gone = walkK >= 0.98;
   const door = smooth(ramp(f, dur * 0.42, dur * 0.56));
   const glow = 0.4 + 0.1 * Math.sin(t * 2);
@@ -247,7 +250,7 @@ export const Cafe: React.FC<WorldProps> = ({ f, shot, th, print }) => {
                 <EMesh g={potG} m={{ palette: th.b, seed: 760 }} />
                 <Cast id="plant" size={1.8} pos={[0, 0.6, 0]} pal={PALS.moss} seed={761} />
               </group>
-              {!gone ? <Figure pal={th.hero} phase={(f - 10) / 24} walk={f < 10 ? 0 : 1} pos={figPos} rot={[0, figYaw, 0]} scale={1.05} hat seed={770} /> : null}
+              {!gone ? <Person pals={{ coat: PALS.espresso, trousers: PALS.ink, hat: PALS.ink, hair: PALS.espresso }} phase={walked / (STRIDE * 1.05)} walk={0.35 + 0.65 * moving} pos={figPos} rot={[0, figYaw, 0]} scale={1.05} hat seed={770} /> : null}
             </Detail.Provider>
           </RefDepth.Provider>
         </World>

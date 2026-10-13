@@ -76,6 +76,102 @@ const LinesOpen: React.FC<{ f: number; disc: string; children: React.ReactNode }
   );
 };
 
+/**
+ * Openers (first shot only). Each film should open its own way; pick the one that suits the spine:
+ *   lines    pen lines race in, a fine field, the world grows inside a disc        (drawn, crafted, "it begins")
+ *   bloom    a drop falls onto the paper and blooms open into the world            (liquids, ink, food, beauty, nature)
+ *   letters  the first word, huge; the world is seen through its letters, then fills (manifestos, launches, a name)
+ *   blinds   foil bars turn open across the frame                                   (premium, finance, product reveals)
+ *   focus    out of a bright blur, the lens racks into focus                        (tech, optics, mornings, calm)
+ */
+const BloomOpen: React.FC<{ f: number; th: ReturnType<typeof theme>; children: React.ReactNode }> = ({ f, th, children }) => {
+  const fall = Math.min(1, f / 10);
+  const dropY = -80 + (H / 2 + 80) * fall * fall;
+  const r = 1300 * expoOut(ramp(f, 11, 40));
+  const ink = th.a[0][0];
+  return (
+    <AbsoluteFill>
+      <AbsoluteFill style={{ background: th.paper }} />
+      {f >= 11 ? <AbsoluteFill style={{ clipPath: `circle(${Math.max(1, r)}px at 50% 50%)` }}>{children}</AbsoluteFill> : null}
+      <svg width={W} height={H} style={{ position: "absolute", inset: 0 }}>
+        {f < 11 ? (
+          <>
+            <ellipse cx={W / 2} cy={dropY} rx={16} ry={16 + 14 * fall} fill={ink} />
+            <path d={`M ${W / 2 - 4} ${dropY - 30 - 60 * fall} Q ${W / 2} ${dropY - 10} ${W / 2 + 4} ${dropY - 30 - 60 * fall}`} fill={ink} opacity={0.5} />
+          </>
+        ) : null}
+        {f >= 11 && f < 50
+          ? [0, 1, 2].map((k) => {
+              const u = ramp(f, 11 + k * 5, 44 + k * 5);
+              return u > 0 && u < 1 ? <circle key={k} cx={W / 2} cy={H / 2} r={Math.max(1, r * (1 - k * 0.12))} fill="none" stroke={ink} strokeWidth={10 * (1 - u) + 1} opacity={0.8 * (1 - u)} /> : null;
+            })
+          : null}
+        {f >= 11 && f < 26
+          ? Array.from({ length: 12 }, (_, i) => {
+              const a = (i / 12) * Math.PI * 2 + 0.3;
+              const u = ramp(f, 11, 26);
+              const d = 40 + 260 * expoOut(u);
+              return <circle key={i} cx={W / 2 + Math.cos(a) * d} cy={H / 2 + Math.sin(a) * d * 0.8 - 80 * Math.sin(Math.PI * u)} r={7 * (1 - u) + 1} fill={ink} />;
+            })
+          : null}
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+const LettersOpen: React.FC<{ f: number; th: ReturnType<typeof theme>; word: string; id: string; children: React.ReactNode }> = ({ f, th, word, id, children }) => {
+  const size = Math.min(520, 1700 / Math.max(1, word.length * 0.56));
+  const z = 1 + 9 * Math.pow(ramp(f, 14, 40), 2.2);
+  const full = ramp(f, 30, 40);
+  return (
+    <AbsoluteFill>
+      <AbsoluteFill style={{ background: th.paper }} />
+      <svg width={0} height={0} style={{ position: "absolute" }}>
+        <defs>
+          <clipPath id={id} clipPathUnits="userSpaceOnUse">
+            <text x={W / 2} y={H / 2 + size * 0.34} textAnchor="middle" fontFamily="Newsreader" fontWeight={700} fontSize={size} letterSpacing={-size * 0.03} transform={`translate(${W / 2} ${H / 2}) scale(${z}) translate(${-W / 2} ${-H / 2})`}>
+              {word}
+            </text>
+          </clipPath>
+        </defs>
+      </svg>
+      <AbsoluteFill style={{ clipPath: `url(#${id})` }}>{children}</AbsoluteFill>
+      {full > 0 ? <AbsoluteFill style={{ opacity: full }}>{children}</AbsoluteFill> : null}
+    </AbsoluteFill>
+  );
+};
+
+const BlindsOpen: React.FC<{ f: number; th: ReturnType<typeof theme>; children: React.ReactNode }> = ({ f, th, children }) => {
+  const n = 9;
+  return (
+    <AbsoluteFill>
+      {children}
+      {Array.from({ length: n }, (_, i) => {
+        const fromMid = Math.abs(i - (n - 1) / 2);
+        const k = easeInOut(ramp(f, 4 + fromMid * 3, 20 + fromMid * 3));
+        if (k >= 1) return null;
+        const h = H / n;
+        return (
+          <div key={i} style={{ position: "absolute", left: 0, right: 0, top: i * h, height: h, transform: `scaleY(${1 - k})`, transformOrigin: i < n / 2 ? "50% 0%" : "50% 100%", background: th.a[0][0], overflow: "hidden" }}>
+            <Holo phase={f / 30 + i * 0.1} style={{ left: 0, right: 0, top: i < n / 2 ? h - 6 : 0, height: 6, mixBlendMode: "normal", opacity: 1 }} />
+          </div>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+const FocusOpen: React.FC<{ f: number; children: React.ReactNode }> = ({ f, children }) => {
+  const k = expoOut(ramp(f, 0, 34));
+  const leak = ramp(f, 6, 40);
+  return (
+    <AbsoluteFill>
+      <AbsoluteFill style={{ filter: k < 1 ? `blur(${(1 - k) * 26}px) brightness(${1 + 0.5 * (1 - k)})` : undefined, transform: `scale(${1.22 - 0.22 * k})` }}>{children}</AbsoluteFill>
+      {leak > 0 && leak < 1 ? <Holo phase={leak} style={{ left: -400 + 2600 * leak, top: -300, width: 260, height: H + 600, transform: "rotate(18deg)", opacity: 0.35 * Math.sin(Math.PI * leak), mixBlendMode: "screen" }} /> : null}
+    </AbsoluteFill>
+  );
+};
+
 const FoilBand: React.FC<{ top: number; bottom: number; o: number; ph: number }> = ({ top, bottom, o, ph }) => {
   if (o >= 1) return null;
   const th = 14 + 30 * (1 - o);
@@ -155,7 +251,14 @@ const ShotLayer: React.FC<{ s: Placed; plan: Plan; shots: Placed[] }> = ({ s, pl
     inFlood = 1 - ramp(f, 0, 10);
     enterT = `scale(${1.12 - 0.12 * expoOut(ramp(f, 0, 16))})`;
   }
-  const body = s.enter === "lines" ? <LinesOpen f={f} disc={th.disc}>{world}</LinesOpen> : world;
+  const word = (s.p?.openWord as string) ?? (s.text?.head ?? plan.brand.name).split(" ")[0];
+  const body =
+    s.enter === "lines" ? <LinesOpen f={f} disc={th.disc}>{world}</LinesOpen>
+    : s.enter === "bloom" ? <BloomOpen f={f} th={th}>{world}</BloomOpen>
+    : s.enter === "letters" ? <LettersOpen f={f} th={th} word={word} id={`open${s.index}`}>{world}</LettersOpen>
+    : s.enter === "blinds" ? <BlindsOpen f={f} th={th}>{world}</BlindsOpen>
+    : s.enter === "focus" ? <FocusOpen f={f}>{world}</FocusOpen>
+    : world;
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ clipPath: clip }}>

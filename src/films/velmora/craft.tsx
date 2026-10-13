@@ -200,30 +200,90 @@ export const Grind: React.FC<WorldProps> = ({ f, shot, th, print }) => {
 // ---- the pour-over -------------------------------------------------------------------------------------------------
 const kettleBody = lathe(smoothProfile([[0, 0], [0.62, 0], [0.7, 0.15], [0.72, 0.55], [0.6, 0.85], [0.3, 1.0], [0.22, 1.05], [0, 1.08]], 40), 64);
 const lidKnob = lathe(smoothProfile([[0, 0], [0.1, 0], [0.08, 0.12], [0.12, 0.2], [0, 0.24]], 12), 24);
-const spoutG = tube([[0.55, 0.15, 0], [0.95, 0.25, 0], [1.15, 0.6, 0], [1.25, 1.05, 0], [1.55, 1.2, 0]], 0.07, 0.035, 80, 12);
+const SPOUT: V3[] = [[0.55, 0.15, 0], [0.95, 0.25, 0], [1.15, 0.6, 0], [1.25, 1.05, 0], [1.55, 1.2, 0]];
+const spoutG = tube(SPOUT, 0.07, 0.03, 80, 12);
 const handleG = tube([[-0.55, 0.85, 0], [-1.05, 0.95, 0], [-1.1, 0.45, 0], [-0.68, 0.25, 0]], 0.07, 0.07, 40, 12);
 const dripperG = lathe([[0.12, 0], [0.22, 0], [0.24, 0.05], [0.72, 0.85], [0.78, 0.9], [0.74, 0.92], [0.2, 0.08], [0.12, 0.06]], 64);
 const ribTex = bandsTex(26, "#efe9e0", "#7a6a5a", true);
 const carafeG = lathe(smoothProfile([[0, 0], [0.62, 0.02], [0.7, 0.4], [0.55, 0.85], [0.42, 1.1], [0.45, 1.25], [0.43, 1.26]], 40), 64);
-const liquidG = new THREE.CylinderGeometry(0.6, 0.62, 1, 48);
-const pourG = new THREE.CylinderGeometry(0.018, 0.026, 1, 12, 6, true);
-const bloomG = lathe(smoothProfile([[0, 0.14], [0.35, 0.12], [0.55, 0.1], [0.6, 0.06]], 12), 48);
+const liquidG = lathe(smoothProfile([[0, 0], [0.6, 0.02], [0.67, 0.4], [0.6, 0.7]], 20), 48);
+const bedG = new THREE.CircleGeometry(0.5, 48);
+const domeG = lathe(smoothProfile([[0, 0.12], [0.2, 0.11], [0.38, 0.07], [0.5, 0.0]], 16), 48);
+const bubbleG = new THREE.SphereGeometry(0.03, 10, 8);
+const rippleG = (() => {
+  const g = new THREE.TorusGeometry(1, 0.012, 6, 48);
+  g.rotateX(Math.PI / 2);
+  return g;
+})();
+const dropG = blobDrop();
+function blobDrop() {
+  const g = lathe(smoothProfile([[0, 0], [0.03, 0.02], [0.035, 0.05], [0.02, 0.09], [0, 0.12]], 12), 16);
+  return g;
+}
+const groundsTex = canvasTex(256, 256, (x) => {
+  x.fillStyle = "#c9b49a";
+  x.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 2600; i++) {
+    x.fillStyle = `rgba(40,25,15,${0.3 + rnd(i, 1) * 0.6})`;
+    x.fillRect(rnd(i, 2) * 256, rnd(i, 3) * 256, 2, 2);
+  }
+});
+const BED_Y = 2.02; // the coffee bed's surface in the dripper (world)
+const DRIP_Y = 1.3; // the dripper's outlet
+const KETTLE = { x: -1.55, y: 3.15 };
+
+/** The spout tip and its direction in world space for a kettle tilt and position. */
+const spoutTip = (tilt: number, kx: number, kz: number) => {
+  const mat = new THREE.Matrix4().compose(new THREE.Vector3(kx, KETTLE.y, kz), new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, tilt)), new THREE.Vector3(1, 1, 1));
+  const tip = new THREE.Vector3(...SPOUT[4]).applyMatrix4(mat);
+  const dir = new THREE.Vector3(0.3, 0.15, 0).normalize().transformDirection(mat);
+  return { tip, dir };
+};
+/** The stream: a gravity arc from the spout tip to where it meets the bed. */
+const streamPath = (tip: THREE.Vector3, dir: THREE.Vector3, speed: number, wob: number): { pts: V3[]; land: V3 } => {
+  const pts: V3[] = [];
+  const g = 9.8;
+  let land: V3 = [tip.x, BED_Y, tip.z];
+  for (let i = 0; i <= 40; i++) {
+    const t = i * 0.012;
+    const x = tip.x + dir.x * speed * t + 0.01 * Math.sin(i * 0.5 + wob);
+    const y = tip.y + dir.y * speed * t - 0.5 * g * t * t;
+    const z = tip.z + dir.z * speed * t;
+    if (y <= BED_Y) {
+      land = [x, BED_Y, z];
+      pts.push(land);
+      break;
+    }
+    pts.push([x, y, z]);
+  }
+  return { pts, land };
+};
 
 export const Pour: React.FC<WorldProps> = ({ f, shot, th, print }) => {
   const dur = shot.dur;
   const t = f / 24;
-  const cutAt = Math.round(dur * 0.58);
+  const cutAt = Math.round(dur * 0.55);
   const cut = step(f, [cutAt]);
+  const tiltK = smooth(ramp(f, 2, 16));
+  const pouring = tiltK > 0.85;
+  // the hand circles the kettle so the stream lands in a slow spiral over the bed
+  const swirl = t * 2.4;
+  const rad = 0.16 + 0.06 * Math.sin(t * 0.9);
+  const kx = KETTLE.x + rad * Math.cos(swirl) * tiltK, kz = rad * Math.sin(swirl) * tiltK;
+  const tilt = -0.62 * tiltK - 0.03 * Math.sin(t * 3);
+  const { tip, dir } = spoutTip(tilt, kx, kz);
+  const { pts, land } = streamPath(tip, dir, 1.05, t * 7);
+  const streamG = useMemo(() => (pouring && pts.length > 2 ? tube(pts, 0.026, 0.017, 48, 10) : null), [pouring, pts]);
+  const bloom = smooth(ramp(f, 18, 56));
+  const lvl = clamp01((f - 26) / (dur - 26));
   const cam = cut === 0
-    ? { pos: [lerp(-3.0, -2.0, f / dur), 3.0, 8.4 - f * 0.01] as V3, target: [-0.3, 2.2, 0] as V3, fov: 36 }
-    : { pos: [-1.4 + (f - cutAt) * 0.008, 3.5, 3.2] as V3, target: [0, 2.7, 0] as V3, fov: 32 };
-  const tiltK = smooth(ramp(f, 4, 22));
-  const pouring = f > 18;
-  const swirl = t * 5;
-  const lvl = clamp01((f - 30) / (dur - 30));
-  const steamOn = ramp(f, 30, 50);
-  const lip: V3 = [0.12 + 0.18 * Math.cos(swirl), 3.9, 0.18 * Math.sin(swirl)];
-  const [sx, sy] = project(cam, [0, 3.2, 0]);
+    ? { pos: [lerp(-3.4, -2.6, f / dur), 3.3, 8.6 - f * 0.01] as V3, target: [-0.4, 2.2, 0] as V3, fov: 36 }
+    : { pos: [-0.9 + (f - cutAt) * 0.008, 2.95, 2.5] as V3, target: [-0.05, 2.15, 0] as V3, fov: 32 };
+  const water = PALS.sky;
+  const brew = PALS.espresso;
+  const steamOn = ramp(f, 24, 44);
+  const [sx, sy] = project(cam, [0, 2.3, 0]);
+  const bubbles = useMemo(() => Array.from({ length: 22 }, (_, i) => ({ a: rnd(i, 1) * Math.PI * 2, r: 0.08 + 0.36 * Math.sqrt(rnd(i, 2)), at: rnd(i, 3), s: 0.6 + rnd(i, 4) })), []);
   return (
     <WorldLook th={th}>
       <AbsoluteFill>
@@ -233,22 +293,44 @@ export const Pour: React.FC<WorldProps> = ({ f, shot, th, print }) => {
           <RefDepth.Provider value={6}>
             <Detail.Provider value={ENGRAVE}>
               <EMesh g={tableG} m={{ palette: th.b, seed: 600, map: wood, mapAmt: 0.75, angleDeg: 4 } as never} pos={[0, -0.15, 0]} />
-              <EMesh g={carafeG} m={{ palette: th.b, seed: 601, angleDeg: 60, opacity: 0.55 } as never} />
-              <EMesh g={liquidG} m={{ palette: th.hero, seed: 602, foil: 0.15 }} pos={[0, 0.02 + 0.3 * lvl, 0]} scale={[0.95, Math.max(0.01, 0.6 * lvl), 0.95]} />
-              <EMesh g={dripperG} m={{ palette: th.a, seed: 603, map: ribTex, mapAmt: 0.6, angleDeg: 80 } as never} pos={[0, 1.27, 0]} />
-              <EMesh g={bloomG} m={{ palette: th.hero, seed: 604, foil: 0.2 }} pos={[0, 1.6 + 0.25 * ramp(f, 20, 60), 0]} scale={[0.9, 1 + 0.6 * Math.sin(t * 2) * 0.1, 0.9]} />
-              {/* the kettle tips in, its stream circling the bed */}
-              <group position={[-1.6, 3.0, 0]} rotation={[0, 0, -0.55 * tiltK]}>
-                <EMesh g={kettleBody} m={{ palette: th.hero, seed: 605, foil: 0.35, angleDeg: 70, follow: 0.5 }} />
-                <EMesh g={lidKnob} m={{ palette: th.a, seed: 606 }} pos={[0, 1.06, 0]} />
-                <EMesh g={spoutG} m={{ palette: th.hero, seed: 607, foil: 0.3 }} />
-                <EMesh g={handleG} m={{ palette: th.a, seed: 608 }} />
+              {/* the carafe fills with brewed coffee */}
+              <EMesh g={liquidG} m={{ palette: brew, seed: 602, foil: 0.12 }} pos={[0, 0.02, 0]} scale={[1, Math.max(0.01, 0.95 * lvl), 1]} />
+              <EMesh g={carafeG} m={{ palette: th.b, seed: 601, angleDeg: 60, opacity: 0.45 } as never} />
+              {/* drips from the dripper's outlet: a thin trickle once the bed is saturated */}
+              {Array.from({ length: 4 }, (_, i) => {
+                const u = ((t * 2.2 + i / 4) % 1);
+                const y0 = DRIP_Y, y1 = 0.05 + 0.65 * lvl;
+                return f > 30 ? <EMesh key={i} g={dropG} m={{ palette: brew, seed: 610 + i, foil: 0.2 }} pos={[0, lerp(y0, y1, u * u), 0]} rot={[Math.PI, 0, 0]} scale={0.9} /> : null;
+              })}
+              <EMesh g={dripperG} m={{ palette: th.a, seed: 603, map: ribTex, mapAmt: 0.6, angleDeg: 80, opacity: 0.85 } as never} pos={[0, 1.27, 0]} />
+              {/* the bed: wet grounds that bloom (rise and bubble) under the water */}
+              <EMesh g={bedG} m={{ palette: brew, seed: 604, map: groundsTex, mapAmt: 0.9 } as never} rot={[-Math.PI / 2, 0, 0]} pos={[0, BED_Y - 0.02, 0]} scale={1.15} />
+              <EMesh g={domeG} m={{ palette: brew, seed: 605, map: groundsTex, mapAmt: 0.85, foil: 0.08 } as never} pos={[0, BED_Y - 0.12, 0]} scale={[1.15, 0.2 + 1.1 * bloom, 1.15]} />
+              {bubbles.map((b, i) => {
+                const life = ((t * 0.8 + b.at) % 1);
+                const k = Math.sin(Math.PI * life);
+                return bloom > 0.2 ? <EMesh key={i} g={bubbleG} m={{ palette: water, seed: 620 + (i % 6), foil: 0.5 }} pos={[Math.cos(b.a) * b.r, BED_Y + 0.02 + 0.1 * bloom * (1 - b.r * 1.6), Math.sin(b.a) * b.r]} scale={b.s * k} /> : null;
+              })}
+              {/* ripples where the stream lands */}
+              {pouring
+                ? [0, 1, 2].map((k) => {
+                    const u = (t * 2.6 + k / 3) % 1;
+                    return <EMesh key={k} g={rippleG} m={{ palette: water, seed: 630 + k, foil: 0.4 }} pos={[land[0], BED_Y + 0.06 * bloom + 0.01, land[2]]} scale={0.03 + 0.16 * u} live={{ opacity: 1 - u }} />;
+                  })
+                : null}
+              {/* the stream: a gravity arc from the spout tip, thinning as it falls */}
+              {streamG ? <EMesh g={streamG} m={{ palette: water, seed: 640, foil: 0.6, angleDeg: 80 }} live={{ foilPhase: t * 1.5 }} /> : null}
+              {/* the kettle: tips in, then circles */}
+              <group position={[kx, KETTLE.y, kz]} rotation={[0, 0, tilt]}>
+                <EMesh g={kettleBody} m={{ palette: th.hero, seed: 645, foil: 0.35, angleDeg: 70, follow: 0.5 }} />
+                <EMesh g={lidKnob} m={{ palette: th.a, seed: 646 }} pos={[0, 1.06, 0]} />
+                <EMesh g={spoutG} m={{ palette: th.hero, seed: 647, foil: 0.3 }} />
+                <EMesh g={handleG} m={{ palette: th.a, seed: 648 }} />
               </group>
-              {pouring ? <EMesh g={pourG} m={{ palette: th.hero, seed: 609, angleDeg: 85 }} pos={[(lip[0] - 0.05) * 0.9, 2.55, lip[2]]} scale={[1, 1.5, 1]} rot={[0, 0, 0.05 * Math.sin(t * 9)]} /> : null}
             </Detail.Provider>
           </RefDepth.Provider>
         </World>
-        <Steam f={f} x={sx} y={sy} h={300} color={th.a[1][0]} o={steamOn * 0.5} />
+        <Steam f={f} x={sx} y={sy} h={320} color={th.a[1][0]} o={steamOn * 0.45} />
         {print ? null : <SayIt say={shot.text} f={f} at={Math.round(dur * 0.22)} out={dur + shot.tail} th={th} plate />}
       </AbsoluteFill>
     </WorldLook>

@@ -11,6 +11,7 @@ import { Headline, Holo } from "../film/scenes/kit.tsx";
 import { Rig } from "../film/scenes/rig.tsx";
 import { fit } from "../film/scenes/copy.tsx";
 import { castOf, keepFn } from "./cast.ts";
+import { Person } from "../build/person.tsx";
 import type { Theme } from "./theme.ts";
 import type { Placed, Say, Value } from "./plan.ts";
 
@@ -126,71 +127,13 @@ export const Sprout: React.FC<{ at: V3; g: number; lean?: number; children: Reac
   );
 
 // ---- procedural subjects (no licensed model exists for these) ----------------------------------------------------
-const capsule = (r: number, len: number) => new THREE.CapsuleGeometry(r, len, 6, 16);
-const FIG = (() => {
-  const torso = new THREE.CapsuleGeometry(0.26, 0.55, 6, 18);
-  torso.scale(1, 1, 0.72);
-  const coat = new THREE.CylinderGeometry(0.3, 0.42, 0.75, 24, 1, true);
-  return {
-    head: new THREE.SphereGeometry(0.17, 24, 18),
-    neck: new THREE.CylinderGeometry(0.06, 0.07, 0.12, 12),
-    torso,
-    coat,
-    upper: capsule(0.075, 0.32),
-    lower: capsule(0.065, 0.3),
-    thigh: capsule(0.1, 0.36),
-    shin: capsule(0.085, 0.36),
-    foot: new THREE.BoxGeometry(0.12, 0.07, 0.26),
-    joint: new THREE.SphereGeometry(0.08, 14, 10),
-    hat: new THREE.LatheGeometry([[0, 0], [0.3, 0], [0.31, 0.02], [0.17, 0.03], [0.16, 0.2], [0.12, 0.23], [0, 0.23]].map(([r, y]) => new THREE.Vector2(r, y)), 32),
-  };
-})();
 /**
- * A walking figure in the manner of an artist's wooden mannequin (procedural: no licensed walking human exists in
- * the cast). phase advances one stride per 1.0; `walk` 0 = standing, 1 = full stride. ~1.8 units tall, feet at y=0.
+ * A walking person (see src/build/person.tsx). Kept as Figure for the kit worlds; `pal` dresses the coat.
+ * phase: one full stride cycle per 1.0; drive it from distance walked (STRIDE * scale per cycle) so feet don't slide.
  */
-export const Figure: React.FC<{ pal: Pal; phase: number; walk?: number; pos?: V3; rot?: V3; scale?: number; seed?: number; coat?: boolean; hold?: boolean; hat?: boolean }> = ({ pal, phase, walk = 1, pos, rot, scale = 1, seed = 70, coat = true, hold, hat }) => {
-  const m = { palette: pal, seed, follow: 0.4, angleDeg: 8 } as EOpts;
-  const a = Math.PI * 2 * phase;
-  const sw = 0.5 * walk;
-  const hipL = Math.sin(a) * sw, hipR = -Math.sin(a) * sw;
-  const kneeL = Math.max(0, -Math.cos(a)) * 0.9 * walk + 0.05, kneeR = Math.max(0, Math.cos(a)) * 0.9 * walk + 0.05;
-  const bob = Math.abs(Math.cos(a)) * 0.04 * walk;
-  const leg = (hip: number, knee: number, x: number) => (
-    <group position={[x, 0.98, 0]} rotation={[-hip, 0, 0]}>
-      <EMesh g={FIG.thigh} m={m} pos={[0, -0.24, 0]} />
-      <group position={[0, -0.47, 0]} rotation={[knee, 0, 0]}>
-        <EMesh g={FIG.joint} m={m} scale={0.9} />
-        <EMesh g={FIG.shin} m={m} pos={[0, -0.24, 0]} />
-        <EMesh g={FIG.foot} m={m} pos={[0, -0.47, 0.06]} />
-      </group>
-    </group>
-  );
-  const arm = (sw2: number, x: number, bend: number) => (
-    <group position={[x, 1.5, 0]} rotation={[sw2, 0, x > 0 ? -0.08 : 0.08]}>
-      <EMesh g={FIG.joint} m={m} scale={0.85} />
-      <EMesh g={FIG.upper} m={m} pos={[0, -0.22, 0]} />
-      <group position={[0, -0.44, 0]} rotation={[-bend, 0, 0]}>
-        <EMesh g={FIG.lower} m={m} pos={[0, -0.2, 0]} />
-      </group>
-    </group>
-  );
-  return (
-    <group position={pos} rotation={rot} scale={scale}>
-      <group position={[0, bob, 0]}>
-        {leg(hipL, kneeL, -0.11)}
-        {leg(hipR, kneeR, 0.11)}
-        <EMesh g={FIG.torso} m={m} pos={[0, 1.3, 0]} />
-        {coat ? <EMesh g={FIG.coat} m={{ ...m, seed: seed + 1 }} pos={[0, 1.02, 0]} double /> : null}
-        <EMesh g={FIG.neck} m={m} pos={[0, 1.7, 0]} />
-        <EMesh g={FIG.head} m={m} pos={[0, 1.86, 0.01]} />
-        {hat ? <EMesh g={FIG.hat} m={{ ...m, seed: seed + 2 }} pos={[0, 1.93, 0.01]} rot={[-0.08, 0, 0]} double /> : null}
-        {arm(hold ? -0.9 : -hipL * 0.8, -0.3, hold ? 1.2 : 0.25 + 0.2 * walk)}
-        {arm(hold ? -0.2 : -hipR * 0.8, 0.3, 0.25 + 0.2 * walk)}
-      </group>
-    </group>
-  );
-};
+export const Figure: React.FC<{ pal: Pal; phase: number; walk?: number; pos?: V3; rot?: V3; scale?: number; seed?: number; coat?: boolean; hold?: boolean; hat?: boolean }> = ({ pal, phase, walk = 1, pos, rot, scale = 1, seed = 70, hold, hat }) => (
+  <Person pals={{ coat: pal }} phase={phase} walk={walk} pos={pos} rot={rot} scale={scale} seed={seed} hold={hold} hat={hat} />
+);
 
 /** A coffee bean: a squashed ellipsoid with a centre crease (procedural). */
 export const BEAN = (() => {

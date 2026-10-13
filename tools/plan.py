@@ -30,9 +30,10 @@ ROOT = os.path.dirname(HERE)
 FPS = 24
 BEAT = 11.52  # 125 BPM at 24 fps
 WORLDS = {"scene", "garden", "object", "globe", "hall", "deep", "city", "orbit", "table", "type", "stage", "lockup"}
-ENTERS = {"lines", "cut", "iris", "split", "wipe", "match", "dive", "print"}
-OVERLAP = {"lines": 0, "cut": 0, "iris": 18, "split": 24, "wipe": 16, "match": 14, "dive": 0, "print": 0}
+ENTERS = {"lines", "bloom", "letters", "blinds", "focus", "cut", "iris", "split", "wipe", "match", "dive", "print"}
+OVERLAP = {"lines": 0, "bloom": 0, "letters": 0, "blinds": 0, "focus": 0, "cut": 0, "iris": 18, "split": 24, "wipe": 16, "match": 14, "dive": 0, "print": 0}
 FIXED = {"stage": 84, "lockup": 75}
+OPENERS = {"lines", "bloom", "letters", "blinds", "focus", "cut", "iris"}
 MIN_SEC = {"garden": 4.5, "object": 3.5, "globe": 4.0, "hall": 3.8, "deep": 3.0, "city": 4.0, "orbit": 3.2, "table": 3.8, "type": 2.4}
 STYLE = {"scene": "groove", "garden": "groove", "object": "groove", "globe": "drive", "hall": "drive", "deep": "ambient", "city": "drive", "orbit": "drive", "table": "groove", "type": "ambient", "stage": "groove", "lockup": "end"}
 
@@ -71,10 +72,10 @@ def check(spec):
             errs.append(f"{tag}: unknown world; one of {sorted(WORLDS)}")
         if e not in ENTERS:
             errs.append(f"{tag}: unknown enter {e!r}; one of {sorted(ENTERS)}")
-        if i == 0 and e not in ("lines", "cut", "iris"):
-            errs.append(f"{tag}: the first shot enters by lines, cut or iris")
-        if i > 0 and e == "lines":
-            errs.append(f"{tag}: 'lines' is only for the first shot")
+        if i == 0 and e not in OPENERS:
+            errs.append(f"{tag}: the first shot enters by an opener: {sorted(OPENERS)}")
+        if i > 0 and e in OPENERS - {"cut", "iris"}:
+            errs.append(f"{tag}: {e!r} is an opener, only for the first shot")
         if e == "print" and w != "object":
             errs.append(f"{tag}: only an object shot enters by print")
         if w == "object" and e != "print":

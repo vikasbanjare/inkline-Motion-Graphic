@@ -2,7 +2,7 @@
  * A film is a shot plan: an ordered list of shots, each a world with its own theme, cast, words and the transition it
  * enters by. tools/plan.py checks a plan, snaps every cut to the beat grid and writes it here as props (with frames).
  */
-export type Enter = "lines" | "cut" | "iris" | "split" | "wipe" | "match" | "dive" | "print";
+export type Enter = "lines" | "bloom" | "letters" | "blinds" | "focus" | "cut" | "iris" | "split" | "wipe" | "match" | "dive" | "print";
 export type WorldName = "scene" | "garden" | "object" | "globe" | "hall" | "deep" | "city" | "orbit" | "table" | "type" | "stage" | "lockup";
 export type Say = { head: string; sub?: string };
 export type Value = { label: string; value: string };
@@ -29,7 +29,7 @@ export type Brand = { name: string; logo: string; line: string };
 export type Plan = { slug: string; brand: Brand; shots: Shot[]; score?: string };
 
 /** Frames the incoming shot overlaps the outgoing one (the outgoing keeps playing under the transition). */
-export const OVERLAP: Record<Enter, number> = { lines: 0, cut: 0, iris: 18, split: 24, wipe: 16, match: 14, dive: 0, print: 0 };
+export const OVERLAP: Record<Enter, number> = { lines: 0, bloom: 0, letters: 0, blinds: 0, focus: 0, cut: 0, iris: 18, split: 24, wipe: 16, match: 14, dive: 0, print: 0 };
 
 export type Placed = Shot & { start: number; index: number; exit: Enter | null; tail: number };
 export const place = (plan: Plan): Placed[] => {
