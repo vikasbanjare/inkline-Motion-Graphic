@@ -86,7 +86,7 @@ const LinesOpen: React.FC<{ f: number; disc: string; children: React.ReactNode }
  */
 const BloomOpen: React.FC<{ f: number; th: ReturnType<typeof theme>; children: React.ReactNode }> = ({ f, th, children }) => {
   const fall = Math.min(1, f / 10);
-  const dropY = -80 + (H / 2 + 80) * fall * fall;
+  const dropY = 90 + (H / 2 - 90) * fall * fall;
   const r = 1300 * expoOut(ramp(f, 11, 40));
   const ink = th.a[0][0];
   return (

@@ -101,10 +101,10 @@ export const Street: React.FC<WorldProps> = ({ f, shot, th, print }) => {
     // corner: low angle down the side street (now along -z); he comes round the corner from the left
     const k = clamp01(f / (dur + shot.tail));
     const turn = smooth(ramp(f, 6, 30));
-    const x = lerp(-3.4, 0.4, smooth(clamp01(k * 1.6)));
+    const x = lerp(-2.2, 0.4, smooth(clamp01(k * 1.6)));
     const z = lerp(1.6, -1.8, Math.max(0, k * 1.6 - 0.4));
     man = { pos: [x, 0, z], yaw: lerp(Math.PI / 2, Math.PI, turn), dist: Math.abs(x + 3.4) + Math.abs(z - 1.6), walk: 1 };
-    cam = { pos: [1.6, 0.7, 4.6], target: [-0.4, 2.0, -14], fov: 40 };
+    cam = { pos: [1.6 - f * 0.01, 0.7 + f * 0.004, 4.6 - f * 0.03], target: [-0.4, 2.0, -14], fov: 40 }; // a slow push down the street
   }
   const sky = variant === "corner" ? 1 : variant === "walk" ? ramp(f, 0, dur) * 0.6 : 0;
   const lampsOff = (i: number) => variant === "door" ? false : variant === "corner" ? true : f > 10 + i * 12;

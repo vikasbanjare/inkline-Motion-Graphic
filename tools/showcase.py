@@ -3,8 +3,8 @@
     python3 -I tools/showcase.py specs/<slug>.plan.json out/<slug>.mp4
 
 Writes:
-  showcase/<slug>/film.mp4         share-size H.264 + AAC (about 1-2 MB per second at 1080p)
-  showcase/<slug>/preview.gif      a 6-second, 640 px loop for the README
+  showcase/<slug>/film.mp4         share-size 720p H.264 + AAC
+  showcase/<slug>/preview.gif      a 5-second, 480 px loop for the README
   showcase/<slug>/board/NN.jpg     one real frame per shot (the shot's key moment, from the export itself)
   showcase/<slug>/STORYBOARD.md    the board: logline, device, motif, pace, then every panel with its frame and notes
   showcase/<slug>/board.html       the same board as a page
@@ -38,7 +38,7 @@ def main():
     shots = props["plan"]["shots"]
     out = os.path.join(ROOT, "showcase", slug)
     os.makedirs(os.path.join(out, "board"), exist_ok=True)
-    run("ffmpeg", "-y", "-i", film, "-c:v", "libx264", "-crf", "30", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", os.path.join(out, "film.mp4"))
+    run("ffmpeg", "-y", "-i", film, "-vf", "scale=1280:-2:flags=lanczos", "-c:v", "libx264", "-crf", "29", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", os.path.join(out, "film.mp4"))
     # the GIF: the film's most characterful 6 seconds (from the longest shot onward), 640 px, 12 fps, a shared palette
     t, starts = 0, []
     for s in shots:
@@ -46,8 +46,8 @@ def main():
         t += s["dur"]
     pal = os.path.join(out, ".pal.png")
     g0 = (starts[1] if len(starts) > 1 else 0) / FPS
-    run("ffmpeg", "-y", "-ss", f"{g0:.2f}", "-t", "6", "-i", film, "-vf", "fps=12,scale=640:-1:flags=lanczos,palettegen=max_colors=128", pal)
-    run("ffmpeg", "-y", "-ss", f"{g0:.2f}", "-t", "6", "-i", film, "-i", pal, "-lavfi", "fps=12,scale=640:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=4", os.path.join(out, "preview.gif"))
+    run("ffmpeg", "-y", "-ss", f"{g0:.2f}", "-t", "5", "-i", film, "-vf", "fps=10,scale=480:-1:flags=lanczos,palettegen=max_colors=96", pal)
+    run("ffmpeg", "-y", "-ss", f"{g0:.2f}", "-t", "5", "-i", film, "-i", pal, "-lavfi", "fps=10,scale=480:-1:flags=lanczos[x];[x][1:v]paletteuse=dither=bayer:bayer_scale=5", os.path.join(out, "preview.gif"))
     os.remove(pal)
     # one real frame per shot
     panels = []
@@ -63,7 +63,7 @@ def main():
     total = t / FPS
     # markdown board
     md = [f"# {B.get('title', slug)}", "", f"*{spec.get('note', '')}*" if spec.get("note") else "", "",
-          f"![The film, 6 seconds](preview.gif)", "", f"**[Watch the film (film.mp4)](film.mp4)** · {total:.1f} s · {len(shots)} shots", ""]
+          f"![The film, 5 seconds](preview.gif)", "", f"**[Watch the film (film.mp4)](film.mp4)** · {total:.1f} s · {len(shots)} shots", ""]
     for k in ("logline", "device", "motif", "protagonist", "arc"):
         if B.get(k):
             md.append(f"- **{k.capitalize()}:** {B[k]}")

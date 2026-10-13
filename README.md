@@ -15,6 +15,17 @@ Paste a product script, and Inkline storyboards it and builds a film of its own 
 
 The music and sound effects are original, generated in code and timed to every cut.
 
+## Showcase
+
+**Velmora: "Two journeys, one cup"** (a fictional coffee brand's café launch, 37 s). A man walking to work and a
+coffee bean travelling from the hills cross the city before sunrise and meet in one cup. Every subject was built
+for this script: coffee hills, a ripening cherry, a blue-hour street, a drum roaster, a hand grinder, a gooseneck
+pour-over, latte art, the café. The score is lo-fi jazz with foley timed to the picture.
+
+[![Velmora, 6 seconds](showcase/velmora/preview.gif)](showcase/velmora/STORYBOARD.md)
+
+**[The storyboard, in real frames](showcase/velmora/STORYBOARD.md)** · **[Watch the film](showcase/velmora/film.mp4)**
+
 Built with [Remotion](https://www.remotion.dev), [Three.js](https://threejs.org) and
 [Claude Code](https://claude.com/claude-code). Free to use under the MIT licence; see **Licences** below for the
 parts that have their own terms.
