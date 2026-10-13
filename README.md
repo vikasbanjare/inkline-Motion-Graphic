@@ -42,7 +42,7 @@ parts that have their own terms.
 You need Node.js 22.18+, Python 3 with `numpy` and `pillow`, and ffmpeg.
 
 ```sh
-git clone https://github.com/<you>/inkline && cd inkline
+git clone https://github.com/vikasbanjare/inkline-Motion-Graphic && cd inkline-Motion-Graphic
 bash scripts/setup.sh                                    # installs packages, finds a browser, checks python/ffmpeg
 
 cp specs/example.json specs/mine.json                    # then replace every value with your script's words
