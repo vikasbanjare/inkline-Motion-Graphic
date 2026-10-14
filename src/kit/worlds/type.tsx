@@ -10,6 +10,13 @@ import { Backdrop, H, W, WorldLook, type WorldProps } from "../common.tsx";
  *   p.foil    the one word to set in foil (must appear in the lines)
  * Camera: a slow push. Words land on the beat (every 3 frames per word).
  */
+const ctx2d = typeof document !== "undefined" ? document.createElement("canvas").getContext("2d") : null;
+const measure = (w: string, size: number) => {
+  if (!ctx2d) return w.length * size * 0.5;
+  ctx2d.font = `600 ${size}px Newsreader`;
+  return ctx2d.measureText(w).width - 2 * Math.max(0, w.length - 1); // letterSpacing -2 per gap
+};
+
 export const TypeWorld: React.FC<WorldProps> = ({ f, shot, th }) => {
   const dur = shot.dur;
   const lines = ((shot.p?.lines as string[]) ?? [shot.text?.head ?? ""]).slice(0, 3);
@@ -37,9 +44,10 @@ export const TypeWorld: React.FC<WorldProps> = ({ f, shot, th }) => {
             </defs>
             {lines.map((line, li) => {
               const words = line.split(" ");
-              // measure roughly to centre the line
-              const widths = words.map((w) => w.length * size * 0.5 + size * 0.28);
-              const total = widths.reduce((a, b) => a + b, 0) - size * 0.28;
+              // measure each word in the real face (the film's fonts are loaded before any frame renders)
+              const space = size * 0.34;
+              const widths = words.map((w) => measure(w, size) + space);
+              const total = widths.reduce((a, b) => a + b, 0) - space;
               let x = W / 2 - total / 2;
               return (
                 <g key={li}>

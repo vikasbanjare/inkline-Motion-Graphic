@@ -2,17 +2,23 @@
   "name": "inkline",
   "version": "1.0.0",
   "private": true,
-  "description": "Engraved 3D claim films from a script: storyboard slots, original score and SFX, render and motion QA. Built with Remotion and Three.js.",
+  "description": "Engraved 3D launch films with their own storyboard, built per script: a director's skill, a subject builder, an original score and foley, render and motion QA. Built with Remotion and Three.js.",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "studio": "remotion studio",
-    "check": "python3 -I tools/film.py",
+    "selftest": "bash tools/selftest.sh",
+    "plan": "python3 -I tools/plan.py",
+    "stills": "bash tools/stills.sh",
     "render": "bash tools/render.sh",
+    "showcase": "python3 -I tools/showcase.py",
     "qa": "python3 -I tools/motion_qa.py",
+    "check": "python3 -I tools/film.py",
     "typecheck": "tsc"
   },
-  "engines": { "node": ">=22.18" },
+  "engines": {
+    "node": ">=22.18"
+  },
   "dependencies": {
     "@react-three/fiber": "9.2.0",
     "@remotion/cli": "4.0.534",

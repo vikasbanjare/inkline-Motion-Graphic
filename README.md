@@ -1,19 +1,18 @@
 # Inkline
 
-**A 30-second engraved 3D launch film, made from your script.**
+**Engraved 3D launch films, storyboarded and built for your script.**
 
-![Nine frames from the example film](docs/preview.jpg)
+Paste a script or brief into Claude Code. Inkline:
+- storyboards it the way a director would: a story, a protagonist, a motif, designed cuts;
+- builds that film's own 3D subjects in an engraved, two-ink style;
+- scores it with original music and foley;
+- renders it and checks the motion.
 
-Paste a product script, and Inkline storyboards it and builds a film of its own from a kit of engraved worlds
-(the original card film below is one example of what it makes):
-- engraved 3D worlds in two-ink duotones;
-- a garden that turns into your card;
-- a foil-strip close-up that splits open onto a travel globe;
-- the globe becoming a colonnade floor;
-- your key number rising from a shell like a pearl;
-- a phone mockup where your claims tick on, and your logo at the end.
+Every film shares the style, and none shares the content.
 
-The music and sound effects are original, generated in code and timed to every cut.
+Built with [Remotion](https://www.remotion.dev), [Three.js](https://threejs.org) and
+[Claude Code](https://claude.com/claude-code). Free to use under the MIT licence; see **Licences** below for the
+parts that have their own terms.
 
 ## Showcase
 
@@ -22,119 +21,94 @@ coffee bean travelling from the hills cross the city before sunrise and meet in 
 for this script: coffee hills, a ripening cherry, a blue-hour street, a drum roaster, a hand grinder, a gooseneck
 pour-over, latte art, the café. The score is lo-fi jazz with foley timed to the picture.
 
-[![Velmora, 6 seconds](showcase/velmora/preview.gif)](showcase/velmora/STORYBOARD.md)
+[![Velmora, 5 seconds](showcase/velmora/preview.gif)](showcase/velmora/STORYBOARD.md)
 
 **[The storyboard, in real frames](showcase/velmora/STORYBOARD.md)** · **[Watch the film](showcase/velmora/film.mp4)**
 
-Built with [Remotion](https://www.remotion.dev), [Three.js](https://threejs.org) and
-[Claude Code](https://claude.com/claude-code). Free to use under the MIT licence; see **Licences** below for the
-parts that have their own terms.
-
 ---
 
-## Make a film (easiest: with Claude Code)
+## Start from zero, with Claude Code (easiest)
 
-1. Open this repo in Claude Code, on the web (claude.ai/code), desktop or CLI. The setup hook installs everything
-   on the first start. You should see `inkline ready: …`.
-2. Paste:
+1. **Open this repo** in Claude Code, on the web (claude.ai/code), desktop or CLI. The setup hook installs
+   everything on the first start (about 1 minute). You should see `inkline ready: …`.
+2. **Optional: check the install.** Ask Claude to run `bash tools/selftest.sh`, or run it yourself. You should see
+   `PASS` (about 2 minutes).
+3. **Paste your brief:**
 
    ```
    Make a film from this script using the inkline-film skill.
-   Brand: <name>. Logo: <path to your logo PNG, or "none">.
+   Brand: <name>. Logo: <path to a white-on-transparent PNG, or "none">.
+   Audience: <who it's for>. Must remember: <the one thing>.
 
    <your script>
    ```
 
-3. Claude shows a **storyboard table**: which shot carries which claim. Approve it, or say what to move.
-4. Claude sends **9 stills**. Check the words and the logo, then say "go".
-5. Claude renders the film (about 30–40 minutes), checks it for freezes, and sends you the MP4.
+4. **Approve the storyboard.** Claude shows the logline, the concept, the protagonist and arc, and a table of every
+   shot (picture, words, sound, how it cuts in). Say what to change.
+5. **Approve the real-frame board.** Claude builds the film's scenes and sends one rendered frame per shot. Check
+   the objects, the words and the framing, then say "go".
+6. **Get the film.** Claude renders it, checks it for freezes and sends the MP4. It also writes a showcase folder
+   with a GIF and the storyboard in real frames.
 
-## Make a film by hand
+A new film's scenes are built for it, so expect a few hours of Claude's work for a 30–40 second film, plus about
+an hour of rendering.
+
+## Start from zero, by hand
 
 You need Node.js 22.18+, Python 3 with `numpy` and `pillow`, and ffmpeg.
 
 ```sh
 git clone https://github.com/vikasbanjare/inkline-Motion-Graphic && cd inkline-Motion-Graphic
-bash scripts/setup.sh                                    # installs packages, finds a browser, checks python/ffmpeg
+bash scripts/setup.sh                 # installs packages, finds a browser, checks python and ffmpeg
+bash tools/selftest.sh                # PASS = ready (plans both examples, renders one still of each)
 
-cp specs/example.json specs/mine.json                    # then replace every value with your script's words
-python3 tools/film.py specs/mine.json                    # checks every line fits its shot; prints the next commands
-bash tools/render.sh public/films/mine/props.json out/mine.mp4   # render + score + motion check
+python3 -I tools/plan.py specs/coffee.plan.json                         # check the plan, snap cuts to the beat, write the score
+bash tools/stills.sh public/films/velmora/props.json out/board 100,180,330,590,790   # real frames
+bash tools/render.sh public/films/velmora/props.json out/velmora.mp4    # render, add the score, check the motion
+python3 -I tools/showcase.py specs/coffee.plan.json out/velmora.mp4     # film, GIF and storyboard in showcase/
 ```
 
-To preview in the browser while you edit, run `npx remotion studio` and pick the `Film` composition.
+`npx remotion studio` previews any film in the browser (composition `Story`).
 
-## The storyboard: what each shot can say
+## How a film is made
 
-| Time | Shot | Field in your sheet | Best for | Limit |
-|---|---|---|---|---|
-| 0–6 s | Pen lines race in, a garden grows, a fox walks | `claim1` | your lead benefit (rewards, cashback) | 26 chars |
-| 6–8 s | The garden becomes your card's print | `card` | the product's name | 30 |
-| 8–11 s | Push into the foil strip; one phrase lands whole | `strip` | your sharpest short claim, in CAPITALS | 18 |
-| 11–16 s | The strip splits open onto a travel world and globe | `claim2` | travel, redeem, worldwide | 30 |
-| 16–20 s | The globe becomes a colonnade; products drop onto plinths | `claim3` | choice, store, partners | 26 |
-| 20–23 s | A shell in the deep; your number rises from it | `hero` | one number: a fee, a rate, a limit | 5 |
-| 23–27 s | The card drops into a phone; your claims tick on | `outro` | the full claim list | 64 per row |
-| 27–30 s | Your logo on black | `logo`, `lockup` | the product line | 40 |
+| Step | What | Where |
+|---|---|---|
+| 1. Storyboard | Logline, concept device, motif, protagonist, arc, beat sheet, shot grammar, designed joins, sound plan | `.claude/skills/inkline-film/reference/storyboarding.md` |
+| 2. Style | What every film copies: the engraving, inks, paper, foil, type, camera rhythm, transitions | `reference/style-bible.md` |
+| 3. Subjects | The film's own scenes, from lathe, extrude, tube, leaf, blob, a walking person, and 2D foil line work | `src/build/`, `src/films/<slug>/` |
+| 4. Plan | Shots, timing, themes, words, energy and foley | `specs/<slug>.plan.json`, `tools/plan.py` |
+| 5. Sound | Music by genre (lo-fi jazz, cinematic, modern pop, ambient), foley tied to the picture, mixed and mastered | `reference/sound-design.md`, `tools/sound.py` |
+| 6. Board | One real frame per shot, approved before the render | `tools/stills.sh` |
+| 7. Render and QA | 120-frame chunks, the score muxed in, a motion check for freezes and stalls | `tools/render.sh`, `tools/motion_qa.py` |
+| 8. Showcase | The film, a GIF, and the storyboard in real frames | `tools/showcase.py`, `showcase/<slug>/` |
 
-`tools/film.py` rejects anything too long and tells you which line to shorten.
+**Openers** (each film opens its own way): `bloom` (a drop blooms open), `letters` (the world seen through a
+word), `blinds` (foil bars turn open), `focus` (a rack focus out of a bright blur), `lines` (pen lines race in).
+
+**Transitions:** `iris`, `match` (one shape becomes the next), `cut` (a scale step on the beat), `wipe` (a
+foil-edged diagonal), `print` (the world becomes the print on an object), `split` (a foil strip opens), `dive`.
+
+**Ready-made kit worlds** (`src/kit/worlds/`; a film uses one only when it is exactly the right picture):
+- garden, globe, orbit, table, city, hall and deep;
+- type (a statement in words);
+- object (a card, ticket, banknote or screen);
+- stage (a phone);
+- lockup (your logo).
+
+`specs/kit-tour.plan.json` shows them all.
 
 ## Your logo
 
-Put your logo in `public/brand/` as a **white logo on a transparent PNG**, and set `"logo": "brand/your-logo.png"`
-in your sheet. With no logo file, the name is set in plain type.
+Put your logo in `public/brand/` as a **white logo on a transparent PNG**, and set `"logo"` in the plan's
+`brand`. With no logo file, the name is set in plain type. Use only a logo you have the right to use; never
+another company's logo or name.
 
-Use only a logo you have the right to use. Don't put another company's logo or name in your film.
+## The original card template
 
-## Two ways to make a film
-
-**A unique film (the `Story` composition): the default.** Inkline copies a style, not a film. What every film
-shares:
-- the engraving shader;
-- two-ink duotones, paper grain and the flowing line field;
-- foil on one hero;
-- the serif headlines;
-- the camera rhythm (a slow move, then a scale-step on the beat);
-- the transition set;
-- the original score.
-
-What each film gets for itself is its subjects. Claude storyboards the script like a director and then builds its
-scenes in code, from turned, extruded and tubed shapes, leaves, organic forms, an engraved mannequin for people,
-and 2D foil line work (`src/build/geo.ts`, `src/films/<slug>/`). The worked example is Velmora, a fictional coffee
-brand: a coffee branch whose cherry ripens, the cherry splitting into twin beans, a drum roaster and its cooling
-tray, a hand grinder, a gooseneck pour-over, rosetta latte art and a café terrace where a man in a hat walks in.
-The style rules are in `.claude/skills/inkline-film/reference/style-bible.md`.
-
-The kit also has ready-made worlds. A film uses one only when it is exactly the right picture:
-
-| Worlds (src/kit/worlds/) | Best for |
-|---|---|
-| garden | origin, growth, nature, a beginning |
-| globe | reach, sourcing, travel, a network |
-| orbit | a process that turns: roasting, an engine, AI, a platform |
-| table | how it's made: food and drink, craft, a ritual in close-up |
-| city | a store or venue opening: a street grows, a person walks in, the door opens |
-| hall | a curated range, a store interior, choice |
-| deep | the one number, rising like a pearl |
-| type | a belief in words, one in foil |
-| object | the world you just watched becomes the print on a card, ticket, banknote or screen |
-| stage | a phone shows your claims |
-| lockup | your logo |
-
-Transitions: `lines` (the pen-line opening), `iris`, `match` (one world becomes the next), `cut` (a scale step on
-the beat), `wipe` (a foil-edged diagonal), `print`, `split` (a foil strip opens), `dive`.
-
-```sh
-python3 tools/plan.py specs/coffee.plan.json        # checks the storyboard, snaps cuts to the beat, writes the score
-bash tools/stills.sh public/films/velmora/props.json out/velmora-stills 85,209,310,417,539,645
-bash tools/render.sh public/films/velmora/props.json out/velmora.mp4
-```
-
-`specs/coffee.plan.json` is a worked example: a store launch for **Velmora**, a fictional coffee brand. The
-director's method is in `.claude/skills/inkline-film/reference/storyboarding.md`.
-
-**The fixed template (the `Film` composition).** The original 30-second card film; only the words, the number and
-the logo change (`tools/film.py`, the table above).
+`src/film/Film.tsx` (composition `Film`) is the first film this repo made: a fixed 30-second card ad. Only its
+words, its number and the logo change: `cp specs/example.json specs/mine.json`, edit, then
+`python3 -I tools/film.py specs/mine.json`. Use it only when you want exactly that film.
 
 ## Licences and credits
 
@@ -146,6 +120,8 @@ the logo change (`tools/film.py`, the table above).
   film.** The list is in `public/models/CREDITS.md`.
 - **Fonts:** Newsreader and Lexend, SIL Open Font License (`public/fonts/OFL-LICENSES.txt`).
 - **Map data:** Natural Earth via `world-atlas` (public domain).
-- **Music and SFX:** generated by `tools/score_to_picture.py`. Every note is synthesized, so you can use it freely.
+- **Music and SFX:** synthesized by `tools/sound.py` and `tools/score_to_picture.py`. Every note and sound is
+  generated in code, so you can use them freely.
 
-**Your claims are your responsibility.** Put only true, approved claims in a film.
+**Your claims are your responsibility.** Put only true, approved claims in a film. Label sample or spec work as
+such.

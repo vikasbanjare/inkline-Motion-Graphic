@@ -1,0 +1,165 @@
+{
+ "composition": "Story",
+ "frames": 969,
+ "plan": {
+  "slug": "kit-tour",
+  "brand": {
+   "name": "KIT TOUR",
+   "logo": "films/kit-tour/wordmark.png",
+   "line": "every kit world, one film"
+  },
+  "shots": [
+   {
+    "world": "garden",
+    "enter": "letters",
+    "theme": "meadow",
+    "cast": [
+     "fox",
+     "plant",
+     "flowers"
+    ],
+    "text": {
+     "head": "Grow"
+    },
+    "dur": 116
+   },
+   {
+    "world": "globe",
+    "enter": "iris",
+    "theme": "dusk",
+    "cast": [
+     "car"
+    ],
+    "p": {
+     "home": [
+      77.6,
+      12.9
+     ],
+     "to": [
+      [
+       2.3,
+       48.8
+      ],
+      [
+       -74,
+       40.7
+      ]
+     ]
+    },
+    "text": {
+     "head": "Everywhere"
+    },
+    "dur": 90
+   },
+   {
+    "world": "hall",
+    "enter": "match",
+    "theme": "terracotta",
+    "cast": [
+     "boombox",
+     "shoe",
+     "bottle"
+    ],
+    "text": {
+     "head": "Choice"
+    },
+    "dur": 90
+   },
+   {
+    "world": "orbit",
+    "enter": "wipe",
+    "theme": "sky",
+    "cast": [
+     "amber"
+    ],
+    "text": {
+     "head": "Smart"
+    },
+    "dur": 77
+   },
+   {
+    "world": "table",
+    "enter": "cut",
+    "theme": "honey",
+    "cast": [
+     "cup",
+     "dish"
+    ],
+    "p": {
+     "steam": true
+    },
+    "dur": 90
+   },
+   {
+    "world": "city",
+    "enter": "cut",
+    "theme": "graphite",
+    "cast": [
+     "figure",
+     "car"
+    ],
+    "p": {
+     "sign": "TESTCO",
+     "enter": true
+    },
+    "dur": 103
+   },
+   {
+    "world": "object",
+    "enter": "print",
+    "theme": "roastery",
+    "p": {
+     "strip": [
+      "TEST STRIP",
+      "SECOND"
+     ]
+    },
+    "dur": 115
+   },
+   {
+    "world": "deep",
+    "enter": "split",
+    "theme": "deep",
+    "value": {
+     "label": "FEE",
+     "value": "0"
+    },
+    "dur": 65
+   },
+   {
+    "world": "type",
+    "enter": "cut",
+    "theme": "blush",
+    "p": {
+     "lines": [
+      "One line",
+      "to say it"
+     ],
+     "foil": "say"
+    },
+    "dur": 64
+   },
+   {
+    "world": "stage",
+    "enter": "dive",
+    "p": {
+     "rows": [
+      "one",
+      "two"
+     ],
+     "left": "left",
+     "right": "right",
+     "screen": "s",
+     "title": "t"
+    },
+    "dur": 84
+   },
+   {
+    "world": "lockup",
+    "enter": "cut",
+    "dur": 75
+   }
+  ],
+  "score": "films/kit-tour/score.wav"
+ }
+}

@@ -1,13 +1,23 @@
 # Inkline
 
-A 30-second engraved 3D claim film, filled from a script. When someone pastes a video script, ad brief or
-feature list, use the `inkline-film` skill (.claude/skills/inkline-film/SKILL.md).
+Engraved 3D launch films, storyboarded and built per script. When someone pastes a video script, brief or feature
+list, or asks for a film, use the `inkline-film` skill (`.claude/skills/inkline-film/SKILL.md`). It starts with
+the storyboard; animation comes after the user approves it.
 
-- Unique films: composition `Story` (`src/kit/`), from a shot plan `specs/<slug>.plan.json` checked by
-  `python3 -I tools/plan.py`. Storyboard first: `.claude/skills/inkline-film/reference/storyboarding.md`.
-- The fixed template is `src/film/Film.tsx` (composition `Film`, 1920x1080, 24 fps, 720 frames). Copy comes in as props
-  (`public/films/<slug>/props.json`, written by `tools/film.py`).
-- Check copy: `python3 -I tools/film.py specs/<slug>.json`. Render: `bash tools/render.sh <props> out/<slug>.mp4`.
-  Check motion: `python3 -I tools/motion_qa.py out/<slug>.mp4`.
-- Show the user the storyboard table and a stills sheet before any full render.
-- Never invent claims, never draw or imitate a company's logo, credit the CC-BY models when publishing.
+- **The film:** composition `Story` (`src/kit/Story.tsx`) renders a plan, `specs/<slug>.plan.json`. Each film's
+  own scenes live in `src/films/<slug>/` (registered in `src/films/index.ts`), built with `src/build/` (geometry,
+  the walking `Person`) and the style pieces in `src/kit/common.tsx`.
+- **Pipeline:**
+  - `python3 -I tools/plan.py specs/<slug>.plan.json` checks the plan and writes the props and score;
+  - `bash tools/stills.sh <props> out/<slug>-board <frames>` makes the real-frame board;
+  - `bash tools/render.sh <props> out/<slug>.mp4` renders and runs QA;
+  - `python3 -I tools/showcase.py specs/<slug>.plan.json out/<slug>.mp4` writes the showcase.
+- **Health check:** `bash tools/selftest.sh` (expect `PASS`).
+- **Rules:**
+  - Copy the style, never the content (`reference/style-bible.md`).
+  - Storyboard first (`reference/storyboarding.md`); design the sound with it (`reference/sound-design.md`).
+  - Show the user the storyboard, then the real-frame board, before any full render.
+  - Never invent claims. Never draw or imitate a company's logo. Label sample films as fictional.
+  - Credit the CC-BY models when publishing.
+- **The old fixed card template** is `src/film/Film.tsx` (composition `Film`, `tools/film.py`). Use it only when
+  someone asks for exactly that film.
