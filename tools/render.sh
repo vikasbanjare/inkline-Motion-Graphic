@@ -25,3 +25,11 @@ ffmpeg -v error -y -f concat -safe 0 -i "$DIR/list.txt" -c copy "$DIR/video.mp4"
 ffmpeg -v error -y -i "$DIR/video.mp4" -i "$SCORE" -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -shortest "$OUT"
 echo "rendered $OUT"
 python3 -I tools/motion_qa.py "$OUT" --sheet "${OUT%.mp4}.qa.jpg" || true
+# every frame, not samples: pops, hitches and camera lurches (the shots' own cut frames are allowed)
+CUTS="$(python3 -c "
+import json,sys
+p=json.load(open(sys.argv[1])); t=0; c=[]
+for s in (p.get('plan') or {}).get('shots', []):
+    c.append(t); t+=s['dur']
+print(','.join(map(str,c[1:])))" "$PROPS")"
+python3 -I tools/jerk_qa.py "$OUT" --cuts "$CUTS" || true

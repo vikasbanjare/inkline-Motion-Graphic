@@ -97,7 +97,7 @@ export const EMesh: React.FC<{
     if (m.opacity !== undefined || live?.opacity !== undefined) x.transparent = true;
     return x;
   }, [g, width, height]);
-  setU(mat, liveU(live));
+  setU(mat, { uRefDepth: rd, ...liveU(live) }); // depth scale follows the context every frame (framings can change it)
   setPal(mat, live?.pal);
   setKey(mat, live?.key);
   return <mesh geometry={g} material={mat} position={pos} rotation={rot} scale={scale} />;

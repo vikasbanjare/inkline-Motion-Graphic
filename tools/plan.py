@@ -30,8 +30,8 @@ ROOT = os.path.dirname(HERE)
 FPS = 24
 BEAT = 11.52  # 125 BPM at 24 fps
 WORLDS = {"scene", "garden", "object", "globe", "hall", "deep", "city", "orbit", "table", "type", "stage", "lockup"}
-ENTERS = {"lines", "bloom", "letters", "blinds", "focus", "cut", "iris", "split", "wipe", "match", "dive", "print"}
-OVERLAP = {"lines": 0, "bloom": 0, "letters": 0, "blinds": 0, "focus": 0, "cut": 0, "iris": 18, "split": 24, "wipe": 16, "match": 14, "dive": 0, "print": 0}
+ENTERS = {"lines", "bloom", "letters", "blinds", "focus", "cut", "iris", "split", "wipe", "match", "dive", "print", "lens", "sweep"}
+OVERLAP = {"lines": 0, "bloom": 0, "letters": 0, "blinds": 0, "focus": 0, "cut": 0, "iris": 18, "split": 24, "wipe": 16, "match": 14, "dive": 0, "print": 0, "lens": 0, "sweep": 16}
 FIXED = {"stage": 84, "lockup": 75}
 OPENERS = {"lines", "bloom", "letters", "blinds", "focus", "cut", "iris"}
 MIN_SEC = {"garden": 4.5, "object": 3.5, "globe": 4.0, "hall": 3.8, "deep": 3.0, "city": 4.0, "orbit": 3.2, "table": 3.8, "type": 2.4}
@@ -175,6 +175,10 @@ def cues(spec, shots, durs):
             ev += [{"at": t, "fx": "riser", "sec": 1.1, "gain": 0.5}, {"at": t + 2, "fx": "impact", "big": 0.6, "gain": 0.6}]
         elif e == "dive":
             ev += [{"at": t, "fx": "riser", "sec": 0.6, "gain": 0.6}, {"at": t + 2, "fx": "swell", "sec": 0.5, "gain": 0.6}]
+        elif e == "lens":
+            ev += [{"at": t, "fx": "impact", "big": 0.4, "gain": 0.6}, {"at": t + 3, "fx": "whoosh", "sec": 0.9, "lo": 200, "hi": 2000, "gain": 0.5}]
+        elif e == "sweep":
+            ev += [{"at": t, "fx": "whoosh", "sec": 0.7, "lo": 150, "hi": 1500, "gain": 0.6, "pan": -0.5}, {"at": t + OVERLAP[e] // 2, "fx": "impact", "big": 0.3, "gain": 0.4}]
         elif e == "print":
             ev += [{"at": t, "fx": "swell", "sec": 1.0, "gain": 0.9}, {"at": t + 1, "fx": "impact", "big": 0.8, "gain": 0.8}]
         if s.get("text"):

@@ -8,6 +8,7 @@ import { Outro } from "../film/scenes/outro.tsx";
 import { CopyProvider, DEFAULT_COPY, type FilmCopy } from "../film/scenes/copy.tsx";
 import { useFilmFonts } from "../film/scenes/fonts.tsx";
 import { T } from "../film/core/looks.ts";
+import { Iris, irisOpen, irisClose, LensSweep } from "./lens.tsx";
 import { Flood, H, W, easeInOut, type WorldProps } from "./common.tsx";
 import { OVERLAP, place, totalFrames, type Placed, type Plan } from "./plan.ts";
 import { theme } from "./theme.ts";
@@ -246,6 +247,12 @@ const ShotLayer: React.FC<{ s: Placed; plan: Plan; shots: Placed[] }> = ({ s, pl
     clip = `circle(${450 + 1800 * Math.pow(easeInOut(ramp(f, 0, ov)), 1.4)}px at 50% 50%)`;
     enterT = `scale(${0.94 + 0.06 * expoOut(ramp(f, 0, ov))})`;
   }
+  // lens grammar: a hard cut, then a dark iris opens; the outgoing shot closes its own iris first (see ./lens.tsx)
+  let irisR = 2300;
+  if (s.enter === "lens") irisR = irisOpen(f, 1, 28);
+  if (s.exit === "lens") irisR = Math.min(irisR, irisClose(f, s.dur - 16, s.dur));
+  if (s.enter === "sweep" && f < ov) clip = f < ov / 2 ? "inset(0px 0px 0px 100%)" : undefined;
+  if (s.enter === "sweep" && f < ov + 1) over = <LensSweep f={f} a={0} b={ov} />;
   let inFlood = 0;
   if (s.enter === "dive") {
     inFlood = 1 - ramp(f, 0, 10);
@@ -262,8 +269,10 @@ const ShotLayer: React.FC<{ s: Placed; plan: Plan; shots: Placed[] }> = ({ s, pl
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ clipPath: clip }}>
-        <AbsoluteFill style={{ transform: `${enterT} ${exitT}`.trim() || undefined }}>{body}</AbsoluteFill>
-        <Flood f={f + s.start} o={Math.max(flood, inFlood)} />
+        <Iris r={irisR}>
+          <AbsoluteFill style={{ transform: `${enterT} ${exitT}`.trim() || undefined }}>{body}</AbsoluteFill>
+          <Flood f={f + s.start} o={Math.max(flood, inFlood)} />
+        </Iris>
       </AbsoluteFill>
       {over}
     </AbsoluteFill>

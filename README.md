@@ -80,14 +80,16 @@ python3 -I tools/showcase.py specs/coffee.plan.json out/velmora.mp4     # film, 
 | 4. Plan | Shots, timing, themes, words, energy and foley | `specs/<slug>.plan.json`, `tools/plan.py` |
 | 5. Sound | Music by genre (lo-fi jazz, cinematic, modern pop, ambient), foley tied to the picture, mixed and mastered | `reference/sound-design.md`, `tools/sound.py` |
 | 6. Board | One real frame per shot, approved before the render | `tools/stills.sh` |
-| 7. Render and QA | 120-frame chunks, the score muxed in, a motion check for freezes and stalls | `tools/render.sh`, `tools/motion_qa.py` |
+| 7. Render and QA | 120-frame chunks, the score muxed in, a check for freezes, and an every-frame check for pops and camera lurches | `tools/render.sh`, `tools/motion_qa.py`, `tools/jerk_qa.py` |
+| 7b. Match a reference (optional) | Frame-matched comparison and look metrics against a film you admire | `tools/ref_compare.py`, `reference/lessons.md` |
 | 8. Showcase | The film, a GIF, and the storyboard in real frames | `tools/showcase.py`, `showcase/<slug>/` |
 
 **Openers** (each film opens its own way): `bloom` (a drop blooms open), `letters` (the world seen through a
 word), `blinds` (foil bars turn open), `focus` (a rack focus out of a bright blur), `lines` (pen lines race in).
 
 **Transitions:** `iris`, `match` (one shape becomes the next), `cut` (a scale step on the beat), `wipe` (a
-foil-edged diagonal), `print` (the world becomes the print on an object), `split` (a foil strip opens), `dive`.
+foil-edged diagonal), `print` (the world becomes the print on an object), `split` (a foil strip opens), `dive`,
+`lens` (the iris closes on the hero, hard cut, a new iris opens) and `sweep` (a lens edge sweeps across).
 
 **Ready-made kit worlds** (`src/kit/worlds/`; a film uses one only when it is exactly the right picture):
 - garden, globe, orbit, table, city, hall and deep;

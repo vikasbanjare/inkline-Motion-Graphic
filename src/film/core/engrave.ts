@@ -50,7 +50,7 @@ uniform float uPeriodFrac, uAngle, uToneGamma, uDmax, uTHi, uCovGamma, uFill;
 uniform float uWobble, uWobbleScale, uWidthJitter, uDetail, uAA;
 uniform vec3 uStops[4]; uniform vec4 uStopPos; uniform int uStopCount;
 uniform float uGrain, uMottle, uMottleScale, uSeed;
-uniform float uEdge, uSpace, uRefDepth, uPoster, uFoil, uFoilPhase, uAtmos, uDim, uOpacity, uLift;
+uniform float uInk, uEdge, uSpace, uRefDepth, uPoster, uFoil, uFoilPhase, uAtmos, uDim, uOpacity, uLift;
 uniform float uHatch, uHatchT, uStipple, uFollow; // engraving detail: cross-hatch in the shadows, stipple in the lights, form-following lines
 uniform float uWash; // tonal watercolour underlay under the line screen (0 = pure line screen)
 uniform vec3 uAtmosColor;
@@ -88,6 +88,7 @@ void main(){
   t = pow(t, uToneGamma);
   // contour: silhouettes darken (engravers cut the outline), CRITIQUE/SPEC: 2 px dark outline
   t *= mix(1.0, smoothstep(0.02, 0.32, abs(dot(N, V))), uEdge);
+  float inkLine = 1.0 - smoothstep(0.1, 0.2, abs(dot(N, V)));
 
   // carrier coordinates: screen-locked (0) or object-anchored and scaled with distance (1)
   vec2 q = frag;
@@ -151,6 +152,7 @@ void main(){
     // watercolour wash: the smooth tone shows through under the lines (the lines become the drawing over a tint)
     if (uWash > 0.0) v = mix(v, mix(t, 1.0, 0.25), uWash);
   }
+  v = mix(v, 0.0, uInk * inkLine);
   v = mix(v, 1.0, uAtmos * 0.55);
   vec3 col = gradientMap(clamp(v, 0.0, 1.0));
   if (uAtmos > 0.0) col = mix(col, uAtmosColor, uAtmos * 0.35);
@@ -194,6 +196,7 @@ export type EOpts = {
   atmosColor?: string;
   lift?: number;
   edge?: number;
+  ink?: number; // crisp dark outline at the silhouette (engraver's contour), 0..1
   seed?: number;
   opacity?: number;
   res?: [number, number];
@@ -259,6 +262,7 @@ export const engrave = (o: EOpts) => {
       uMottleScale: { value: 0.012 },
       uSeed: { value: o.seed ?? 3 },
       uEdge: { value: o.edge ?? 0.85 },
+      uInk: { value: o.ink ?? 0 },
       uSpace: { value: o.space ?? 1 },
       uRefDepth: { value: o.refDepth ?? 15 },
       uPoster: { value: o.poster ? 1 : 0 },

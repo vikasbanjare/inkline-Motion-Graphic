@@ -111,9 +111,11 @@ Fix it, re-render, then send the sheet to the user and wait for "go".
 bash tools/render.sh public/films/<slug>/props.json out/<slug>.mp4
 ```
 
-This renders in 120-frame chunks, joins them, adds the score and runs `tools/motion_qa.py`.
+This renders in 120-frame chunks, joins them, adds the score and runs two checks: `tools/motion_qa.py` (freezes and
+stalls) and `tools/jerk_qa.py` (every frame: SPIKE = an unintended pop, STUTTER = a repeated or late frame, LURCH =
+the camera snaps instead of easing; the plan's own cuts are allowed).
 
-**Expect:** `freezes: none`. The lockup's opening black frames and its slow hold are known and fine. For anything
+**Expect:** `freezes: none` and no SPIKE or LURCH away from a planned move. The lockup's opening black frames and its slow hold are known and fine. For anything
 else, look at the flagged frames in the export, not the preview, and fix the motion (overlap the moves, or keep a
 drift through the hand-over).
 
@@ -132,7 +134,7 @@ This writes `showcase/<slug>/`:
 
 Send the user the film and the board. Say plainly that the score is synthesized: clean, not a produced track.
 
-### 7. Notes
+### 7. Notes and the improvement loop
 
 Turn the user's timestamps into frames (seconds × 24) and look at those frames first.
 - **Story notes:** change the board first, then the scenes.
@@ -141,3 +143,10 @@ Turn the user's timestamps into frames (seconds × 24) and look at those frames 
   pitfalls: micro-stops, chunk-safe animation and headless text rendering.
 - **Sound notes:** change the shots' `energy`, `drop` and `sfx`, or the genre, and re-run step 3. That only
   re-mixes; re-run render.sh to mux the new score (delete `.render/<slug>/video.mp4` only).
+
+**When the user gives a reference film** ("make it feel like this"):
+1. Frame-match first: their frames and ours at the same timestamps, side by side; list each difference in a line.
+2. Guard the look with `python3 -I tools/ref_compare.py REF.mp4 out/<slug>.mp4` (a guard, not the score).
+3. Copy the reference's cut grammar, not its pictures (`reference/transitions.md`, the lens grammar).
+4. Fix the biggest gap, render, run `jerk_qa`, send a board or a clip. Repeat. Never keep reference frames, audio
+   or screenshots in the repo.
