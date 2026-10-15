@@ -21,7 +21,7 @@ physical (a creature) passing across the frame. Prefer these over flood, mosaic 
 
 | Transition | Use when | How it is built | Watch for |
 |---|---|---|---|
-| **`lens`: iris close, cut, iris open** | Leaving one world on its hero and arriving in another | The outgoing shot closes a soft dark iris onto its centre over its last 16 frames; hard cut; the new shot opens its own iris from loupe size to full frame over 28 frames (`src/kit/lens.tsx`: `Iris`, `irisOpen`, `irisClose`) | Both radii are sine-eased and start on the cut. A hold, then a snap, reads as a lurch |
+| **`lens`: iris close, cut, iris open** | Leaving one world on its hero and arriving in another | The outgoing shot closes a soft dark iris onto its centre over its last 16 frames; hard cut; the new shot opens its own iris from loupe size to full frame over 28 frames (`src/kit/lens.tsx`: `Iris`, `irisOpen`, `irisClose`) | The close eases in (accelerates into the cut) and the open eases out (leaves the cut moving). An ease-in-out open repeats the first frame: a visible hitch |
 | **`sweep`: lens-edge sweep** | A cut inside one place, or between two close worlds | A huge soft black disc passes left to right over 16 frames; the new shot appears behind its darkest point (`LensSweep`) | The disc must cover the whole frame at the swap frame |
 | **Persistent loupe + hard cuts** | Several close-ups in a row | Fade a dark radial mask in once and keep it; hard cut on the beat inside it (build it in the film's scene with `Iris`) | Never fade the lens out before the cut: it reads as a blink |
 | **Creature wipe** | Hiding a cut, or crossing the words | A fish, bird or leaf very close to camera, fast, crosses the frame | Close and fast, or it reads as a prop |

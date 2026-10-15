@@ -25,12 +25,13 @@ export const Iris: React.FC<{ r: number; cx?: number; cy?: number; children: Rea
 };
 
 export const easeIO = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-const k = (f: number, a: number, b: number) => 0.5 - 0.5 * Math.cos(Math.PI * Math.min(1, Math.max(0, (f - a) / (b - a))));
+const t01 = (f: number, a: number, b: number) => Math.min(1, Math.max(0, (f - a) / (b - a)));
 
-/** Iris radius opening between frames a and b, from r0 to the full frame (even sine ease: no hold, no snap). */
-export const irisOpen = (f: number, a: number, b: number, r0 = 560) => r0 + (FULL - r0) * k(f, a, b);
-/** Iris radius closing between frames a and b, from the full frame down to r1. */
-export const irisClose = (f: number, a: number, b: number, r1 = 520) => FULL - (FULL - r1) * k(f, a, b);
+/** Iris radius opening between frames a and b, from r0 to the full frame. Sine ease-out: it leaves the cut moving
+ * (an ease-in-out repeated the first frame, which jerk_qa flags as a STUTTER) and settles gently. */
+export const irisOpen = (f: number, a: number, b: number, r0 = 560) => r0 + (FULL - r0) * Math.sin((Math.PI / 2) * t01(f, a, b));
+/** Iris radius closing between frames a and b, from the full frame down to r1. Sine ease-in: it accelerates into the cut. */
+export const irisClose = (f: number, a: number, b: number, r1 = 520) => FULL - (FULL - r1) * (1 - Math.cos((Math.PI / 2) * t01(f, a, b)));
 
 /** The lens edge sweeping across the frame between frames a and b; change the shot at the midpoint. */
 export const LensSweep: React.FC<{ f: number; a: number; b: number }> = ({ f, a, b }) => {

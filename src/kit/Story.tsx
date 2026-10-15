@@ -249,8 +249,8 @@ const ShotLayer: React.FC<{ s: Placed; plan: Plan; shots: Placed[] }> = ({ s, pl
   }
   // lens grammar: a hard cut, then a dark iris opens; the outgoing shot closes its own iris first (see ./lens.tsx)
   let irisR = 2300;
-  if (s.enter === "lens") irisR = irisOpen(f, 1, 28);
-  if (s.exit === "lens") irisR = Math.min(irisR, irisClose(f, s.dur - 16, s.dur));
+  if (s.enter === "lens") irisR = irisOpen(f, -1, 27);
+  if (s.exit === "lens") irisR = Math.min(irisR, irisClose(f, s.dur - 16, s.dur - 1));
   if (s.enter === "sweep" && f < ov) clip = f < ov / 2 ? "inset(0px 0px 0px 100%)" : undefined;
   if (s.enter === "sweep" && f < ov + 1) over = <LensSweep f={f} a={0} b={ov} />;
   let inFlood = 0;
