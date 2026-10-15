@@ -1,0 +1,259 @@
+{
+ "fps": 24,
+ "frames": 881,
+ "genre": "lofi_jazz",
+ "bpm": 84,
+ "key": "F",
+ "sections": [
+  {
+   "from": 0,
+   "to": 137,
+   "energy": 0.12
+  },
+  {
+   "from": 137,
+   "to": 214,
+   "energy": 0.25
+  },
+  {
+   "from": 214,
+   "to": 291,
+   "energy": 0.4
+  },
+  {
+   "from": 291,
+   "to": 360,
+   "energy": 0.55
+  },
+  {
+   "from": 360,
+   "to": 420,
+   "energy": 0.65
+  },
+  {
+   "from": 420,
+   "to": 489,
+   "energy": 0.72
+  },
+  {
+   "from": 489,
+   "to": 540,
+   "energy": 0.8
+  },
+  {
+   "from": 540,
+   "to": 609,
+   "energy": 0.9
+  },
+  {
+   "from": 609,
+   "to": 669,
+   "energy": 0.2,
+   "drop": true
+  },
+  {
+   "from": 669,
+   "to": 729,
+   "energy": 1.0
+  },
+  {
+   "from": 729,
+   "to": 806,
+   "energy": 1.0
+  },
+  {
+   "from": 806,
+   "to": 881,
+   "energy": 1.0,
+   "end": true
+  }
+ ],
+ "events": [
+  {
+   "at": 10,
+   "fx": "drop"
+  },
+  {
+   "at": 12,
+   "until": 140,
+   "fx": "wind",
+   "gain": 0.8
+  },
+  {
+   "at": 30,
+   "until": 140,
+   "fx": "birds"
+  },
+  {
+   "at": 141,
+   "until": 177,
+   "fx": "rustle",
+   "pan": 0.2
+  },
+  {
+   "at": 137,
+   "until": 209,
+   "fx": "birds",
+   "gain": 0.6
+  },
+  {
+   "at": 214,
+   "until": 296,
+   "fx": "city",
+   "gain": 0.9
+  },
+  {
+   "at": 218,
+   "fx": "door",
+   "pan": -0.4
+  },
+  {
+   "at": 228,
+   "until": 296,
+   "fx": "steps",
+   "rate": 1.9,
+   "pan_from": -0.5,
+   "pan_to": 0.1
+  },
+  {
+   "at": 291,
+   "until": 358,
+   "fx": "drum"
+  },
+  {
+   "at": 291,
+   "fx": "air",
+   "sec": 0.5
+  },
+  {
+   "at": 360,
+   "until": 422,
+   "fx": "steps",
+   "rate": 1.9,
+   "pan_from": -0.3,
+   "pan_to": 0.3
+  },
+  {
+   "at": 370,
+   "fx": "lamp",
+   "pan": -0.5
+  },
+  {
+   "at": 382,
+   "fx": "lamp",
+   "pan": -0.2
+  },
+  {
+   "at": 394,
+   "fx": "lamp",
+   "pan": 0.1
+  },
+  {
+   "at": 360,
+   "until": 422,
+   "fx": "steam",
+   "pan": 0.5
+  },
+  {
+   "at": 360,
+   "until": 422,
+   "fx": "city",
+   "gain": 0.7
+  },
+  {
+   "at": 424,
+   "until": 482,
+   "fx": "grind",
+   "rate": 2.1
+  },
+  {
+   "at": 489,
+   "until": 547,
+   "fx": "steps",
+   "rate": 1.7,
+   "pan_from": -0.4,
+   "pan_to": 0.0
+  },
+  {
+   "at": 507,
+   "until": 547,
+   "fx": "hum",
+   "pan": 0.1
+  },
+  {
+   "at": 489,
+   "until": 547,
+   "fx": "city",
+   "gain": 0.5
+  },
+  {
+   "at": 554,
+   "until": 602,
+   "fx": "pour"
+  },
+  {
+   "at": 570,
+   "until": 602,
+   "fx": "drip",
+   "rate": 2.4
+  },
+  {
+   "at": 560,
+   "until": 602,
+   "fx": "steam"
+  },
+  {
+   "at": 609,
+   "fx": "door",
+   "pan": -0.1
+  },
+  {
+   "at": 615,
+   "fx": "bell"
+  },
+  {
+   "at": 609,
+   "until": 671,
+   "fx": "steps",
+   "rate": 1.6,
+   "pan_from": 0.0,
+   "pan_to": -0.1
+  },
+  {
+   "at": 669,
+   "fx": "swell",
+   "sec": 0.7
+  },
+  {
+   "at": 673,
+   "until": 709,
+   "fx": "pour",
+   "gain": 0.6
+  },
+  {
+   "at": 669,
+   "until": 731,
+   "fx": "cafe"
+  },
+  {
+   "at": 729,
+   "until": 801,
+   "fx": "cafe"
+  },
+  {
+   "at": 751,
+   "fx": "clink",
+   "gain": 0.8
+  },
+  {
+   "at": 739,
+   "until": 801,
+   "fx": "steam"
+  },
+  {
+   "at": 808,
+   "fx": "clink",
+   "gain": 0.6
+  }
+ ]
+}

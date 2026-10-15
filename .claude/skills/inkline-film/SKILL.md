@@ -1,77 +1,109 @@
 ---
 name: inkline-film
-description: Make a 30-second engraved 3D claim film from any product script. The film is a finished template — engraved 3D worlds in duotones, the world turning into the card, a foil-strip close-up that splits open, a globe that becomes a colonnade floor, a number rising from a shell, a white-set outro where the card drops into a phone, a logo lockup, and an original score with SFX. Claude reads the script, places each real claim in the shot that suits it (the storyboard), tools/film.py checks every line fits, then stills to the user, render, motion QA and delivery. Use whenever someone pastes a video script, ad brief or feature list and wants a launch or product film made with this repo.
+description: Make an engraved 3D launch film from any script, with its own storyboard and its own subjects. The style is fixed (engraving shader, two-ink duotones, paper and line field, foil on one hero, serif headlines, scale-step cuts on the beat, the transition set, an original score), and the content is designed for the script. Claude storyboards like a director (spine, the script's world of objects, shape, a designed shot per beat, designed joins), builds that film's own scenes in src/films/<slug>/ from the subject builder (lathe, extrude, tube, leaf, blob, mannequin, 2D foil overlays), then checks it with tools/plan.py (beat grid and score), sends stills to the user, renders, runs motion QA and delivers. Use whenever someone pastes a video script, ad brief, product or store launch, or feature list, or asks for a brand film in this style.
 ---
+# Inkline film: a script in, a unique film out
 
-# Inkline film: a script in, a finished film out
+**Copy the style, never the content.** The style is the engraving, the inks, the paper, the foil, the type, the
+camera rhythm, the transitions and the score (`reference/style-bible.md`). The content is invented for each
+script: a coffee film has a coffee branch, a roaster, a pour-over and a café, and a space film has a rocket, stage
+separation and orbits. Re-using the garden, the card or the colonnade for a script they don't belong to is the
+failure this skill exists to prevent.
 
-The look, worlds, camera moves, transitions, timing and score are fixed and already tuned (`src/film/`).
-Your job is to direct: put the script's real claims into the film's slots so every shot says something true
-and every line fits. A worked example is `specs/example.json`.
+There are two compositions:
+- **`Story`** (use this): any shot plan. Its shots are the film's own scenes (`src/films/<slug>/`, `"world":
+  "scene"`) and, only where one fits exactly, a kit world (`src/kit/worlds/`). It runs from
+  `specs/<slug>.plan.json` through `tools/plan.py`.
+- **`Film`**: the original fixed 30-second card film; only its words change (`tools/film.py`). Use it only when
+  the user asks for "the same film as the example".
 
 ## Hard rules
 
 - **Copy:**
-  - Every claim on screen is the script's own approved wording. Never invent a number, benefit or tagline.
-    If a number looks unverified, ask.
+  - Every claim on screen is the script's own approved wording. Never invent a number, offer, date or address.
+    If one is missing, ask.
+  - For a sample or a pitch with no real brand, use a clearly fictional brand. Label the film as a sample, and
+    keep its claims in the spec's `note`.
   - No card or account numbers and no personal data.
-- **Logo:** use only the brand's own logo file (white on transparent PNG). Without one, `tools/film.py` sets the
-  name in plain type. Never redraw or imitate any company's logo, and never put another company's mark on screen.
-- **Labelling:** if the brand did not commission the film, the user must label it as spec or concept work when
-  sharing it.
+- **Logo:**
+  - Use only the brand's own logo file (white on transparent PNG). With no file, `plan.py` sets the name in
+    plain type.
+  - Never redraw or imitate a logo, and never put another company's mark on screen. The shopfront sign in `city`
+    is the name in plain type.
+- **Labelling:** if the brand didn't commission the film, the user must label it as spec or concept work.
 - **Credits:** credit the CC-BY 3D models when the film is published (`public/models/CREDITS.md`).
 - **Remotion licence:** Remotion is free for individuals and companies of up to 3 people. Tell a larger
   company it needs a Remotion company licence (remotion.dev/license).
 
-## The storyboard (slots, shot by shot)
-
-| Time | Shot | Slot | Best for | Limit |
-|---|---|---|---|---|
-| 0–6 s | Pen lines race in, a garden grows, a fox walks | `claim1` head / sub | the lead benefit: rewards, cashback, growth | head ≤ 26 chars |
-| 6–8 s | The garden becomes the card's print, logo on the card | `card` head / sub | the product's full name | head ≤ 30 |
-| 8–11 s | A push into the foil strip; one phrase lands whole | `strip[0]`, with `strip[1]` scrolling past | the sharpest short claim, in CAPITALS | `strip[0]` ≤ 18 |
-| 11–16 s | The strip splits open onto the travel world (hotel, lantern, flights over a globe) | `claim2` | travel, redeem, worldwide, reach | head ≤ 30 |
-| 16–20 s | The globe becomes the colonnade floor; products drop onto plinths | `claim3` head / sub | choice, catalogue, store, partners | head ≤ 26 |
-| 20–23 s | Fish and an iridescent shell; a big number rises like a pearl | `hero` label / value | the one number: a fee, a rate, a limit ("₹0", "0%", "5X") | value ≤ 5 |
-| 23–27 s | White set, lasers, the card drops into a phone, the claims tick on | `card_print`, `outro.title`, `outro.rows` (2–4), `outro.left` / `outro.right` | the claim list, with the product name either side | rows ≤ 64, left/right ≤ 26 |
-| 27–30 s | Logo lockup on black | `logo`, `lockup` | the product line | ≤ 40 |
-
-If the script has fewer than four strong claims, reuse the strongest one in two slots (for example `strip[0]`
-and `hero`). Never pad with invented claims.
-
 ## Steps
 
-### 1. Direct the script (no code)
+### 1. Storyboard: the most important step (no code yet)
 
-List the script's real claims, word for word. Put each one where its shot already means something: travel
-claims on the globe, a fee or rate on the shell, choice in the colonnade. Write each headline as the 1–4
-words a viewer remembers, and the sub-line as the rest of the exact wording.
+Read `reference/style-bible.md`, then follow `reference/storyboarding.md` in full:
+1. the brief → the logline;
+2. the **concept device** (parallel journeys, one take, object's POV, before/after, ritual, scale shift, reveal)
+   and a **motif**;
+3. a **protagonist** and a three-beat **arc**;
+4. the **beat sheet** with a hook in the first 2 s and a pace curve;
+5. the script's own **world** of objects;
+6. one shot per beat, with its size, angle, move, action, words, sound and a designed join.
 
-Show the user the filled storyboard table. Ask one question only if a claim is missing or doubtful.
+Plan the sound at the same time (`reference/sound-design.md`): the genre from the concept, the energy per shot, the
+drop before the turn, and the foley each picture implies.
 
-### 2. Write the copy sheet
+Show the user the board (logline, device, motif, protagonist, arc, the shot table) and wait for approval or notes.
+Ask at most one question, and only if a claim or the audience is unclear.
 
-Copy `specs/example.json` to `specs/<slug>.json` and replace every value. The full schema and the limits are
-at the top of `tools/film.py`. If the user has a logo file, put it in `public/brand/` and set `"logo"`.
+### 2. Build the film's scenes and write the plan
 
-### 3. Check it fits
+1. **Make `src/films/<slug>/`**, one `React.FC<WorldProps>` per scene, built with:
+   - `src/build/geo.ts`: lathe, extrude, tube, leaf, blob, textures, signs;
+   - `src/build/person.tsx`: the walking `Person`, with stride-locked feet, a coat and a hat;
+   - the style pieces in `src/kit/common.tsx`.
+
+   The worked example is `src/films/velmora/`: hills, branch, street (door / walk / corner), roaster, grinder,
+   pour-over, latte art, café, counter.
+2. **Register the film:** export its scenes from `src/films/<slug>/index.tsx` and add the film to
+   `src/films/index.ts`.
+3. **Write `specs/<slug>.plan.json`** (copy `specs/coffee.plan.json`):
+   - **Top level:** `"sound": {"genre", "bpm", "key"}`, plus a `"board"` with title, logline, device, motif,
+     protagonist and arc.
+   - **Each shot:** `{"world": "scene", "scene", "sec", "enter", "theme", "energy", "drop"?, "text"?, "p"?,
+     "sfx": [...], "board": {beat, shot, action, sound, in, why}}`.
+   - **The first shot** enters by an opener chosen for this film: `bloom`, `letters`, `blinds`, `focus` or `lines`.
+     Never default to `lines`.
+   - **The last shot** is the lockup.
+4. **Typecheck:** `npx tsc --noEmit`.
+
+### 3. Check it and score it
 
 ```sh
-python3 -I tools/film.py specs/<slug>.json
+python3 -I tools/plan.py specs/<slug>.plan.json
 ```
 
-**You should see:** `ok: <slug> fits the film`, then the still, render and QA commands. A line that is too long
-is named, with its limit. Shorten it (keep the meaning and the numbers) and run the check again.
+**You should see:**
+- `wrote …score.wav (genre BPM in key)`;
+- `ok: <slug>: N shots, F frames`;
+- the shot table.
 
-### 4. Stills to the user (gate)
+Cuts snap to the genre's beat. It refuses a plan that breaks a rule (a line too long, neighbours in the same ink,
+the lockup not last, an unknown scene); fix what it names and run it again.
 
-Run the printed still command (9 key frames). Tile the stills into one sheet with ffmpeg `xstack` and look first
-yourself:
-- every word readable;
-- the logo inside the card's red block and on the card print;
-- frame 272 showing `strip[0]` whole.
+### 4. The realistic board (gate)
 
-**Send the sheet to the user** and wait for "go".
+Render one real frame per panel and look at it as a director would:
+
+```sh
+bash tools/stills.sh public/films/<slug>/props.json out/<slug>-board <one frame per shot, from step 3>
+```
+
+Look at `out/<slug>-board/sheet.jpg` yourself first:
+- would someone from this industry recognise every object?
+- is the protagonist in frame and readable in every shot they're in?
+- are the words clear of the subjects?
+- do neighbouring shots differ in scale and ink?
+
+Fix it, re-render, then send the sheet to the user and wait for "go".
 
 ### 5. Render and check
 
@@ -79,28 +111,42 @@ yourself:
 bash tools/render.sh public/films/<slug>/props.json out/<slug>.mp4
 ```
 
-This renders in 120-frame chunks, joins them, adds the score and runs `tools/motion_qa.py`.
+This renders in 120-frame chunks, joins them, adds the score and runs two checks: `tools/motion_qa.py` (freezes and
+stalls) and `tools/jerk_qa.py` (every frame: SPIKE = an unintended pop, STUTTER = a repeated or late frame, LURCH =
+the camera snaps instead of easing; the plan's own cuts are allowed).
 
-**Expect:** `freezes: none`. The film's own cut into the logo shows one repeated black frame and a slow logo
-hold; both are known and fine. Anything else flagged is new: look at the saved frames in the export, not
-the preview.
+**Expect:** `freezes: none` and no SPIKE or LURCH away from a planned move. The lockup's opening black frames and its slow hold are known and fine. For anything
+else, look at the flagged frames in the export, not the preview, and fix the motion (overlap the moves, or keep a
+drift through the hand-over).
 
-### 6. Deliver
-
-Make a share copy:
+### 6. Showcase and deliver
 
 ```sh
-ffmpeg -i out/<slug>.mp4 -c:v libx264 -crf 26 -preset slow -c:a aac -b:a 192k out/<slug>-share.mp4
+python3 -I tools/showcase.py specs/<slug>.plan.json out/<slug>.mp4
 ```
 
-Send it with the storyboard table and what QA found. Say plainly:
-- the worlds (garden, travel, colonnade, shell) are the same in every film;
-- the score is synthesized: clean, not a produced track.
+This writes `showcase/<slug>/`:
+- `film.mp4`;
+- `preview.gif`;
+- `board/NN.jpg` (real frames from the export);
+- `STORYBOARD.md`, which renders on GitHub;
+- `board.html`.
 
-### 7. Notes
+Send the user the film and the board. Say plainly that the score is synthesized: clean, not a produced track.
 
-Turn timestamps into frames (seconds × 24) and look at those frames first.
-- **Copy notes:** edit the sheet, re-run step 3, then re-run `tools/render.sh`. Delete `.render/<slug>/` first
-  so every chunk re-renders.
-- **Look notes** (new worlds, colours or models): bespoke work in `src/film/scenes/`. Read
-  `reference/transitions.md` and `reference/lessons.md` first.
+### 7. Notes and the improvement loop
+
+Turn the user's timestamps into frames (seconds × 24) and look at those frames first.
+- **Story notes:** change the board first, then the scenes.
+- **Copy and order notes:** edit the plan, re-run step 3, delete `.render/<slug>/` and re-render.
+- **Look notes:** change the film's own scenes in `src/films/<slug>/`. `reference/lessons.md` covers the motion
+  pitfalls: micro-stops, chunk-safe animation and headless text rendering.
+- **Sound notes:** change the shots' `energy`, `drop` and `sfx`, or the genre, and re-run step 3. That only
+  re-mixes; re-run render.sh to mux the new score (delete `.render/<slug>/video.mp4` only).
+
+**When the user gives a reference film** ("make it feel like this"):
+1. Frame-match first: their frames and ours at the same timestamps, side by side; list each difference in a line.
+2. Guard the look with `python3 -I tools/ref_compare.py REF.mp4 out/<slug>.mp4` (a guard, not the score).
+3. Copy the reference's cut grammar, not its pictures (`reference/transitions.md`, the lens grammar).
+4. Fix the biggest gap, render, run `jerk_qa`, send a board or a clip. Repeat. Never keep reference frames, audio
+   or screenshots in the repo.

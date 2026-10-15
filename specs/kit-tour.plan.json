@@ -1,0 +1,163 @@
+{
+ "slug": "kit-tour",
+ "brand": {
+  "name": "KIT TOUR",
+  "line": "every kit world, one film"
+ },
+ "sound": {
+  "genre": "modern_pop",
+  "bpm": 112,
+  "key": "C"
+ },
+ "shots": [
+  {
+   "world": "garden",
+   "sec": 4.6,
+   "enter": "letters",
+   "theme": "meadow",
+   "cast": [
+    "fox",
+    "plant",
+    "flowers"
+   ],
+   "text": {
+    "head": "Grow"
+   }
+  },
+  {
+   "world": "globe",
+   "sec": 4.0,
+   "enter": "iris",
+   "theme": "dusk",
+   "cast": [
+    "car"
+   ],
+   "p": {
+    "home": [
+     77.6,
+     12.9
+    ],
+    "to": [
+     [
+      2.3,
+      48.8
+     ],
+     [
+      -74,
+      40.7
+     ]
+    ]
+   },
+   "text": {
+    "head": "Everywhere"
+   }
+  },
+  {
+   "world": "hall",
+   "sec": 3.8,
+   "enter": "match",
+   "theme": "terracotta",
+   "cast": [
+    "boombox",
+    "shoe",
+    "bottle"
+   ],
+   "text": {
+    "head": "Choice"
+   }
+  },
+  {
+   "world": "orbit",
+   "sec": 3.2,
+   "enter": "wipe",
+   "theme": "sky",
+   "cast": [
+    "amber"
+   ],
+   "text": {
+    "head": "Smart"
+   }
+  },
+  {
+   "world": "table",
+   "sec": 3.8,
+   "enter": "cut",
+   "theme": "honey",
+   "cast": [
+    "cup",
+    "dish"
+   ],
+   "p": {
+    "steam": true
+   }
+  },
+  {
+   "world": "city",
+   "sec": 4.0,
+   "enter": "cut",
+   "theme": "graphite",
+   "cast": [
+    "figure",
+    "car"
+   ],
+   "p": {
+    "sign": "TESTCO",
+    "enter": true
+   }
+  },
+  {
+   "world": "object",
+   "sec": 4.8,
+   "enter": "print",
+   "theme": "roastery",
+   "p": {
+    "strip": [
+     "TEST STRIP",
+     "SECOND"
+    ]
+   }
+  },
+  {
+   "world": "deep",
+   "sec": 3.0,
+   "enter": "split",
+   "theme": "deep",
+   "value": {
+    "label": "FEE",
+    "value": "0"
+   }
+  },
+  {
+   "world": "type",
+   "sec": 2.6,
+   "enter": "cut",
+   "theme": "blush",
+   "p": {
+    "lines": [
+     "One line",
+     "to say it"
+    ],
+    "foil": "say"
+   }
+  },
+  {
+   "world": "stage",
+   "enter": "dive",
+   "p": {
+    "rows": [
+     "one",
+     "two"
+    ],
+    "left": "left",
+    "right": "right",
+    "screen": "s",
+    "title": "t"
+   }
+  },
+  {
+   "world": "lockup",
+   "enter": "cut"
+  }
+ ],
+ "note": "A tour of the ready-made kit worlds and transitions (fictional brand). Used by tools/selftest.sh."
+}

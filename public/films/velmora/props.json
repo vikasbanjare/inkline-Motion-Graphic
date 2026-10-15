@@ -1,0 +1,447 @@
+{
+ "composition": "Story",
+ "frames": 881,
+ "plan": {
+  "slug": "velmora",
+  "brand": {
+   "name": "VELMORA",
+   "logo": "films/velmora/wordmark.png",
+   "line": "first café · opens 1 November · sample film"
+  },
+  "shots": [
+   {
+    "world": "scene",
+    "scene": "hills",
+    "enter": "bloom",
+    "theme": "forest",
+    "energy": 0.12,
+    "text": {
+     "head": "Before sunrise,"
+    },
+    "sfx": [
+     {
+      "at": 10,
+      "fx": "drop"
+     },
+     {
+      "at": 12,
+      "until": 140,
+      "fx": "wind",
+      "gain": 0.8
+     },
+     {
+      "at": 30,
+      "until": 140,
+      "fx": "birds"
+     }
+    ],
+    "board": {
+     "beat": "Hook + set-up · A",
+     "shot": "EWS · eye level · crane down",
+     "action": "A drop of coffee falls onto the paper and blooms open into coffee hills at first light: ridges in mist, rows of shrubs heavy with cherries.",
+     "sound": "The drop's tick; wind; far birds; one Rhodes chord.",
+     "in": "Bloom opener",
+     "why": "Open on the motif (a circle) and the origin."
+    },
+    "dur": 137
+   },
+   {
+    "world": "scene",
+    "scene": "branch",
+    "enter": "cut",
+    "theme": "meadow",
+    "energy": 0.25,
+    "sfx": [
+     {
+      "at": 4,
+      "until": 40,
+      "fx": "rustle",
+      "pan": 0.2
+     },
+     {
+      "at": 0,
+      "until": 72,
+      "fx": "birds",
+      "gain": 0.6
+     }
+    ],
+    "board": {
+     "beat": "Set-up · A",
+     "shot": "CU · slow push",
+     "action": "On one branch a cherry ripens from green to red, then lets go and falls right.",
+     "sound": "Leaf rustle; birds.",
+     "in": "Cut on the beat",
+     "why": "The bean's journey starts; its fall hands over to his first step."
+    },
+    "dur": 77
+   },
+   {
+    "world": "scene",
+    "scene": "street",
+    "enter": "cut",
+    "theme": "dusk",
+    "energy": 0.4,
+    "p": {
+     "variant": "door"
+    },
+    "text": {
+     "head": "two journeys begin."
+    },
+    "sfx": [
+     {
+      "at": 0,
+      "until": 82,
+      "fx": "city",
+      "gain": 0.9
+     },
+     {
+      "at": 4,
+      "fx": "door",
+      "pan": -0.4
+     },
+     {
+      "at": 14,
+      "until": 82,
+      "fx": "steps",
+      "rate": 1.9,
+      "pan_from": -0.5,
+      "pan_to": 0.1
+     }
+    ],
+    "board": {
+     "beat": "Set-up · B",
+     "shot": "WS · static, then he moves",
+     "action": "A blue-hour street. His door swings open; the man in the ochre coat steps out and sets off left to right.",
+     "sound": "Door latch; city; his footsteps begin, in time. Brushes enter.",
+     "in": "Match on motion (the cherry falls right, he steps right)",
+     "why": "Our protagonist, introduced in one action."
+    },
+    "dur": 77
+   },
+   {
+    "world": "scene",
+    "scene": "roast",
+    "enter": "wipe",
+    "theme": "roastery",
+    "energy": 0.55,
+    "text": {
+     "head": "Roasted slow."
+    },
+    "sfx": [
+     {
+      "at": 0,
+      "until": 67,
+      "fx": "drum"
+     },
+     {
+      "at": 0,
+      "fx": "air",
+      "sec": 0.5
+     }
+    ],
+    "board": {
+     "beat": "Journey · A",
+     "shot": "MS → TOP · orbit, then a scale-step",
+     "action": "The drum roaster turns and pours its beans into the cooling tray; the arms sweep them round.",
+     "sound": "Drum hum and bean rattle; a soft air on the wipe.",
+     "in": "Foil wipe",
+     "why": "Transformation: the bean is roasted."
+    },
+    "dur": 69
+   },
+   {
+    "world": "scene",
+    "scene": "street",
+    "enter": "match",
+    "theme": "dusk",
+    "energy": 0.65,
+    "p": {
+     "variant": "walk"
+    },
+    "sfx": [
+     {
+      "at": 0,
+      "until": 62,
+      "fx": "steps",
+      "rate": 1.9,
+      "pan_from": -0.3,
+      "pan_to": 0.3
+     },
+     {
+      "at": 10,
+      "fx": "lamp",
+      "pan": -0.5
+     },
+     {
+      "at": 22,
+      "fx": "lamp",
+      "pan": -0.2
+     },
+     {
+      "at": 34,
+      "fx": "lamp",
+      "pan": 0.1
+     },
+     {
+      "at": 0,
+      "until": 62,
+      "fx": "steam",
+      "pan": 0.5
+     },
+     {
+      "at": 0,
+      "until": 62,
+      "fx": "city",
+      "gain": 0.7
+     }
+    ],
+    "board": {
+     "beat": "Journey · B",
+     "shot": "WS · tracking right with him",
+     "action": "He walks past the terraces; behind him the street lamps go out one by one as the sky warms; a vent breathes steam.",
+     "sound": "Footsteps panning with him; a click as each lamp goes out; steam hiss.",
+     "in": "Match (the tray's circle → the round lamps)",
+     "why": "Time passes: night turns to morning."
+    },
+    "dur": 60
+   },
+   {
+    "world": "scene",
+    "scene": "grind",
+    "enter": "cut",
+    "theme": "honey",
+    "energy": 0.72,
+    "text": {
+     "head": "Ground fresh."
+    },
+    "sfx": [
+     {
+      "at": 4,
+      "until": 62,
+      "fx": "grind",
+      "rate": 2.1
+     }
+    ],
+    "board": {
+     "beat": "Journey · A",
+     "shot": "TOP → three-quarter",
+     "action": "Over the grinder's mouth, the crank turns; grounds fall into the bowl.",
+     "sound": "The grinder's crunch, pulsing with the crank.",
+     "in": "Cut on the beat",
+     "why": "Craft, close and tactile."
+    },
+    "dur": 69
+   },
+   {
+    "world": "scene",
+    "scene": "street",
+    "enter": "cut",
+    "theme": "blush",
+    "energy": 0.8,
+    "p": {
+     "variant": "corner",
+     "sign": "VELMORA"
+    },
+    "sfx": [
+     {
+      "at": 0,
+      "until": 58,
+      "fx": "steps",
+      "rate": 1.7,
+      "pan_from": -0.4,
+      "pan_to": 0.0
+     },
+     {
+      "at": 18,
+      "until": 58,
+      "fx": "hum",
+      "pan": 0.1
+     },
+     {
+      "at": 0,
+      "until": 58,
+      "fx": "city",
+      "gain": 0.5
+     }
+    ],
+    "board": {
+     "beat": "Journey · B",
+     "shot": "Low angle · static",
+     "action": "He turns into a side street. At the far end, VELMORA's sign flickers on.",
+     "sound": "Steps slow; the sign's soft electric hum.",
+     "in": "Cut on his turn",
+     "why": "The destination appears."
+    },
+    "dur": 51
+   },
+   {
+    "world": "scene",
+    "scene": "pour",
+    "enter": "match",
+    "theme": "lagoon",
+    "energy": 0.9,
+    "text": {
+     "head": "Poured by hand."
+    },
+    "sfx": [
+     {
+      "at": 14,
+      "until": 62,
+      "fx": "pour"
+     },
+     {
+      "at": 30,
+      "until": 62,
+      "fx": "drip",
+      "rate": 2.4
+     },
+     {
+      "at": 20,
+      "until": 62,
+      "fx": "steam"
+     }
+    ],
+    "board": {
+     "beat": "Converge · A",
+     "shot": "WS → CU · push into the stream",
+     "action": "A gooseneck kettle circles over the dripper: the stream arcs in, the bed blooms and bubbles, drips fill the carafe.",
+     "sound": "The pour; drips; steam. The music is at its fullest.",
+     "in": "Match (the sign's glow → the kettle's shine)",
+     "why": "The two journeys are about to meet."
+    },
+    "dur": 69
+   },
+   {
+    "world": "scene",
+    "scene": "cafe",
+    "enter": "cut",
+    "theme": "terracotta",
+    "energy": 0.2,
+    "drop": true,
+    "p": {
+     "variant": "enter",
+     "sign": "VELMORA"
+    },
+    "sfx": [
+     {
+      "at": 0,
+      "fx": "door",
+      "pan": -0.1
+     },
+     {
+      "at": 6,
+      "fx": "bell"
+     },
+     {
+      "at": 0,
+      "until": 62,
+      "fx": "steps",
+      "rate": 1.6,
+      "pan_from": 0.0,
+      "pan_to": -0.1
+     }
+    ],
+    "board": {
+     "beat": "Turn",
+     "shot": "MS · push in",
+     "action": "The café door opens on warm light. He steps in.",
+     "sound": "Door; the shop bell. Then near-silence: one held chord.",
+     "in": "Cut on the door",
+     "why": "The turn: he arrives."
+    },
+    "dur": 60
+   },
+   {
+    "world": "scene",
+    "scene": "art",
+    "enter": "dive",
+    "theme": "roastery",
+    "energy": 1.0,
+    "sfx": [
+     {
+      "at": 0,
+      "fx": "swell",
+      "sec": 0.7
+     },
+     {
+      "at": 4,
+      "until": 40,
+      "fx": "pour",
+      "gain": 0.6
+     },
+     {
+      "at": 0,
+      "until": 62,
+      "fx": "cafe"
+     }
+    ],
+    "board": {
+     "beat": "Payoff",
+     "shot": "TOP · slow rotate",
+     "action": "From above, a rosetta draws itself into the crema.",
+     "sound": "A reverse swell; the milk pour; café murmur.",
+     "in": "Dive into the warmth",
+     "why": "They meet: the bean becomes his cup."
+    },
+    "dur": 60
+   },
+   {
+    "world": "scene",
+    "scene": "counter",
+    "enter": "match",
+    "theme": "honey",
+    "energy": 1.0,
+    "text": {
+     "head": "Your first cup is waiting."
+    },
+    "sfx": [
+     {
+      "at": 0,
+      "until": 72,
+      "fx": "cafe"
+     },
+     {
+      "at": 22,
+      "fx": "clink",
+      "gain": 0.8
+     },
+     {
+      "at": 10,
+      "until": 72,
+      "fx": "steam"
+     }
+    ],
+    "board": {
+     "beat": "Payoff",
+     "shot": "MS · slow dolly",
+     "action": "At the counter, he lifts the cup; steam curls up into the morning light.",
+     "sound": "Café murmur; the cup leaves the saucer; the music lands.",
+     "in": "Match (the cup from above → the cup on the counter)",
+     "why": "The feeling the brand gives."
+    },
+    "dur": 77
+   },
+   {
+    "world": "lockup",
+    "enter": "cut",
+    "sfx": [
+     {
+      "at": 2,
+      "fx": "clink",
+      "gain": 0.6
+     }
+    ],
+    "board": {
+     "beat": "End card",
+     "shot": "Lockup",
+     "action": "The VELMORA wordmark; first café; opens 1 November.",
+     "sound": "A last clink; the chord's tail.",
+     "in": "Cut",
+     "why": "The action, and the label: a fictional sample."
+    },
+    "dur": 75
+   }
+  ],
+  "score": "films/velmora/score.wav"
+ }
+}

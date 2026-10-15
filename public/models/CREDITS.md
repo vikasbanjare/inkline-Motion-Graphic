@@ -1,7 +1,8 @@
 # 3D models: sources and licences
 
 All models are from the Khronos Group glTF Sample Assets (github.com/KhronosGroup/glTF-Sample-Assets), downloaded
-unmodified apart from texture downsizing (max 1024 px, JPEG) for repository size. Licences per model's metadata.json:
+unmodified apart from texture downsizing (max 1024 px, JPEG; the newer models 512 px with glTF-Transform, and the chess pieces cut from
+the full set and simplified) for repository size. Licences per model's metadata.json:
 
 | File | Author(s) | Licence |
 | --- | --- | --- |
@@ -16,6 +17,14 @@ unmodified apart from texture downsizing (max 1024 px, JPEG) for repository size
 | WaterBottle.glb | Microsoft | CC0-1.0 |
 | Avocado.glb | Microsoft | CC0-1.0 |
 | ToyCar.glb | Guido Odendahl; Eric Chadwick | CC0-1.0 |
+| AnisotropyBarnLamp.glb | Eric Chadwick | CC-BY-4.0 |
+| ChessKing.glb, ChessKnight.glb, ChessPawn.glb (single pieces cut from ABeautifulGame) | Ed Mackey; MaterialX Project | CC-BY-4.0 |
+| Corset.glb | Microsoft | CC0-1.0 |
+| DiffuseTransmissionTeacup.glb | Polyhaven.com; Eric Chadwick | CC0-1.0 |
+| GlamVelvetSofa.glb | Eric Chadwick | CC-BY-4.0 |
+| IridescentDishWithOlives.glb | Eric Chadwick | CC-BY-4.0 |
+| MosquitoInAmber.glb | Loic Norgeot; Sketchfab | CC-BY-4.0 |
+| SheenChair.glb | Eric Chadwick | CC0-1.0 |
 
 CC-BY-4.0 requires attribution: keep this file with the models and credit the authors above in any published film's
 end credits or description.
